@@ -1,0 +1,343 @@
+<tree schema_version="1.0">
+    <sourceName>-</sourceName>
+    <sourceGroup>-</sourceGroup>
+    <definitionId>routine_rename_kinops_instance_v1</definitionId>
+    <type>Global Routine</type>
+    <status>Active</status>
+    <taskTree builder_version="" schema_version="1.0" version="">
+        <name>Rename kinops Instance</name>
+        <author></author>
+        <notes></notes>
+        <lastID>22</lastID>
+        <taskDefinition id="routine_rename_kinops_instance_v1" name="Rename kinops Instance" schema_version="1.0" version="1">
+            <visible>false</visible>
+            <deferrable>true</deferrable>
+            <parameters>
+                <parameter id="Old Space Slug" label="Old Space Slug" required="true" tooltip=""></parameter>
+                <parameter id="New Space Slug" label="New Space Slug" required="true" tooltip=""></parameter>
+                <parameter id="Property File Uri" label="Property File Uri" required="true" tooltip=""></parameter>
+                <parameter id="Launch Type" label="Launch Type" required="false" tooltip="">EC2</parameter>
+                <parameter id="AWS Task Definition - Task" label="AWS Task Definition - Task" required="false" tooltip="">KineticTask</parameter>
+                <parameter id="AWS Task Definition - Response" label="AWS Task Definition - Response" required="false" tooltip="">KineticResponse</parameter>
+                <parameter id="Provisioner Git Branch" label="Provisioner Git Branch" required="false" tooltip="">master</parameter>
+                <parameter id="Kinetic SDK Git Branch" label="Kinetic SDK Git Branch" required="false" tooltip="">master</parameter>
+                <parameter id="Platform Template Git Branch" label="Platform Template Git Branch" required="false" tooltip="">master</parameter>
+                <parameter id="Platform Template Git Repository URL" label="Platform Template Git Repository URL" required="false" tooltip="">git@github.com:kineticdata/platform-template.git</parameter>
+            </parameters>
+            <handler name="system_tree_call" version="1"></handler>
+            <results format="xml"></results>
+        </taskDefinition>
+        <request>
+            <task definition_id="system_start_v1" id="start" name="Start" x="54" y="56">
+                <version>1</version>
+                <configured>true</configured>
+                <defers>false</defers>
+                <deferrable>false</deferrable>
+                <visible>false</visible>
+                <parameters></parameters>
+                <messages></messages>
+                <dependents>
+                    <task label="" type="Complete" value="">utilities_echo_v1_8</task>
+                </dependents>
+            </task>
+            <task definition_id="utilities_defer_v1" id="utilities_defer_v1_1" name="Defer" x="494" y="55">
+                <version>1</version>
+                <configured>true</configured>
+                <defers>true</defers>
+                <deferrable>true</deferrable>
+                <visible>true</visible>
+                <parameters>
+                    <parameter id="deferral_value" label="Initial Deferral Value" menu="" required="false" tooltip=""></parameter>
+                </parameters>
+                <messages>
+                    <message type="Create"></message>
+                    <message type="Update"></message>
+                    <message type="Complete"></message>
+                </messages>
+                <dependents>
+                    <task label="" type="Create" value="">utilities_echo_v1_3</task>
+                    <task label="" type="Complete" value="">system_tree_return_v1_7</task>
+                    <task label="Datastore Record Exists" type="Complete" value="!@results['Find Datastore Record']['ID'].nil?">kinetic_request_ce_submission_update_v1_12</task>
+                    <task label="Datastore Record Found" type="Complete" value="!@results['Find Datastore Record New']['ID'].nil?">kinetic_request_ce_datastore_submission_update_v1_20</task>
+                </dependents>
+            </task>
+            <task definition_id="utilities_echo_v1" id="utilities_echo_v1_3" name="Env Variables Hash" x="525" y="153">
+                <version>1</version>
+                <configured>true</configured>
+                <defers>false</defers>
+                <deferrable>false</deferrable>
+                <visible>true</visible>
+                <parameters>
+                    <parameter id="input" label="Input" menu="" required="true" tooltip="">&lt;%=
+{
+  "Old Space Slug" =&gt; @inputs['Old Space Slug'],
+  "New Space Slug" =&gt; @inputs['New Space Slug'],
+  "Launch Type" =&gt; @inputs['Launch Type'],
+  "AWS Task Definition - Task" =&gt; @inputs['AWS Task Definition - Task'],
+  "AWS Task Definition - Response" =&gt; @inputs['AWS Task Definition - Response'],
+  "Property File Uri" =&gt; @inputs['Property File Uri'],
+  "Deferral Token" =&gt; @results['Defer']['deferral_token']
+}.to_json 
+%&gt;</parameter>
+                </parameters>
+                <messages>
+                    <message type="Create"></message>
+                    <message type="Update"></message>
+                    <message type="Complete"></message>
+                </messages>
+                <dependents>
+                    <task label="FARGATE" type="Complete" value="@inputs['Launch Type'] == &quot;FARGATE&quot;">aws_ecs_task_run_v3_21</task>
+                    <task label="EC2" type="Complete" value="@inputs['Launch Type'] != &quot;FARGATE&quot;">aws_ecs_task_run_v3_22</task>
+                </dependents>
+            </task>
+            <task definition_id="system_tree_return_v1" id="system_tree_return_v1_7" name="Return" x="811" y="55">
+                <version>1</version>
+                <configured>true</configured>
+                <defers>false</defers>
+                <deferrable>false</deferrable>
+                <visible>false</visible>
+                <parameters></parameters>
+                <messages>
+                    <message type="Create"></message>
+                    <message type="Update"></message>
+                    <message type="Complete"></message>
+                </messages>
+                <dependents></dependents>
+            </task>
+            <task definition_id="utilities_echo_v1" id="utilities_echo_v1_8" name="Check Reserved" x="198" y="45">
+                <version>1</version>
+                <configured>true</configured>
+                <defers>false</defers>
+                <deferrable>false</deferrable>
+                <visible>true</visible>
+                <parameters>
+                    <parameter id="input" label="Input" menu="" required="true" tooltip="">&lt;%= ['kinops-gold','manage','shared','kinetic-calendar','kinetic-schedule'].include?(@inputs['New Space Slug']) ? raise("#{@inputs['New Space Slug']} is a reserved space slug that can not use this process") : ""%&gt;</parameter>
+                </parameters>
+                <messages>
+                    <message type="Create"></message>
+                    <message type="Update"></message>
+                    <message type="Complete"></message>
+                </messages>
+                <dependents>
+                    <task label="" type="Complete" value="">kinetic_request_ce_submission_retrieve_by_query_v1_9</task>
+                </dependents>
+            </task>
+            <task definition_id="kinetic_request_ce_submission_retrieve_by_query_v1" id="kinetic_request_ce_submission_retrieve_by_query_v1_9" name="Find Datastore Record" x="330" y="34">
+                <version>1</version>
+                <configured>true</configured>
+                <defers>false</defers>
+                <deferrable>false</deferrable>
+                <visible>false</visible>
+                <parameters>
+                    <parameter id="error_handling" label="Error Handling" menu="Error Message,Raise Error" required="true" tooltip="Determine what to return if an error is encountered.">Error Message</parameter>
+                    <parameter id="space_slug" label="Space Slug" menu="" required="false" tooltip="The Space the submission is being retrieved from."></parameter>
+                    <parameter id="kapp_slug" label="Kapp Slug:" menu="" required="true" tooltip="The slug of the Kapp the form is for.">admin</parameter>
+                    <parameter id="form_slug" label="Form Slug:" menu="" required="true" tooltip="The id of the form being retrieved.">kinops-environments</parameter>
+                    <parameter id="query" label="Query:" menu="" required="false" tooltip="The query that will be used to search the submissions. Ex: values[company]=Kinetic">q=&lt;%= URI.escape("values[Space Slug]")%&gt;=&lt;%=URI.escape("\"" + @inputs['Old Space Slug'] + "\"")%&gt;</parameter>
+                </parameters>
+                <messages>
+                    <message type="Create"></message>
+                    <message type="Update"></message>
+                    <message type="Complete"></message>
+                </messages>
+                <dependents>
+                    <task label="" type="Complete" value="">utilities_defer_v1_1</task>
+                    <task label="Datastore Record Exists" type="Complete" value="!@results['Find Datastore Record']['ID'].nil?">kinetic_request_ce_submission_update_v1_13</task>
+                    <task label="" type="Complete" value="">kinetic_request_ce_datastore_submission_retrieve_v1_18</task>
+                </dependents>
+            </task>
+            <task definition_id="kinetic_request_ce_submission_update_v1" id="kinetic_request_ce_submission_update_v1_12" name="Update Datastore - New Space Slug" x="884" y="165">
+                <version>1</version>
+                <configured>true</configured>
+                <defers>false</defers>
+                <deferrable>false</deferrable>
+                <visible>true</visible>
+                <parameters>
+                    <parameter id="error_handling" label="Error Handling" menu="Error Message,Raise Error" required="true" tooltip="Determine what to return if an error is encountered.">Raise Error</parameter>
+                    <parameter id="space_slug" label="Space Slug" menu="" required="false" tooltip="The Space the submission is being retrieved from."></parameter>
+                    <parameter id="submission_id" label="Submission Id" menu="" required="true" tooltip="The id of the submission being updated.">&lt;%=@results['Find Datastore Record']['ID']%&gt;</parameter>
+                    <parameter id="state" label="State" menu="" required="false" tooltip="The value used to set the submission state."></parameter>
+                    <parameter id="values" label="Values" menu="" required="false" tooltip="A JSON map of field names to values that should be set.">&lt;%={
+  "Space Slug" =&gt; @inputs['New Space Slug'],
+  "Environment Status" =&gt; "Active"
+}.to_json%&gt;</parameter>
+                    <parameter id="current_page_name" label="Current Page Name:" menu="" required="false" tooltip="Set the current page name."></parameter>
+                    <parameter id="current_page_navigation" label="Current Page Navigation:" menu="" required="false" tooltip="Set the current page navigation."></parameter>
+                    <parameter id="origin_id" label="Origin ID:" menu="" required="false" tooltip="Set the origin ID."></parameter>
+                    <parameter id="parent_id" label="Parent ID:" menu="" required="false" tooltip="Set the parent ID."></parameter>
+                </parameters>
+                <messages>
+                    <message type="Create"></message>
+                    <message type="Update"></message>
+                    <message type="Complete"></message>
+                </messages>
+                <dependents></dependents>
+            </task>
+            <task definition_id="kinetic_request_ce_submission_update_v1" id="kinetic_request_ce_submission_update_v1_13" name="Update Datastore - Rename in Progress" x="331" y="200">
+                <version>1</version>
+                <configured>true</configured>
+                <defers>false</defers>
+                <deferrable>false</deferrable>
+                <visible>true</visible>
+                <parameters>
+                    <parameter id="error_handling" label="Error Handling" menu="Error Message,Raise Error" required="true" tooltip="Determine what to return if an error is encountered.">Raise Error</parameter>
+                    <parameter id="space_slug" label="Space Slug" menu="" required="false" tooltip="The Space the submission is being retrieved from."></parameter>
+                    <parameter id="submission_id" label="Submission Id" menu="" required="true" tooltip="The id of the submission being updated.">&lt;%=@results['Find Datastore Record']['ID']%&gt;</parameter>
+                    <parameter id="state" label="State" menu="" required="false" tooltip="The value used to set the submission state."></parameter>
+                    <parameter id="values" label="Values" menu="" required="false" tooltip="A JSON map of field names to values that should be set.">&lt;%={
+  "Environment Status" =&gt; "Rename in Progress"
+}.to_json%&gt;</parameter>
+                    <parameter id="current_page_name" label="Current Page Name:" menu="" required="false" tooltip="Set the current page name."></parameter>
+                    <parameter id="current_page_navigation" label="Current Page Navigation:" menu="" required="false" tooltip="Set the current page navigation."></parameter>
+                    <parameter id="origin_id" label="Origin ID:" menu="" required="false" tooltip="Set the origin ID."></parameter>
+                    <parameter id="parent_id" label="Parent ID:" menu="" required="false" tooltip="Set the parent ID."></parameter>
+                </parameters>
+                <messages>
+                    <message type="Create"></message>
+                    <message type="Update"></message>
+                    <message type="Complete"></message>
+                </messages>
+                <dependents></dependents>
+            </task>
+            <task definition_id="kinetic_request_ce_datastore_submission_retrieve_v1" id="kinetic_request_ce_datastore_submission_retrieve_v1_18" name="Find Datastore Record New" x="197" y="184">
+                <version>1</version>
+                <configured>true</configured>
+                <defers>false</defers>
+                <deferrable>false</deferrable>
+                <visible>true</visible>
+                <parameters>
+                    <parameter id="error_handling" label="Error Handling" menu="Error Message,Raise Error" required="true" tooltip="Determine what to return if an error is encountered.">Error Message</parameter>
+                    <parameter id="space_slug" label="Space Slug" menu="" required="false" tooltip="The Space the submission is being retrieved from (defaults to info value if not provided)."></parameter>
+                    <parameter id="retrieve_by" label="Retrieve By" menu="Id,Query" required="true" tooltip="How to retrieve the submission. Id or Query.">Query</parameter><!-- Retrieve By Query parameters -->
+                    <parameter dependsOnId="retrieve_by" dependsOnValue="Query" id="form_slug" label="Datastore Form Slug" menu="" required="false" tooltip="Slug of the form to query">kinops-environments</parameter>
+                    <parameter dependsOnId="retrieve_by" dependsOnValue="Query" id="index" label="Index" menu="" required="false" tooltip="The index to use for the search/retrieval">values[Space Slug]</parameter>
+                    <parameter dependsOnId="retrieve_by" dependsOnValue="Query" id="query" label="Query" menu="" required="false" tooltip="A query that will retrieve a single submission">values[Space Slug]="&lt;%=@inputs['Old Space Slug']%&gt;"</parameter><!-- Retrieve By Id parameters -->
+                    <parameter dependsOnId="retrieve_by" dependsOnValue="Id" id="submission_id" label="Datastore Submission Id" menu="" required="false" tooltip="The id of the submission being retrieved."></parameter>
+                </parameters>
+                <messages>
+                    <message type="Create"></message>
+                    <message type="Update"></message>
+                    <message type="Complete"></message>
+                </messages>
+                <dependents>
+                    <task label="Datastore Record Found" type="Complete" value="!@results['Find Datastore Record New']['ID'].nil?">kinetic_request_ce_datastore_submission_update_v1_19</task>
+                </dependents>
+            </task>
+            <task definition_id="kinetic_request_ce_datastore_submission_update_v1" id="kinetic_request_ce_datastore_submission_update_v1_19" name="Update Datastore - Rename in Progress New" x="187" y="319">
+                <version>1</version>
+                <configured>true</configured>
+                <defers>false</defers>
+                <deferrable>false</deferrable>
+                <visible>true</visible>
+                <parameters>
+                    <parameter id="error_handling" label="Error Handling" menu="Error Message,Raise Error" required="true" tooltip="Determine what to return if an error is encountered.">Error Message</parameter>
+                    <parameter id="space_slug" label="Space Slug" menu="" required="false" tooltip="The Space the submission is being updated in (defaults to info value if not provided)."></parameter>
+                    <parameter id="submission_id" label="Datastore Submission Id" menu="" required="true" tooltip="The id of the submission being updated.">&lt;%=@results['Find Datastore Record New']['ID']%&gt;</parameter>
+                    <parameter id="state" label="State" menu="" required="false" tooltip="The value used to set the submission state."></parameter>
+                    <parameter id="values" label="Values" menu="" required="false" tooltip="A JSON map of field names to values that should be set.">&lt;%={
+  "Environment Status" =&gt; "Rename in Progress"
+}.to_json%&gt;</parameter>
+                    <parameter id="current_page_name" label="Current Page Name" menu="" required="false" tooltip="Set the current page name."></parameter>
+                    <parameter id="current_page_navigation" label="Current Page Navigation" menu="" required="false" tooltip="Set the current page navigation."></parameter>
+                </parameters>
+                <messages>
+                    <message type="Create"></message>
+                    <message type="Update"></message>
+                    <message type="Complete"></message>
+                </messages>
+                <dependents></dependents>
+            </task>
+            <task definition_id="kinetic_request_ce_datastore_submission_update_v1" id="kinetic_request_ce_datastore_submission_update_v1_20" name="Update Datastore - New Space Slug New" x="906" y="296">
+                <version>1</version>
+                <configured>true</configured>
+                <defers>false</defers>
+                <deferrable>false</deferrable>
+                <visible>true</visible>
+                <parameters>
+                    <parameter id="error_handling" label="Error Handling" menu="Error Message,Raise Error" required="true" tooltip="Determine what to return if an error is encountered.">Error Message</parameter>
+                    <parameter id="space_slug" label="Space Slug" menu="" required="false" tooltip="The Space the submission is being updated in (defaults to info value if not provided)."></parameter>
+                    <parameter id="submission_id" label="Datastore Submission Id" menu="" required="true" tooltip="The id of the submission being updated.">&lt;%=@results['Find Datastore Record New']['ID']%&gt;</parameter>
+                    <parameter id="state" label="State" menu="" required="false" tooltip="The value used to set the submission state."></parameter>
+                    <parameter id="values" label="Values" menu="" required="false" tooltip="A JSON map of field names to values that should be set.">&lt;%={
+  "Space Slug" =&gt; @inputs['New Space Slug'],
+  "Environment Status" =&gt; "Active"
+}.to_json%&gt;</parameter>
+                    <parameter id="current_page_name" label="Current Page Name" menu="" required="false" tooltip="Set the current page name."></parameter>
+                    <parameter id="current_page_navigation" label="Current Page Navigation" menu="" required="false" tooltip="Set the current page navigation."></parameter>
+                </parameters>
+                <messages>
+                    <message type="Create"></message>
+                    <message type="Update"></message>
+                    <message type="Complete"></message>
+                </messages>
+                <dependents></dependents>
+            </task>
+            <task definition_id="aws_ecs_task_run_v3" id="aws_ecs_task_run_v3_21" name="Call AWS Shim - FARGATE" x="462" y="337">
+                <version>3</version>
+                <configured>true</configured>
+                <defers>false</defers>
+                <deferrable>false</deferrable>
+                <visible>true</visible>
+                <parameters>
+                    <parameter id="aws_region" label="AWS Region" menu="" required="true" tooltip="Name of the AWS Region (ex: us-west-2)">us-east-1</parameter>
+                    <parameter id="aws_credentials_s3_bucket" label="S3 Bucket" menu="" required="true" tooltip="S3 Bucket for AWS Credentials">private.kinops.io</parameter>
+                    <parameter id="aws_credentials_s3_filename" label="S3 Filename" menu="" required="true" tooltip="S3 Filename for AWS Credentials">aws_credentials.csv</parameter>
+                    <parameter id="ecs_cluster" label="ECS Cluster" menu="" required="true" tooltip="Name of the ECS Cluster">kinops</parameter>
+                    <parameter id="ecs_task_definition" label="ECS Task Definition" menu="" required="true" tooltip="Name of the ECS Task Definition">Provisioner-Fargate</parameter>
+                    <parameter id="ecs_container_name" label="ECS Container Name" menu="" required="true" tooltip="Name of the ECS Container">Provisioner</parameter><!-- FARGATE PARAMETERS -->
+                    <parameter id="launch_type" label="Launch Type" menu="EC2,FARGATE" required="false" tooltip="Where to launch the container">FARGATE</parameter>
+                    <parameter dependsOnId="launch_type" dependsOnValue="FARGATE" id="fargate_platform_version" label="Fargate Platform Version" menu="" required="false" tooltip="Fargate platform version">LATEST</parameter>
+                    <parameter dependsOnId="launch_type" dependsOnValue="FARGATE" id="subnets" label="Subnets" menu="" required="false" tooltip="Cluster Subnets (comma-separated) - used with awsvpc network mode">subnet-f64853bf,subnet-932fbdf6,subnet-dd371186</parameter>
+                    <parameter dependsOnId="launch_type" dependsOnValue="FARGATE" id="security_groups" label="Security Groups" menu="" required="false" tooltip="Security Groups (comma-separated) - used with awsvpc network mode">sg-c213ca8b</parameter>
+                    <parameter dependsOnId="launch_type" dependsOnValue="FARGATE" id="assign_public_ip" label="Auto Assign Public IP" menu="DISABLED,ENABLED" required="false" tooltip="Auto Assign Public IP - used with awsvpc network mode">ENABLED</parameter><!-- -->
+                    <parameter id="environment_json" label="Environment Variables JSON" menu="" required="true" tooltip="JSON representation of environment variables to pass to container.">&lt;%=@results['Env Variables Hash']['output']%&gt;</parameter>
+                    <parameter id="provision_action" label="Provisioning Action" menu=",rename" required="false" tooltip="Provision Action">rename</parameter>
+                    <parameter id="provisioning_git_branch" label="Provisioning Git Branch" menu="" required="false" tooltip="Provision Git Branch">&lt;%=@inputs['Provisioner Git Branch']%&gt;</parameter>
+                    <parameter id="kinetic_sdk_git_branch" label="Kinetic SDK Git Branch" menu="" required="false" tooltip="Kinetic SDK Git Branch">&lt;%=@inputs['Kinetic SDK Git Branch']%&gt;</parameter>
+                    <parameter id="platform_template_git_repo" label="Platform Template Git Repository" menu="" required="false" tooltip="Platform Template Git Repository">&lt;%=@inputs['Platform Template Git Repository URL']%&gt;</parameter>
+                    <parameter id="platform_template_git_branch" label="Platform Template Git Branch" menu="" required="false" tooltip="Platform Template Git Branch">&lt;%=@inputs['Platform Template Git Branch']%&gt;</parameter>
+                    <parameter id="error_handling" label="Error Handling" menu="Error Message,Raise Error" required="true" tooltip="Determine what to return if an error is encountered.">Error Message</parameter>
+                </parameters>
+                <messages>
+                    <message type="Create"></message>
+                    <message type="Update"></message>
+                    <message type="Complete"></message>
+                </messages>
+                <dependents></dependents>
+            </task>
+            <task definition_id="aws_ecs_task_run_v3" id="aws_ecs_task_run_v3_22" name="Call AWS Shim - EC2" x="594" y="340">
+                <version>3</version>
+                <configured>true</configured>
+                <defers>false</defers>
+                <deferrable>false</deferrable>
+                <visible>true</visible>
+                <parameters>
+                    <parameter id="aws_region" label="AWS Region" menu="" required="true" tooltip="Name of the AWS Region (ex: us-west-2)">us-east-1</parameter>
+                    <parameter id="aws_credentials_s3_bucket" label="S3 Bucket" menu="" required="true" tooltip="S3 Bucket for AWS Credentials">private.kinops.io</parameter>
+                    <parameter id="aws_credentials_s3_filename" label="S3 Filename" menu="" required="true" tooltip="S3 Filename for AWS Credentials">aws_credentials.csv</parameter>
+                    <parameter id="ecs_cluster" label="ECS Cluster" menu="" required="true" tooltip="Name of the ECS Cluster">kinops</parameter>
+                    <parameter id="ecs_task_definition" label="ECS Task Definition" menu="" required="true" tooltip="Name of the ECS Task Definition">Provisioner-EC2</parameter>
+                    <parameter id="ecs_container_name" label="ECS Container Name" menu="" required="true" tooltip="Name of the ECS Container">Provisioner</parameter><!-- FARGATE PARAMETERS -->
+                    <parameter id="launch_type" label="Launch Type" menu="EC2,FARGATE" required="false" tooltip="Where to launch the container">EC2</parameter>
+                    <parameter dependsOnId="launch_type" dependsOnValue="FARGATE" id="fargate_platform_version" label="Fargate Platform Version" menu="" required="false" tooltip="Fargate platform version"></parameter>
+                    <parameter dependsOnId="launch_type" dependsOnValue="FARGATE" id="subnets" label="Subnets" menu="" required="false" tooltip="Cluster Subnets (comma-separated) - used with awsvpc network mode"></parameter>
+                    <parameter dependsOnId="launch_type" dependsOnValue="FARGATE" id="security_groups" label="Security Groups" menu="" required="false" tooltip="Security Groups (comma-separated) - used with awsvpc network mode"></parameter>
+                    <parameter dependsOnId="launch_type" dependsOnValue="FARGATE" id="assign_public_ip" label="Auto Assign Public IP" menu="DISABLED,ENABLED" required="false" tooltip="Auto Assign Public IP - used with awsvpc network mode"></parameter><!-- -->
+                    <parameter id="environment_json" label="Environment Variables JSON" menu="" required="true" tooltip="JSON representation of environment variables to pass to container.">&lt;%=@results['Env Variables Hash']['output']%&gt;</parameter>
+                    <parameter id="provision_action" label="Provisioning Action" menu=",rename" required="false" tooltip="Provision Action">rename</parameter>
+                    <parameter id="provisioning_git_branch" label="Provisioning Git Branch" menu="" required="false" tooltip="Provision Git Branch">&lt;%=@inputs['Provisioner Git Branch']%&gt;</parameter>
+                    <parameter id="kinetic_sdk_git_branch" label="Kinetic SDK Git Branch" menu="" required="false" tooltip="Kinetic SDK Git Branch">&lt;%=@inputs['Kinetic SDK Git Branch']%&gt;</parameter>
+                    <parameter id="platform_template_git_repo" label="Platform Template Git Repository" menu="" required="false" tooltip="Platform Template Git Repository">&lt;%=@inputs['Platform Template Git Repository URL']%&gt;</parameter>
+                    <parameter id="platform_template_git_branch" label="Platform Template Git Branch" menu="" required="false" tooltip="Platform Template Git Branch">&lt;%=@inputs['Platform Template Git Branch']%&gt;</parameter>
+                    <parameter id="error_handling" label="Error Handling" menu="Error Message,Raise Error" required="true" tooltip="Determine what to return if an error is encountered.">Error Message</parameter>
+                </parameters>
+                <messages>
+                    <message type="Create"></message>
+                    <message type="Update"></message>
+                    <message type="Complete"></message>
+                </messages>
+                <dependents></dependents>
+            </task>
+        </request>
+    </taskTree>
+</tree>

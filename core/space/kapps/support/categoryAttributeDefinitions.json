@@ -1,0 +1,22 @@
+[
+  {
+    "allowsMultiple": false,
+    "description": null,
+    "name": "Hidden"
+  },
+  {
+    "allowsMultiple": false,
+    "description": null,
+    "name": "Icon"
+  },
+  {
+    "allowsMultiple": false,
+    "description": null,
+    "name": "Parent"
+  },
+  {
+    "allowsMultiple": false,
+    "description": null,
+    "name": "Sort Order"
+  }
+]

@@ -1,0 +1,14 @@
+{
+  "name": "Pardot",
+  "description": null,
+  "type": "Stored",
+  "handlers": [
+    "pardot_list_add_prospect_v1"
+  ],
+  "policyRules": [
+
+  ],
+  "trees": [
+    "routine_add_lead_to_pardot_routine_v1"
+  ]
+}

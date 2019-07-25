@@ -1,0 +1,147 @@
+<tree schema_version="1.0">
+    <sourceName>-</sourceName>
+    <sourceGroup>-</sourceGroup>
+    <definitionId>routine_repair_spaces</definitionId>
+    <type>Global Routine</type>
+    <status>Active</status>
+    <taskTree builder_version="" schema_version="1.0" version="">
+        <name>Repair Spaces</name>
+        <author></author>
+        <notes></notes>
+        <lastID>23</lastID>
+        <taskDefinition id="routine_repair_spaces" name="Repair Spaces" schema_version="1.0" version="1">
+            <visible>false</visible>
+            <deferrable>true</deferrable>
+            <parameters>
+                <parameter id="Space Slugs (comma separated)" label="Space Slugs (comma separated)" required="false" tooltip=""></parameter>
+                <parameter id="Launch Type" label="Launch Type" required="false" tooltip="">EC2</parameter>
+                <parameter id="AWS Task Definition - Task" label="AWS Task Definition - Task" required="false" tooltip="">KineticTask</parameter>
+                <parameter id="AWS Task Definition - Response" label="AWS Task Definition - Response" required="false" tooltip="">KineticResponse</parameter>
+                <parameter id="Property File Uri" label="Property File Uri" required="false" tooltip=""></parameter>
+                <parameter id="Provisioner Git Branch" label="Provisioner Git Branch" required="false" tooltip="">master</parameter>
+                <parameter id="Kinetic SDK Git Branch" label="Kinetic SDK Git Branch" required="false" tooltip="">master</parameter>
+                <parameter id="Platform Template Git Repository URL" label="Platform Template Git Repository URL" required="false" tooltip="">git@github.com:kineticdata/platform-template.git</parameter>
+                <parameter id="Platform Template Git Branch" label="Platform Template Git Branch" required="false" tooltip="">master</parameter>
+            </parameters>
+            <handler name="system_tree_call" version="1"></handler>
+            <results format="xml"></results>
+        </taskDefinition>
+        <request>
+            <task definition_id="system_start_v1" id="start" name="Start" x="11" y="11">
+                <version>1</version>
+                <configured>true</configured>
+                <defers>false</defers>
+                <deferrable>false</deferrable>
+                <visible>false</visible>
+                <parameters></parameters>
+                <messages></messages>
+                <dependents>
+                    <task label="" type="Complete" value="">system_junction_v1_9</task>
+                    <task label="If Space Slug" type="Complete" value="(@inputs['Space Slugs (comma separated)'] || '').split(',', 2)[0] != nil">kinetic_request_ce_space_retrieve_v1_15</task>
+                </dependents>
+            </task>
+            <task definition_id="system_tree_return_v1" id="system_tree_return_v1_8" name="Return" x="407" y="328">
+                <version>1</version>
+                <configured>true</configured>
+                <defers>false</defers>
+                <deferrable>false</deferrable>
+                <visible>false</visible>
+                <parameters></parameters>
+                <messages>
+                    <message type="Create"></message>
+                    <message type="Update"></message>
+                    <message type="Complete"></message>
+                </messages>
+                <dependents></dependents>
+            </task>
+            <task definition_id="system_junction_v1" id="system_junction_v1_9" name="Junction" x="410" y="228">
+                <version>1</version>
+                <configured>true</configured>
+                <defers>false</defers>
+                <deferrable>false</deferrable>
+                <visible>false</visible>
+                <parameters></parameters>
+                <messages>
+                    <message type="Create"></message>
+                    <message type="Update"></message>
+                    <message type="Complete"></message>
+                </messages>
+                <dependents>
+                    <task label="" type="Complete" value="">system_tree_return_v1_8</task>
+                </dependents>
+            </task>
+            <task definition_id="kinetic_request_ce_space_retrieve_v1" id="kinetic_request_ce_space_retrieve_v1_15" name="Retrieve Space" x="266" y="2">
+                <version>1</version>
+                <configured>true</configured>
+                <defers>false</defers>
+                <deferrable>false</deferrable>
+                <visible>true</visible>
+                <parameters>
+                    <parameter id="error_handling" label="Error Handling" menu="Error Message,Raise Error" required="true" tooltip="Determine what to return if an error is encountered.">Raise Error</parameter>
+                    <parameter id="space_slug" label="Space Slug" menu="" required="false" tooltip="The Space the submission is being retrieved from.">&lt;%=(@inputs['Space Slugs (comma separated)'] || '').split(',', 2)[0]%&gt;</parameter>
+                </parameters>
+                <messages>
+                    <message type="Create"></message>
+                    <message type="Update"></message>
+                    <message type="Complete"></message>
+                </messages>
+                <dependents>
+                    <task label="" type="Complete" value="">routine_repair_kinops_instance_v1_22</task>
+                </dependents>
+            </task>
+            <task definition_id="routine_repair_kinops_instance_v1" id="routine_repair_kinops_instance_v1_22" name="Repair Space" x="425" y="7">
+                <version>1</version>
+                <configured>true</configured>
+                <defers>true</defers>
+                <deferrable>true</deferrable>
+                <visible>false</visible>
+                <parameters>
+                    <parameter id="Space Name" label="Space Name" menu="" required="true" tooltip="">&lt;%=@results['Retrieve Space']['Name']%&gt;</parameter>
+                    <parameter id="Space Slug" label="Space Slug" menu="" required="true" tooltip="">&lt;%=@results['Retrieve Space']['Slug']%&gt;</parameter>
+                    <parameter id="Property File Uri" label="Property File Uri" menu="" required="true" tooltip="">&lt;%=@inputs['Property File Uri']%&gt;</parameter>
+                    <parameter id="Launch Type" label="Launch Type" menu="" required="false" tooltip="">&lt;%=@inputs['Launch Type']%&gt;</parameter>
+                    <parameter id="AWS Task Definition - Task" label="AWS Task Definition - Task" menu="" required="false" tooltip="">&lt;%=@inputs['AWS Task Definition - Task']%&gt;</parameter>
+                    <parameter id="AWS Task Definition - Response" label="AWS Task Definition - Response" menu="" required="false" tooltip="">&lt;%=@inputs['AWS Task Definition - Response']%&gt;</parameter>
+                    <parameter id="Provisioner Git Branch" label="Provisioner Git Branch" menu="" required="false" tooltip="">&lt;%=@inputs['Provisioner Git Branch']%&gt;</parameter>
+                    <parameter id="Kinetic SDK Git Branch" label="Kinetic SDK Git Branch" menu="" required="false" tooltip="">&lt;%=@inputs['Kinetic SDK Git Branch']%&gt;</parameter>
+                    <parameter id="Platform Template Git Branch" label="Platform Template Git Branch" menu="" required="false" tooltip="">&lt;%=@inputs['Platform Template Git Branch']%&gt;</parameter>
+                    <parameter id="Platform Template Git Repository URL" label="Platform Template Git Repository URL" menu="" required="false" tooltip="">&lt;%=@inputs['Platform Template Git Repository URL']%&gt;</parameter>
+                </parameters>
+                <messages>
+                    <message type="Create"></message>
+                    <message type="Update"></message>
+                    <message type="Complete"></message>
+                </messages>
+                <dependents>
+                    <task label="If Remaining Spaces" type="Complete" value="@inputs['Space Slugs (comma separated)'].split(',', 2)[1] != nil">routine_repair_spaces_23</task>
+                </dependents>
+            </task>
+            <task definition_id="routine_repair_spaces" id="routine_repair_spaces_23" name="Repair Remaining Spaces" x="672" y="24">
+                <version>1</version>
+                <configured>true</configured>
+                <defers>true</defers>
+                <deferrable>true</deferrable>
+                <visible>false</visible>
+                <parameters>
+                    <parameter id="Space Slugs (comma separated)" label="Space Slugs (comma separated)" menu="" required="false" tooltip="">&lt;%=@inputs['Space Slugs (comma separated)'].split(',', 2)[1]%&gt;</parameter>
+                    <parameter id="Launch Type" label="Launch Type" menu="" required="false" tooltip="">&lt;%=@inputs['Launch Type']%&gt;</parameter>
+                    <parameter id="AWS Task Definition - Task" label="AWS Task Definition - Task" menu="" required="false" tooltip="">&lt;%=@inputs['AWS Task Definition - Task']%&gt;</parameter>
+                    <parameter id="AWS Task Definition - Response" label="AWS Task Definition - Response" menu="" required="false" tooltip="">&lt;%=@inputs['AWS Task Definition - Response']%&gt;</parameter>
+                    <parameter id="Property File Uri" label="Property File Uri" menu="" required="false" tooltip="">&lt;%=@inputs['Property File Uri']%&gt;</parameter>
+                    <parameter id="Provisioner Git Branch" label="Provisioner Git Branch" menu="" required="false" tooltip="">&lt;%=@inputs['Provisioner Git Branch']%&gt;</parameter>
+                    <parameter id="Kinetic SDK Git Branch" label="Kinetic SDK Git Branch" menu="" required="false" tooltip="">&lt;%=@inputs['Kinetic SDK Git Branch']%&gt;</parameter>
+                    <parameter id="Platform Template Git Repository URL" label="Platform Template Git Repository URL" menu="" required="false" tooltip="">&lt;%=@inputs['Platform Template Git Repository URL']%&gt;</parameter>
+                    <parameter id="Platform Template Git Branch" label="Platform Template Git Branch" menu="" required="false" tooltip="">&lt;%=@inputs['Platform Template Git Branch']%&gt;</parameter>
+                </parameters>
+                <messages>
+                    <message type="Create"></message>
+                    <message type="Update"></message>
+                    <message type="Complete"></message>
+                </messages>
+                <dependents>
+                    <task label="" type="Complete" value="">system_junction_v1_9</task>
+                </dependents>
+            </task>
+        </request>
+    </taskTree>
+</tree>

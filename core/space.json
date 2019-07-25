@@ -1,0 +1,194 @@
+{
+  "afterLogoutPath": null,
+  "attributes": [
+    {
+      "name": "Admin Kapp Slug",
+      "values": [
+        "admin"
+      ]
+    },
+    {
+      "name": "AWS Credentials File",
+      "values": [
+        "aws_credentials.csv"
+      ]
+    },
+    {
+      "name": "AWS ECS Cluster",
+      "values": [
+        "kinops"
+      ]
+    },
+    {
+      "name": "AWS Property File",
+      "values": [
+        "s3://private.kinops.io/kinops.yaml"
+      ]
+    },
+    {
+      "name": "AWS Property File - Nagios",
+      "values": [
+        "s3://private.kinops.io/kinops-nagios.yaml"
+      ]
+    },
+    {
+      "name": "AWS Region",
+      "values": [
+        "us-east-1"
+      ]
+    },
+    {
+      "name": "AWS Tenant S3 Bucket",
+      "values": [
+        "tenants.kinops.io"
+      ]
+    },
+    {
+      "name": "Catalog Kapp Slug",
+      "values": [
+        "public"
+      ]
+    },
+    {
+      "name": "Company Name",
+      "values": [
+        "Kinetic Data - Manage"
+      ]
+    },
+    {
+      "name": "Default Kapp Display",
+      "values": [
+        "support"
+      ]
+    },
+    {
+      "name": "Discussion Server Url",
+      "values": [
+        "Does Not Use Discussions"
+      ]
+    },
+    {
+      "name": "Footer Bundle Path",
+      "values": [
+        "space"
+      ]
+    },
+    {
+      "name": "Header Bundle Path",
+      "values": [
+        "space"
+      ]
+    },
+    {
+      "name": "kinops Sales Email Address",
+      "values": [
+        "kinops@kineticdata.com"
+      ]
+    },
+    {
+      "name": "kinops Support Email Address",
+      "values": [
+        "kinops@kineticdata.com"
+      ]
+    },
+    {
+      "name": "Libraries Bundle Path",
+      "values": [
+        "space"
+      ]
+    },
+    {
+      "name": "Page Title Prefix",
+      "values": [
+        "kinops"
+      ]
+    },
+    {
+      "name": "Service Days Due",
+      "values": [
+        "7"
+      ]
+    },
+    {
+      "name": "Task Assignee Individual",
+      "values": [
+        ""
+      ]
+    },
+    {
+      "name": "Task Assignee Team",
+      "values": [
+        "Administators"
+      ]
+    },
+    {
+      "name": "Task Form Slug",
+      "values": [
+        "generic"
+      ]
+    },
+    {
+      "name": "Task Server Url",
+      "values": [
+        "https://manage.kinops.io/kinetic-task"
+      ]
+    },
+    {
+      "name": "Task Source Name",
+      "values": [
+        "Kinetic Request CE"
+      ]
+    },
+    {
+      "name": "Web Server Url",
+      "values": [
+        "https://kinops.io"
+      ]
+    }
+  ],
+  "bundlePath": "",
+  "customTranslationContexts": [
+
+  ],
+  "defaultDatastoreFormConfirmationPage": null,
+  "defaultDatastoreFormDisplayPage": null,
+  "defaultLocale": null,
+  "defaultTimezone": null,
+  "displayType": "Single Page App",
+  "displayValue": "spa.jsp?location=https://s3.amazonaws.com/kinops.io/bundles/kinetic/releases/2.x.x",
+  "enabledLocales": [
+
+  ],
+  "filestore": {
+    "filehubUrl": "https://kinops.io/kinetic-filehub",
+    "slug": "ce-manage"
+  },
+  "loginPage": null,
+  "name": "Manage",
+  "resetPasswordPage": null,
+  "securityPolicies": [
+    {
+      "endpoint": "Display",
+      "name": "Authenticated Users"
+    },
+    {
+      "endpoint": "Teams Access",
+      "name": "Authenticated Users"
+    },
+    {
+      "endpoint": "Users Access",
+      "name": "Authenticated Users"
+    }
+  ],
+  "sessionInactiveLimitInSeconds": 2592000,
+  "sharedBundleBase": "hydrogen-v1",
+  "slug": "manage",
+  "trustedFrameDomains": [
+    "*.kineticdata.com",
+    "*.kinops.io",
+    "http://localhost:4567"
+  ],
+  "trustedResourceDomains": [
+    "https://kinops.io"
+  ]
+}

@@ -1,0 +1,158 @@
+<tree schema_version="1.0">
+    <sourceName>-</sourceName>
+    <sourceGroup>-</sourceGroup>
+    <definitionId>routine_import_trees_to_space</definitionId>
+    <type>Global Routine</type>
+    <status>Active</status>
+    <taskTree builder_version="" schema_version="1.0" version="">
+        <name>Import Trees To Space</name>
+        <author></author>
+        <notes></notes>
+        <lastID>9</lastID>
+        <taskDefinition id="routine_import_trees_to_space" name="Import Trees To Space" schema_version="1.0" version="1">
+            <visible>false</visible>
+            <deferrable>true</deferrable>
+            <parameters>
+                <parameter id="Space Slug" label="Space Slug" required="false" tooltip="Slug of the Space to import trees into"></parameter>
+                <parameter id="Attachment Field Name" label="Attachment Field Name" required="false" tooltip="Name of the attachment field that collects the tree files to import"></parameter>
+                <parameter id="Attachment Field Value" label="Attachment Field Value" required="false" tooltip="Submitted value of the attachment field that collects the tree files to import"></parameter>
+                <parameter id="Submission Id" label="Submission Id" required="false" tooltip="Id of the submission that collected the tree files to import"></parameter>
+            </parameters>
+            <handler name="system_tree_call" version="1"></handler>
+            <results format="xml">
+                <result name="Handler Error Message" tooltip=""></result>
+                <result name="Tree Files" tooltip=""></result>
+                <result name="Space Slug" tooltip=""></result>
+            </results>
+        </taskDefinition>
+        <request>
+            <task definition_id="system_start_v1" id="start" name="Start" x="10" y="10">
+                <version>1</version>
+                <configured>true</configured>
+                <defers>false</defers>
+                <deferrable>false</deferrable>
+                <visible>false</visible>
+                <parameters></parameters>
+                <messages></messages>
+                <dependents>
+                    <task label="" type="Complete" value="">utilities_echo_v1_4</task>
+                </dependents>
+            </task>
+            <task definition_id="system_tree_return_v1" id="system_tree_return_v1_2" name="Return" x="897" y="51">
+                <version>1</version>
+                <configured>true</configured>
+                <defers>false</defers>
+                <deferrable>false</deferrable>
+                <visible>false</visible>
+                <parameters>
+                    <parameter id="Handler Error Message" label="Handler Error Message" menu="" required="false" tooltip="">&lt;%=@results.has_key?('Import Tree Files') ?
+ @results['Import Tree Files']['Handler Error Message'] : ''%&gt;</parameter>
+                    <parameter id="Tree Files" label="Tree Files" menu="" required="false" tooltip="">&lt;%=@results.has_key?('Import Tree Files') ?
+ @results['Import Tree Files']['Tree Files'] : ''%&gt;</parameter>
+                    <parameter id="Space Slug" label="Space Slug" menu="" required="false" tooltip="">&lt;%=@inputs['Space Slug']%&gt;</parameter>
+                </parameters>
+                <messages>
+                    <message type="Create"></message>
+                    <message type="Update"></message>
+                    <message type="Complete"></message>
+                </messages>
+                <dependents></dependents>
+            </task>
+            <task definition_id="utilities_echo_v1" id="utilities_echo_v1_3" name="Attachment Field Value" x="559" y="33">
+                <version>1</version>
+                <configured>true</configured>
+                <defers>false</defers>
+                <deferrable>false</deferrable>
+                <visible>true</visible>
+                <parameters>
+                    <parameter id="input" label="Input" menu="" required="true" tooltip="">&lt;%=@inputs['Attachment Field Value']%&gt;</parameter>
+                </parameters>
+                <messages>
+                    <message type="Create"></message>
+                    <message type="Update"></message>
+                    <message type="Complete"></message>
+                </messages>
+                <dependents>
+                    <task label="" type="Complete" value="">kinops_manage_tree_import_to_space_v1_9</task>
+                </dependents>
+            </task>
+            <task definition_id="utilities_echo_v1" id="utilities_echo_v1_4" name="Space Slug" x="138" y="34">
+                <version>1</version>
+                <configured>true</configured>
+                <defers>false</defers>
+                <deferrable>false</deferrable>
+                <visible>true</visible>
+                <parameters>
+                    <parameter id="input" label="Input" menu="" required="true" tooltip="">&lt;%=@inputs['Space Slug']%&gt;</parameter>
+                </parameters>
+                <messages>
+                    <message type="Create"></message>
+                    <message type="Update"></message>
+                    <message type="Complete"></message>
+                </messages>
+                <dependents>
+                    <task label="" type="Complete" value="">utilities_echo_v1_5</task>
+                </dependents>
+            </task>
+            <task definition_id="utilities_echo_v1" id="utilities_echo_v1_5" name="Submission Id" x="280" y="34">
+                <version>1</version>
+                <configured>true</configured>
+                <defers>false</defers>
+                <deferrable>false</deferrable>
+                <visible>true</visible>
+                <parameters>
+                    <parameter id="input" label="Input" menu="" required="true" tooltip="">&lt;%=@inputs['Submission Id']%&gt;</parameter>
+                </parameters>
+                <messages>
+                    <message type="Create"></message>
+                    <message type="Update"></message>
+                    <message type="Complete"></message>
+                </messages>
+                <dependents>
+                    <task label="" type="Complete" value="">utilities_echo_v1_6</task>
+                </dependents>
+            </task>
+            <task definition_id="utilities_echo_v1" id="utilities_echo_v1_6" name="Attachment Field Name" x="421" y="34">
+                <version>1</version>
+                <configured>true</configured>
+                <defers>false</defers>
+                <deferrable>false</deferrable>
+                <visible>true</visible>
+                <parameters>
+                    <parameter id="input" label="Input" menu="" required="true" tooltip="">&lt;%=@inputs['Attachment Field Name']%&gt;</parameter>
+                </parameters>
+                <messages>
+                    <message type="Create"></message>
+                    <message type="Update"></message>
+                    <message type="Complete"></message>
+                </messages>
+                <dependents>
+                    <task label="" type="Complete" value="">utilities_echo_v1_3</task>
+                </dependents>
+            </task>
+            <task definition_id="kinops_manage_tree_import_to_space_v1" id="kinops_manage_tree_import_to_space_v1_9" name="Import Tree Files" x="749" y="32">
+                <version>1</version>
+                <configured>true</configured>
+                <defers>false</defers>
+                <deferrable>false</deferrable>
+                <visible>true</visible>
+                <parameters>
+                    <parameter id="error_handling" label="Error Handling" menu="Error Message,Raise Error" required="true" tooltip="Determine what to return if an error is encountered.">Error Message</parameter>
+                    <parameter id="space_slug" label="Space Slug" menu="" required="true" tooltip="Slug of the Space where the tree should be imported">&lt;%=@inputs['Space Slug']%&gt;</parameter>
+                    <parameter id="field_name" label="Form Field Name" menu="" required="true" tooltip="Name of the file attachment field on the Kinetic Request CE form">&lt;%=@inputs['Attachment Field Name']%&gt;</parameter>
+                    <parameter id="field_value" label="Submitted Field Value" menu="" required="true" tooltip="Submitted value of the form field">&lt;%=@inputs['Attachment Field Value']%&gt;</parameter>
+                    <parameter id="submission_id" label="Submission Id" menu="" required="true" tooltip="Submission Id that contains the attached tree file">&lt;%=@inputs['Submission Id']%&gt;</parameter>
+                    <parameter id="overwrite" label="Overwrite" menu="" required="true" tooltip="Overwrite the tree if it already exists (Yes/No)">Yes</parameter>
+                </parameters>
+                <messages>
+                    <message type="Create"></message>
+                    <message type="Update"></message>
+                    <message type="Complete"></message>
+                </messages>
+                <dependents>
+                    <task label="" type="Complete" value="">system_tree_return_v1_2</task>
+                </dependents>
+            </task>
+        </request>
+    </taskTree>
+</tree>

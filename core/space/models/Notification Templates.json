@@ -1,0 +1,87 @@
+{
+  "activeMappingName": "Notification Templates",
+  "attributes": [
+    {
+      "name": "Body"
+    },
+    {
+      "name": "id"
+    },
+    {
+      "name": "Language"
+    },
+    {
+      "name": "Notification Name"
+    },
+    {
+      "name": "Status"
+    },
+    {
+      "name": "Subject"
+    }
+  ],
+  "mappings": [
+    {
+      "attributes": [
+        {
+          "name": "Body",
+          "structureField": "${fields('values[Message Body]')}"
+        },
+        {
+          "name": "id",
+          "structureField": "${fields('id')}"
+        },
+        {
+          "name": "Language",
+          "structureField": "${fields('values[Language]')}"
+        },
+        {
+          "name": "Notification Name",
+          "structureField": "${fields('values[Notification Name]')}"
+        },
+        {
+          "name": "Status",
+          "structureField": "${fields('values[Status]')}"
+        },
+        {
+          "name": "Subject",
+          "structureField": "${fields('values[Subject]')}"
+        }
+      ],
+      "bridgeName": "Kinetic Core",
+      "name": "Notification Templates",
+      "qualifications": [
+        {
+          "name": "All",
+          "query": "kappSlug=admin&formSlug=notification-templates&limit=999"
+        },
+        {
+          "name": "Content By Notification",
+          "query": "kappSlug=admin&formSlug=notification-templates&values[Notification Name]=${parameters('Notification Name')}&limit=999"
+        }
+      ],
+      "structure": "Submissions"
+    }
+  ],
+  "name": "Notification Templates",
+  "qualifications": [
+    {
+      "name": "All",
+      "parameters": [
+
+      ],
+      "resultType": "Multiple"
+    },
+    {
+      "name": "Content By Notification",
+      "parameters": [
+        {
+          "name": "Notification Name",
+          "notes": null
+        }
+      ],
+      "resultType": "Multiple"
+    }
+  ],
+  "status": "Active"
+}

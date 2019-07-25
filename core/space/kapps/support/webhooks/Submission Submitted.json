@@ -1,0 +1,21 @@
+{
+  "authStrategy": {
+    "type": "Signature",
+    "properties": [
+      {
+        "name": "Key",
+        "value": "kinops-request-ce"
+      },
+      {
+        "name": "Secret",
+        "sensitive": "true"
+      }
+    ]
+  },
+  "event": "Submitted",
+  "filter": "",
+  "name": "Submission Submitted",
+  "type": "Submission",
+  "url": "https://manage.kinops.io/kinetic-task/app/api/v1/run-tree/${space('attribute:Task Source Name')}/${kapp('slug')}%20%3E%20${form('slug')}/Submitted",
+  "attributes": null
+}

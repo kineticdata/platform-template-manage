@@ -1,0 +1,430 @@
+<tree schema_version="1.0">
+    <sourceName>-</sourceName>
+    <sourceGroup>-</sourceGroup>
+    <definitionId>routine_create_kinops_instance_v1</definitionId>
+    <type>Global Routine</type>
+    <status>Active</status>
+    <taskTree builder_version="" schema_version="1.0" version="">
+        <name>Create kinops Instance</name>
+        <author></author>
+        <notes></notes>
+        <lastID>32</lastID>
+        <taskDefinition id="routine_create_kinops_instance_v1" name="Create kinops Instance" schema_version="1.0" version="1">
+            <visible>false</visible>
+            <deferrable>true</deferrable>
+            <parameters>
+                <parameter id="Space Name" label="Space Name" required="true" tooltip=""></parameter>
+                <parameter id="Space Slug" label="Space Slug" required="true" tooltip=""></parameter>
+                <parameter id="Requester Email" label="Requester Email" required="true" tooltip=""></parameter>
+                <parameter id="Requester Name" label="Requester Name" required="true" tooltip=""></parameter>
+                <parameter id="Dedicated Task Engine" label="Dedicated Task Engine" required="false" tooltip="">False</parameter>
+                <parameter id="Property File Uri" label="Property File Uri" required="true" tooltip=""></parameter>
+                <parameter id="Launch Type" label="Launch Type" required="false" tooltip="">FARGATE</parameter>
+                <parameter id="AWS Task Definition - Task" label="AWS Task Definition - Task" required="false" tooltip="">KineticTask</parameter>
+                <parameter id="AWS Task Definition - Response" label="AWS Task Definition - Response" required="false" tooltip="">KineticResponse</parameter>
+                <parameter id="Provisioner Git Branch" label="Provisioner Git Branch" required="false" tooltip="">master</parameter>
+                <parameter id="Kinetic SDK Git Branch" label="Kinetic SDK Git Branch" required="false" tooltip="">master</parameter>
+                <parameter id="Platform Template Git Branch" label="Platform Template Git Branch" required="false" tooltip="">master</parameter>
+                <parameter id="Platform Template Git Repository URL" label="Platform Template Git Repository URL" required="false" tooltip="">git@github.com:kineticdata/platform-template.git</parameter>
+                <parameter id="Default Locale" label="Default Locale" required="false" tooltip="">en</parameter>
+                <parameter id="Default Timezone" label="Default Timezone" required="false" tooltip="">America/Chicago</parameter>
+            </parameters>
+            <handler name="system_tree_call" version="1"></handler>
+            <results format="xml">
+                <result name="Login Link" tooltip="Link to send to user with deferral token"></result>
+            </results>
+        </taskDefinition>
+        <request>
+            <task definition_id="system_start_v1" id="start" name="Start" x="25" y="78">
+                <version>1</version>
+                <configured>true</configured>
+                <defers>false</defers>
+                <deferrable>false</deferrable>
+                <visible>false</visible>
+                <parameters></parameters>
+                <messages></messages>
+                <dependents>
+                    <task label="" type="Complete" value="">utilities_echo_v1_10</task>
+                </dependents>
+            </task>
+            <task definition_id="utilities_defer_v1" id="utilities_defer_v1_1" name="Defer" x="506" y="87">
+                <version>1</version>
+                <configured>true</configured>
+                <defers>true</defers>
+                <deferrable>true</deferrable>
+                <visible>true</visible>
+                <parameters>
+                    <parameter id="deferral_value" label="Initial Deferral Value" menu="" required="false" tooltip=""></parameter>
+                </parameters>
+                <messages>
+                    <message type="Create"></message>
+                    <message type="Update"></message>
+                    <message type="Complete"></message>
+                </messages>
+                <dependents>
+                    <task label="" type="Create" value="">utilities_echo_v1_3</task>
+                    <task label="" type="Complete" value="">kinetic_request_ce_space_retrieve_v1_15</task>
+                    <task label="" type="Create" value="">utilities_echo_v1_23</task>
+                </dependents>
+            </task>
+            <task definition_id="utilities_echo_v1" id="utilities_echo_v1_3" name="Env Variables Hash" x="407" y="220">
+                <version>1</version>
+                <configured>true</configured>
+                <defers>false</defers>
+                <deferrable>false</deferrable>
+                <visible>true</visible>
+                <parameters>
+                    <parameter id="input" label="Input" menu="" required="true" tooltip="">&lt;%=
+        {
+          "Space Name" =&gt; @inputs['Space Name'],
+          "Space Slug" =&gt; @inputs['Space Slug'],
+          "Launch Type" =&gt; @inputs['Launch Type'],
+          "AWS Task Definition - Task" =&gt; @inputs['AWS Task Definition - Task'],
+          "AWS Task Definition - Response" =&gt; @inputs['AWS Task Definition - Response'],
+          "Requester Email" =&gt; @inputs['Requester Email'],
+          "Requester Name" =&gt; @inputs['Requester Name'],
+          "Dedicated Task Engine" =&gt; @inputs['Dedicated Task Engine'],
+          "Property File Uri" =&gt; @inputs['Property File Uri'],
+          "Deferral Token" =&gt; @results['Defer']['deferral_token'],
+          "Default Locale" =&gt; @inputs['Default Locale'],
+          "Default Timezone" =&gt; @inputs['Default Timezone'],
+          "Has Reporting Database" =&gt; "True"
+        }.to_json 
+%&gt;</parameter>
+                </parameters>
+                <messages>
+                    <message type="Create"></message>
+                    <message type="Update"></message>
+                    <message type="Complete"></message>
+                </messages>
+                <dependents>
+                    <task label="FARGATE" type="Complete" value="@inputs['Launch Type'] == &quot;FARGATE&quot;">aws_ecs_task_run_v3_28</task>
+                    <task label="EC2" type="Complete" value="@inputs['Launch Type'] != &quot;FARGATE&quot;">aws_ecs_task_run_v3_29</task>
+                </dependents>
+            </task>
+            <task definition_id="system_tree_return_v1" id="system_tree_return_v1_5" name="Return" x="968" y="88">
+                <version>1</version>
+                <configured>true</configured>
+                <defers>false</defers>
+                <deferrable>false</deferrable>
+                <visible>false</visible>
+                <parameters>
+                    <parameter id="Login Link" label="Login Link" menu="" required="false" tooltip="Link to send to user with deferral token">&lt;%=@results['Defer'].has_key?('Login Link') ? @results['Defer']['Login Link'] : nil%&gt;</parameter>
+                </parameters>
+                <messages>
+                    <message type="Create"></message>
+                    <message type="Update"></message>
+                    <message type="Complete"></message>
+                </messages>
+                <dependents></dependents>
+            </task>
+            <task definition_id="utilities_echo_v1" id="utilities_echo_v1_10" name="Check Reserved" x="187" y="77">
+                <version>1</version>
+                <configured>true</configured>
+                <defers>false</defers>
+                <deferrable>false</deferrable>
+                <visible>true</visible>
+                <parameters>
+                    <parameter id="input" label="Input" menu="" required="true" tooltip="">&lt;%= ['kinops-gold','manage','shared','shared-nagios','kinetic-calendar','kinetic-schedule'].include?(@inputs['Space Slug'])? raise("#{@inputs['Space Slug']} is a reserved space slug that can not use this process") : "" %&gt;</parameter>
+                </parameters>
+                <messages>
+                    <message type="Create"></message>
+                    <message type="Update"></message>
+                    <message type="Complete"></message>
+                </messages>
+                <dependents>
+                    <task label="" type="Complete" value="">kinetic_request_ce_datastore_submission_create_v1_26</task>
+                </dependents>
+            </task>
+            <task definition_id="system_wait_v1" id="system_wait_v1_12" name="Wait before Notifying Support" x="649" y="295">
+                <version>1</version>
+                <configured>true</configured>
+                <defers>true</defers>
+                <deferrable>true</deferrable>
+                <visible>true</visible>
+                <parameters>
+                    <parameter id="Time to wait" label="Wait time:" menu="" required="true" tooltip="Time you want to wait for deferred task">&lt;%=@results['Notification Delay in Minutes']['output']%&gt;</parameter>
+                    <parameter id="Time unit" label="Time unit:" menu="Second,Minute,Hour,Day,Week" required="true" tooltip="Unit of measurement for time (Seconds, Minutes, Hours, Days, Weeks)">Minute</parameter>
+                </parameters>
+                <messages>
+                    <message type="Create"></message>
+                    <message type="Update"></message>
+                    <message type="Complete"></message>
+                </messages>
+                <dependents>
+                    <task label="Incomplete" type="Complete" value="!(@results['Defer'].has_key?('Login Link'))">routine_kd_notification_send_using_template_v1_14</task>
+                </dependents>
+            </task>
+            <task definition_id="routine_kd_notification_send_using_template_v1" id="routine_kd_notification_send_using_template_v1_14" name="Notify Kinops Support" x="649" y="436">
+                <version>1</version>
+                <configured>true</configured>
+                <defers>false</defers>
+                <deferrable>true</deferrable>
+                <visible>false</visible>
+                <parameters>
+                    <parameter id="Recipient List" label="Recipient List" menu="" required="true" tooltip="Comma separated list of recipients (Usernames, SMTP Addresses, and/or Team Names)">kinops@kineticdata.com</parameter>
+                    <parameter id="Notification Template Name" label="Notification Template Name" menu="" required="true" tooltip="Name of the notification template to use when sending this email">Kinops Environment Creation Did Not Complete</parameter>
+                    <parameter id="JSON Vars" label="JSON Vars" menu="" required="false" tooltip="JSON input of miscellaneous values.  These values are used to replace placeholder content in notification messages.">&lt;%
+  tasks = @results.has_key?('Call AWS Shim - EC2') ? 
+    @results['Run ECS Job - EC2']['Tasks'] :
+    @results.has_key?('Call AWS Shim - FARGATE') ?
+      @results['Run ECS Job - FARGATE']['Tasks'] : []
+%&gt;
+&lt;%=
+        {
+          "Notification Delay" =&gt; @results['Notification Delay in Minutes']['output'],
+          "Space Name" =&gt; @inputs['Space Name'],
+          "Space Slug" =&gt; @inputs['Space Slug'],
+          "Requester Email" =&gt; @inputs['Requester Email'],
+          "Requester Name" =&gt; @inputs['Requester Name'],
+          "Deferral Token" =&gt; @results['Defer']['deferral_token'],
+          "Run Id" =&gt; @run['Id'],
+          "AWS Info" =&gt; tasks.to_s
+        }.to_json %&gt;</parameter>
+                    <parameter id="System" label="System" menu="" required="false" tooltip="System to search for ID. Defaults to Request">Kinetic Request</parameter>
+                    <parameter id="Space Slug" label="Space Slug" menu="" required="true" tooltip="Space Slug of the submission to get values for. Used to retrieve Request submissions, notification templates, users.">manage</parameter>
+                    <parameter id="ID" label="ID" menu="" required="false" tooltip="Id of the submission to get values for, required if using those or attachments in the message"></parameter>
+                    <parameter id="Admin Kapp Slug" label="Admin Kapp Slug" menu="" required="true" tooltip="Slug of this spaces admin kapp (typically admin)">admin</parameter>
+                    <parameter id="Kapp Slug Initiating Notification" label="Kapp Slug Initiating Notification" menu="" required="true" tooltip="The slug of the Kapp sending the notification (ex: catalog, queue, etc.)">support</parameter>
+                </parameters>
+                <messages>
+                    <message type="Create"></message>
+                    <message type="Update"></message>
+                    <message type="Complete"></message>
+                </messages>
+                <dependents>
+                    <task label="" type="Complete" value="">utilities_defer_v1_30</task>
+                </dependents>
+            </task>
+            <task definition_id="kinetic_request_ce_space_retrieve_v1" id="kinetic_request_ce_space_retrieve_v1_15" name="Retrieve Space" x="671" y="76">
+                <version>1</version>
+                <configured>true</configured>
+                <defers>false</defers>
+                <deferrable>false</deferrable>
+                <visible>true</visible>
+                <parameters>
+                    <parameter id="error_handling" label="Error Handling" menu="Error Message,Raise Error" required="true" tooltip="Determine what to return if an error is encountered.">Error Message</parameter>
+                    <parameter id="space_slug" label="Space Slug" menu="" required="false" tooltip="The Space the submission is being retrieved from.">&lt;%=@inputs['Space Slug']%&gt;</parameter>
+                </parameters>
+                <messages>
+                    <message type="Create"></message>
+                    <message type="Update"></message>
+                    <message type="Complete"></message>
+                </messages>
+                <dependents>
+                    <task label="" type="Complete" value="">kinetic_request_ce_datastore_submission_update_v1_27</task>
+                </dependents>
+            </task>
+            <task definition_id="utilities_echo_v1" id="utilities_echo_v1_23" name="Notification Delay in Minutes" x="639" y="185">
+                <version>1</version>
+                <configured>true</configured>
+                <defers>false</defers>
+                <deferrable>false</deferrable>
+                <visible>true</visible>
+                <parameters>
+                    <parameter id="input" label="Input" menu="" required="true" tooltip="">60</parameter>
+                </parameters>
+                <messages>
+                    <message type="Create"></message>
+                    <message type="Update"></message>
+                    <message type="Complete"></message>
+                </messages>
+                <dependents>
+                    <task label="" type="Complete" value="">system_wait_v1_12</task>
+                </dependents>
+            </task>
+            <task definition_id="kinetic_request_ce_datastore_submission_create_v1" id="kinetic_request_ce_datastore_submission_create_v1_26" name="Create Datastore Submission" x="319" y="66">
+                <version>1</version>
+                <configured>true</configured>
+                <defers>false</defers>
+                <deferrable>false</deferrable>
+                <visible>true</visible>
+                <parameters>
+                    <parameter id="error_handling" label="Error Handling" menu="Error Message,Raise Error" required="true" tooltip="Determine what to return if an error is encountered.">Raise Error</parameter>
+                    <parameter id="space_slug" label="Space Slug" menu="" required="false" tooltip="The Space the submission is being created in (defaults to info value if not provided)."></parameter>
+                    <parameter id="form_slug" label="Datastore Form Slug" menu="" required="true" tooltip="The slug of the datastore form the submission is for.">kinops-environments</parameter>
+                    <parameter id="values" label="Values" menu="" required="false" tooltip="JSON map of submission field values.">&lt;%= 
+  {
+    "Space Slug" =&gt; @inputs['Space Slug'],
+    "Company Name" =&gt; @inputs['Space Name'],
+    "Admin Name" =&gt; @inputs['Requester Name'],
+    "Admin Email" =&gt; @inputs['Requester Email'],
+    "Environment Status" =&gt; "Build In Progress",
+    "Exclude from Repair All" =&gt; "False"
+  }.to_json %&gt;</parameter>
+                    <parameter id="current_page_name" label="Current Page Name" menu="" required="false" tooltip="Set the current page name."></parameter>
+                    <parameter id="current_page_navigation" label="Current Page Navigation" menu="" required="false" tooltip="Set the current page navigation."></parameter>
+                </parameters>
+                <messages>
+                    <message type="Create"></message>
+                    <message type="Update"></message>
+                    <message type="Complete"></message>
+                </messages>
+                <dependents>
+                    <task label="" type="Complete" value="">utilities_defer_v1_1</task>
+                </dependents>
+            </task>
+            <task definition_id="kinetic_request_ce_datastore_submission_update_v1" id="kinetic_request_ce_datastore_submission_update_v1_27" name="Update Datastore Submission" x="825" y="66">
+                <version>1</version>
+                <configured>true</configured>
+                <defers>false</defers>
+                <deferrable>false</deferrable>
+                <visible>true</visible>
+                <parameters>
+                    <parameter id="error_handling" label="Error Handling" menu="Error Message,Raise Error" required="true" tooltip="Determine what to return if an error is encountered.">Error Message</parameter>
+                    <parameter id="space_slug" label="Space Slug" menu="" required="false" tooltip="The Space the submission is being updated in (defaults to info value if not provided)."></parameter>
+                    <parameter id="submission_id" label="Datastore Submission Id" menu="" required="true" tooltip="The id of the submission being updated.">&lt;%=@results['Create Datastore Submission']['Submission ID']%&gt;</parameter>
+                    <parameter id="state" label="State" menu="" required="false" tooltip="The value used to set the submission state."></parameter>
+                    <parameter id="values" label="Values" menu="" required="false" tooltip="A JSON map of field names to values that should be set.">&lt;%= 
+  shared_workflow = false
+  JSON.parse(@results['Retrieve Space']['Attributes']).each { |attribute|
+    if attribute['name'] == 'Shared Workflow Engine'
+      shared_workflow = attribute['values'].inject(false) { |result, value|
+        result || ['yes', 'true'].include?(value.to_s.strip.downcase)
+      }
+      break
+    end
+  }
+
+  {
+    "Space Slug" =&gt; @inputs['Space Slug'],
+    "Company Name" =&gt; @inputs['Space Name'],
+    "Admin Name" =&gt; @inputs['Requester Name'],
+    "Admin Email" =&gt; @inputs['Requester Email'],
+    "Environment Status" =&gt; "Active",
+    "Shared Workflow Engine" =&gt; shared_workflow ? 'True' : 'False',
+    "Status" =&gt; "active"
+  }.to_json
+%&gt;</parameter>
+                    <parameter id="current_page_name" label="Current Page Name" menu="" required="false" tooltip="Set the current page name."></parameter>
+                    <parameter id="current_page_navigation" label="Current Page Navigation" menu="" required="false" tooltip="Set the current page navigation."></parameter>
+                </parameters>
+                <messages>
+                    <message type="Create"></message>
+                    <message type="Update"></message>
+                    <message type="Complete"></message>
+                </messages>
+                <dependents>
+                    <task label="" type="Complete" value="">system_tree_return_v1_5</task>
+                </dependents>
+            </task>
+            <task definition_id="aws_ecs_task_run_v3" id="aws_ecs_task_run_v3_28" name="Run ECS Job - FARGATE" x="342" y="417">
+                <version>3</version>
+                <configured>true</configured>
+                <defers>false</defers>
+                <deferrable>false</deferrable>
+                <visible>true</visible>
+                <parameters>
+                    <parameter id="aws_region" label="AWS Region" menu="" required="true" tooltip="Name of the AWS Region (ex: us-west-2)">us-east-1</parameter>
+                    <parameter id="aws_credentials_s3_bucket" label="S3 Bucket" menu="" required="true" tooltip="S3 Bucket for AWS Credentials">private.kinops.io</parameter>
+                    <parameter id="aws_credentials_s3_filename" label="S3 Filename" menu="" required="true" tooltip="S3 Filename for AWS Credentials">aws_credentials.csv</parameter>
+                    <parameter id="ecs_cluster" label="ECS Cluster" menu="" required="true" tooltip="Name of the ECS Cluster">kinops</parameter>
+                    <parameter id="ecs_task_definition" label="ECS Task Definition" menu="" required="true" tooltip="Name of the ECS Task Definition">Provisioner-Fargate</parameter>
+                    <parameter id="ecs_container_name" label="ECS Container Name" menu="" required="true" tooltip="Name of the ECS Container">Provisioner</parameter><!-- FARGATE PARAMETERS -->
+                    <parameter id="launch_type" label="Launch Type" menu="EC2,FARGATE" required="false" tooltip="Where to launch the container">FARGATE</parameter>
+                    <parameter dependsOnId="launch_type" dependsOnValue="FARGATE" id="fargate_platform_version" label="Fargate Platform Version" menu="" required="false" tooltip="Fargate platform version">LATEST</parameter>
+                    <parameter dependsOnId="launch_type" dependsOnValue="FARGATE" id="subnets" label="Subnets" menu="" required="false" tooltip="Cluster Subnets (comma-separated) - used with awsvpc network mode">subnet-f64853bf,subnet-932fbdf6,subnet-dd371186</parameter>
+                    <parameter dependsOnId="launch_type" dependsOnValue="FARGATE" id="security_groups" label="Security Groups" menu="" required="false" tooltip="Security Groups (comma-separated) - used with awsvpc network mode">sg-c213ca8b</parameter>
+                    <parameter dependsOnId="launch_type" dependsOnValue="FARGATE" id="assign_public_ip" label="Auto Assign Public IP" menu="DISABLED,ENABLED" required="false" tooltip="Auto Assign Public IP - used with awsvpc network mode">ENABLED</parameter><!-- -->
+                    <parameter id="environment_json" label="Environment Variables JSON" menu="" required="true" tooltip="JSON representation of environment variables to pass to container.">&lt;%=@results['Env Variables Hash']['output']%&gt;</parameter>
+                    <parameter id="provision_action" label="Provisioning Action" menu=",rename" required="false" tooltip="Provision Action"></parameter>
+                    <parameter id="provisioning_git_branch" label="Provisioning Git Branch" menu="" required="false" tooltip="Provision Git Branch">&lt;%=@inputs['Provisioner Git Branch']%&gt;</parameter>
+                    <parameter id="kinetic_sdk_git_branch" label="Kinetic SDK Git Branch" menu="" required="false" tooltip="Kinetic SDK Git Branch">&lt;%=@inputs['Kinetic SDK Git Branch']%&gt;</parameter>
+                    <parameter id="platform_template_git_repo" label="Platform Template Git Repository" menu="" required="false" tooltip="Platform Template Git Repository">&lt;%=@inputs['Platform Template Git Repository URL']%&gt;</parameter>
+                    <parameter id="platform_template_git_branch" label="Platform Template Git Branch" menu="" required="false" tooltip="Platform Template Git Branch">&lt;%=@inputs['Platform Template Git Branch']%&gt;</parameter>
+                    <parameter id="error_handling" label="Error Handling" menu="Error Message,Raise Error" required="true" tooltip="Determine what to return if an error is encountered.">Error Message</parameter>
+                </parameters>
+                <messages>
+                    <message type="Create"></message>
+                    <message type="Update"></message>
+                    <message type="Complete"></message>
+                </messages>
+                <dependents></dependents>
+            </task>
+            <task definition_id="aws_ecs_task_run_v3" id="aws_ecs_task_run_v3_29" name="Run ECS Job - EC2" x="468" y="416">
+                <version>3</version>
+                <configured>true</configured>
+                <defers>false</defers>
+                <deferrable>false</deferrable>
+                <visible>true</visible>
+                <parameters>
+                    <parameter id="aws_region" label="AWS Region" menu="" required="true" tooltip="Name of the AWS Region (ex: us-west-2)">us-east-1</parameter>
+                    <parameter id="aws_credentials_s3_bucket" label="S3 Bucket" menu="" required="true" tooltip="S3 Bucket for AWS Credentials">private.kinops.io</parameter>
+                    <parameter id="aws_credentials_s3_filename" label="S3 Filename" menu="" required="true" tooltip="S3 Filename for AWS Credentials">aws_credentials.csv</parameter>
+                    <parameter id="ecs_cluster" label="ECS Cluster" menu="" required="true" tooltip="Name of the ECS Cluster">kinops</parameter>
+                    <parameter id="ecs_task_definition" label="ECS Task Definition" menu="" required="true" tooltip="Name of the ECS Task Definition">Provisioner-EC2</parameter>
+                    <parameter id="ecs_container_name" label="ECS Container Name" menu="" required="true" tooltip="Name of the ECS Container">Provisioner</parameter><!-- FARGATE PARAMETERS -->
+                    <parameter id="launch_type" label="Launch Type" menu="EC2,FARGATE" required="false" tooltip="Where to launch the container">EC2</parameter>
+                    <parameter dependsOnId="launch_type" dependsOnValue="FARGATE" id="fargate_platform_version" label="Fargate Platform Version" menu="" required="false" tooltip="Fargate platform version"></parameter>
+                    <parameter dependsOnId="launch_type" dependsOnValue="FARGATE" id="subnets" label="Subnets" menu="" required="false" tooltip="Cluster Subnets (comma-separated) - used with awsvpc network mode"></parameter>
+                    <parameter dependsOnId="launch_type" dependsOnValue="FARGATE" id="security_groups" label="Security Groups" menu="" required="false" tooltip="Security Groups (comma-separated) - used with awsvpc network mode"></parameter>
+                    <parameter dependsOnId="launch_type" dependsOnValue="FARGATE" id="assign_public_ip" label="Auto Assign Public IP" menu="DISABLED,ENABLED" required="false" tooltip="Auto Assign Public IP - used with awsvpc network mode"></parameter><!-- -->
+                    <parameter id="environment_json" label="Environment Variables JSON" menu="" required="true" tooltip="JSON representation of environment variables to pass to container.">&lt;%=@results['Env Variables Hash']['output']%&gt;</parameter>
+                    <parameter id="provision_action" label="Provisioning Action" menu=",rename" required="false" tooltip="Provision Action"></parameter>
+                    <parameter id="provisioning_git_branch" label="Provisioning Git Branch" menu="" required="false" tooltip="Provision Git Branch">&lt;%=@inputs['Provisioner Git Branch']%&gt;</parameter>
+                    <parameter id="kinetic_sdk_git_branch" label="Kinetic SDK Git Branch" menu="" required="false" tooltip="Kinetic SDK Git Branch">&lt;%=@inputs['Kinetic SDK Git Branch']%&gt;</parameter>
+                    <parameter id="platform_template_git_repo" label="Platform Template Git Repository" menu="" required="false" tooltip="Platform Template Git Repository">&lt;%=@inputs['Platform Template Git Repository URL']%&gt;</parameter>
+                    <parameter id="platform_template_git_branch" label="Platform Template Git Branch" menu="" required="false" tooltip="Platform Template Git Branch">&lt;%=@inputs['Platform Template Git Branch']%&gt;</parameter>
+                    <parameter id="error_handling" label="Error Handling" menu="Error Message,Raise Error" required="true" tooltip="Determine what to return if an error is encountered.">Error Message</parameter>
+                </parameters>
+                <messages>
+                    <message type="Create"></message>
+                    <message type="Update"></message>
+                    <message type="Complete"></message>
+                </messages>
+                <dependents></dependents>
+            </task>
+            <task definition_id="utilities_defer_v1" id="utilities_defer_v1_30" name="Deferred Manual Restart - If needed" x="654" y="557">
+                <version>1</version>
+                <configured>true</configured>
+                <defers>true</defers>
+                <deferrable>true</deferrable>
+                <visible>true</visible>
+                <parameters>
+                    <parameter id="deferral_value" label="Initial Deferral Value" menu="" required="false" tooltip=""></parameter>
+                </parameters>
+                <messages>
+                    <message type="Create"></message>
+                    <message type="Update"></message>
+                    <message type="Complete"></message>
+                </messages>
+                <dependents>
+                    <task label="" type="Complete" value="">aws_ecs_task_run_v3_32</task>
+                </dependents>
+            </task>
+            <task definition_id="aws_ecs_task_run_v3" id="aws_ecs_task_run_v3_32" name="Manual Restart ECS Job - EC2" x="650" y="688">
+                <version>3</version>
+                <configured>true</configured>
+                <defers>false</defers>
+                <deferrable>false</deferrable>
+                <visible>true</visible>
+                <parameters>
+                    <parameter id="aws_region" label="AWS Region" menu="" required="true" tooltip="Name of the AWS Region (ex: us-west-2)">us-east-1</parameter>
+                    <parameter id="aws_credentials_s3_bucket" label="S3 Bucket" menu="" required="true" tooltip="S3 Bucket for AWS Credentials">private.kinops.io</parameter>
+                    <parameter id="aws_credentials_s3_filename" label="S3 Filename" menu="" required="true" tooltip="S3 Filename for AWS Credentials">aws_credentials.csv</parameter>
+                    <parameter id="ecs_cluster" label="ECS Cluster" menu="" required="true" tooltip="Name of the ECS Cluster">kinops</parameter>
+                    <parameter id="ecs_task_definition" label="ECS Task Definition" menu="" required="true" tooltip="Name of the ECS Task Definition">Provisioner-EC2</parameter>
+                    <parameter id="ecs_container_name" label="ECS Container Name" menu="" required="true" tooltip="Name of the ECS Container">Provisioner</parameter><!-- FARGATE PARAMETERS -->
+                    <parameter id="launch_type" label="Launch Type" menu="EC2,FARGATE" required="false" tooltip="Where to launch the container">EC2</parameter>
+                    <parameter dependsOnId="launch_type" dependsOnValue="FARGATE" id="fargate_platform_version" label="Fargate Platform Version" menu="" required="false" tooltip="Fargate platform version"></parameter>
+                    <parameter dependsOnId="launch_type" dependsOnValue="FARGATE" id="subnets" label="Subnets" menu="" required="false" tooltip="Cluster Subnets (comma-separated) - used with awsvpc network mode"></parameter>
+                    <parameter dependsOnId="launch_type" dependsOnValue="FARGATE" id="security_groups" label="Security Groups" menu="" required="false" tooltip="Security Groups (comma-separated) - used with awsvpc network mode"></parameter>
+                    <parameter dependsOnId="launch_type" dependsOnValue="FARGATE" id="assign_public_ip" label="Auto Assign Public IP" menu="DISABLED,ENABLED" required="false" tooltip="Auto Assign Public IP - used with awsvpc network mode"></parameter><!-- -->
+                    <parameter id="environment_json" label="Environment Variables JSON" menu="" required="true" tooltip="JSON representation of environment variables to pass to container.">&lt;%=@results['Env Variables Hash']['output']%&gt;</parameter>
+                    <parameter id="provision_action" label="Provisioning Action" menu=",rename" required="false" tooltip="Provision Action"></parameter>
+                    <parameter id="provisioning_git_branch" label="Provisioning Git Branch" menu="" required="false" tooltip="Provision Git Branch">&lt;%=@inputs['Provisioner Git Branch']%&gt;</parameter>
+                    <parameter id="kinetic_sdk_git_branch" label="Kinetic SDK Git Branch" menu="" required="false" tooltip="Kinetic SDK Git Branch">&lt;%=@inputs['Kinetic SDK Git Branch']%&gt;</parameter>
+                    <parameter id="platform_template_git_repo" label="Platform Template Git Repository" menu="" required="false" tooltip="Platform Template Git Repository">&lt;%=@inputs['Platform Template Git Repository URL']%&gt;</parameter>
+                    <parameter id="platform_template_git_branch" label="Platform Template Git Branch" menu="" required="false" tooltip="Platform Template Git Branch">&lt;%=@inputs['Platform Template Git Branch']%&gt;</parameter>
+                    <parameter id="error_handling" label="Error Handling" menu="Error Message,Raise Error" required="true" tooltip="Determine what to return if an error is encountered.">Error Message</parameter>
+                </parameters>
+                <messages>
+                    <message type="Create"></message>
+                    <message type="Update"></message>
+                    <message type="Complete"></message>
+                </messages>
+                <dependents></dependents>
+            </task>
+        </request>
+    </taskTree>
+</tree>

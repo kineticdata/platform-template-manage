@@ -1,0 +1,27 @@
+[
+  {
+    "allowsMultiple": false,
+    "description": null,
+    "name": "Bundle Package"
+  },
+  {
+    "allowsMultiple": false,
+    "description": "Slug of the current space template being used to capture updates.",
+    "name": "Current Space Template Slug"
+  },
+  {
+    "allowsMultiple": false,
+    "description": null,
+    "name": "Icon"
+  },
+  {
+    "allowsMultiple": false,
+    "description": "Defines whether the Kapp is configured. Value is automatically managed by the Setup Wizard. DO NOT MODIFY.",
+    "name": "Kapp Configuration Status"
+  },
+  {
+    "allowsMultiple": false,
+    "description": null,
+    "name": "Kapp Description"
+  }
+]

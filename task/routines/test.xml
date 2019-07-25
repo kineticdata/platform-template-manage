@@ -1,0 +1,92 @@
+<tree schema_version="1.0">
+    <sourceName>-</sourceName>
+    <sourceGroup>-</sourceGroup>
+    <definitionId>routine_test</definitionId>
+    <type>Global Routine</type>
+    <status>Active</status>
+    <taskTree builder_version="" schema_version="1.0" version="">
+        <name>test</name>
+        <author>james.davies@kineticdata.com</author>
+        <notes></notes>
+        <lastID>3</lastID>
+        <taskDefinition id="routine_test" name="test" schema_version="1.0" version="1">
+            <visible>false</visible>
+            <deferrable>true</deferrable>
+            <parameters></parameters>
+            <handler name="system_tree_call" version="1"></handler>
+            <results format="xml"></results>
+        </taskDefinition>
+        <request>
+            <task definition_id="system_start_v1" id="start" name="Start" x="10" y="10">
+                <version>1</version>
+                <configured>true</configured>
+                <defers>false</defers>
+                <deferrable>false</deferrable>
+                <visible>false</visible>
+                <parameters></parameters>
+                <messages></messages>
+                <dependents>
+                    <task label="" type="Complete" value="">kinetic_request_ce_user_update_v5_3</task>
+                </dependents>
+            </task>
+            <task definition_id="kinetic_request_ce_datastore_submission_retrieve_v1" id="kinetic_request_ce_datastore_submission_retrieve_v1_2" name="kinetic_request_ce_datastore_submission_retrieve_v1_2" x="187" y="281">
+                <version>1</version>
+                <configured>true</configured>
+                <defers>false</defers>
+                <deferrable>false</deferrable>
+                <visible>true</visible>
+                <parameters>
+                    <parameter id="error_handling" label="Error Handling" menu="Error Message,Raise Error" required="true" tooltip="Determine what to return if an error is encountered.">Error Message</parameter>
+                    <parameter id="space_slug" label="Space Slug" menu="" required="false" tooltip="The Space the submission is being retrieved from (defaults to info value if not provided)."></parameter>
+                    <parameter id="retrieve_by" label="Retrieve By" menu="Id,Query" required="true" tooltip="How to retrieve the submission. Id or Query.">Query</parameter><!-- Retrieve By Query parameters -->
+                    <parameter dependsOnId="retrieve_by" dependsOnValue="Query" id="form_slug" label="Datastore Form Slug" menu="" required="false" tooltip="Slug of the form to query">kinops-environments</parameter>
+                    <parameter dependsOnId="retrieve_by" dependsOnValue="Query" id="index" label="Index" menu="" required="false" tooltip="The index to use for the search/retrieval">values[Space Slug]</parameter>
+                    <parameter dependsOnId="retrieve_by" dependsOnValue="Query" id="query" label="Query" menu="" required="false" tooltip="A query that will retrieve a single submission">values[Space Slug]="kinetic-data"</parameter><!-- Retrieve By Id parameters -->
+                    <parameter dependsOnId="retrieve_by" dependsOnValue="Id" id="submission_id" label="Datastore Submission Id" menu="" required="false" tooltip="The id of the submission being retrieved."></parameter>
+                </parameters>
+                <messages>
+                    <message type="Create"></message>
+                    <message type="Update"></message>
+                    <message type="Complete"></message>
+                </messages>
+                <dependents></dependents>
+            </task>
+            <task definition_id="kinetic_request_ce_user_update_v5" id="kinetic_request_ce_user_update_v5_3" name="kinetic_request_ce_user_update_v5_3" x="352.6875" y="108.6875">
+                <version>5</version>
+                <configured>true</configured>
+                <defers>false</defers>
+                <deferrable>false</deferrable>
+                <visible>true</visible>
+                <parameters>
+                    <parameter id="error_handling" label="Error Handling" menu="Error Message,Raise Error" required="true" tooltip="Determine what to return if an error is encountered.">Error Message</parameter>
+                    <parameter id="space_slug" label="Space Slug" menu="" required="true" tooltip="Space slug of which the user you are trying to updates belongs to (defaults to info value if not provided).">5255162</parameter>
+                    <parameter id="current_username" label="Current User Name" menu="" required="true" tooltip="User name of user you wish to update.">james.davies@kineticdata.com</parameter>
+                    <parameter id="display_name" label="Display Name" menu="" required="false" tooltip="The displayName for the user."></parameter>
+                    <parameter id="email" label="Email" menu="" required="false" tooltip="The email for this user profile."></parameter>
+                    <parameter id="preferred_locale" label="Preferred Locale" menu="" required="false" tooltip="The preferred language for the user, in the format languageabbreviation[_COUNTRYABBREVIATION].  Examples:  en, fr, es, en_GB, es_MX"></parameter>
+                    <parameter id="enabled" label="Enabled" menu="" required="false" tooltip="Select if this user profile will be enabled (boolean)"></parameter>
+                    <parameter id="password" label="Password" menu="" required="false" tooltip="Reset password for a user."></parameter>
+                    <parameter id="space_admin" label="Space Admin" menu="" required="false" tooltip="Select if you desire for this user to have space admin privledges.(boolean)"></parameter>
+                    <parameter id="new_username" label="New Username" menu="" required="false" tooltip="Change the username for this user."></parameter>
+                    <parameter id="append_or_replace" label="Append or Replace attributes?" menu="Append,Replace" required="true" tooltip="Append or replace the existing attribute values with the attributes provided.">Append</parameter>
+                    <parameter id="attributes" label="Attributes" menu="" required="false" tooltip="Change the attributes for this user. JSON formatted string: [{&quot;name&quot;: &quot;Attribute Name&quot;,&quot;values&quot;: [&quot;Attribute Value&quot;,&quot;Attribute Value&quot;,...]},{&quot;name&quot;: &quot;Attribute Name2&quot;,&quot;values&quot;: [&quot;Attribute Value&quot;,...]},...]"></parameter>
+                    <parameter id="profile_attributes" label="Profile Attributes" menu="" required="false" tooltip="Change the profile attributes for this user. JSON formatted string: [{&quot;name&quot;: &quot;Profile Attribute Name&quot;,&quot;values&quot;: [&quot;Profile Attribute Value&quot;,&quot;Profile Attribute Value&quot;,...]},{&quot;name&quot;: &quot;Profile Attribute Name2&quot;,&quot;values&quot;: [&quot;Profile Attribute Value&quot;,...]},...]"></parameter>
+                    <parameter id="append_or_replace_memberships" label="Append or Replace memberships?" menu="Append,Replace" required="true" tooltip="Append or replace the existing memberships with the memberships provided.">Replace</parameter>
+                    <parameter id="memberships" label="Memberships" menu="" required="false" tooltip="Change the memberships (e.g. teams) for this user. JSON formatted string: [{&quot;team&quot;: {&quot;name&quot;: &quot;Facilities&quot;}}, {&quot;team&quot;: {&quot;name&quot;: &quot;Engineers&quot;}},...]">&lt;%=[
+  {"team" =&gt; {"name" =&gt; "Default"}},
+  {"team" =&gt; {"name" =&gt; "Role::Employee"}},
+  {"team" =&gt; {"name" =&gt; "Role::Tech Bar Display::HQ TechBar"}},
+  {"team" =&gt; {"name" =&gt; "Role::Scheduler"}},
+  {"team" =&gt; {"name" =&gt; "Scheduler::HQ TechBar"}}
+].to_json%&gt;</parameter>
+                </parameters>
+                <messages>
+                    <message type="Create"></message>
+                    <message type="Update"></message>
+                    <message type="Complete"></message>
+                </messages>
+                <dependents></dependents>
+            </task>
+        </request>
+    </taskTree>
+</tree>

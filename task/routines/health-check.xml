@@ -1,0 +1,283 @@
+<tree schema_version="1.0">
+    <sourceName>-</sourceName>
+    <sourceGroup>-</sourceGroup>
+    <definitionId>routine_health_check</definitionId>
+    <type>Global Routine</type>
+    <status>Active</status>
+    <taskTree builder_version="" schema_version="1.0" version="">
+        <name>Health Check</name>
+        <author></author>
+        <notes></notes>
+        <lastID>8</lastID>
+        <taskDefinition id="routine_health_check" name="Health Check" schema_version="1.0" version="1">
+            <visible>false</visible>
+            <deferrable>true</deferrable>
+            <parameters>
+                <parameter id="Schedule Another Run" label="Schedule Another Run" required="false" tooltip="Will schedule another run if set to True">False</parameter>
+                <parameter id="Schedule Delay" label="Schedule Delay" required="false" tooltip="Number of minutes delay for the next scheduled run">720</parameter>
+                <parameter id="Number of Recurring Runs" label="Number of Recurring Runs" required="false" tooltip="Number of times to schedule another run (-1 to recur forever)">1</parameter>
+            </parameters>
+            <handler name="system_tree_call" version="1"></handler>
+            <results format="xml"></results>
+        </taskDefinition>
+        <request>
+            <task definition_id="system_start_v1" id="start" name="Start" x="10" y="10">
+                <version>1</version>
+                <configured>true</configured>
+                <defers>false</defers>
+                <deferrable>false</deferrable>
+                <visible>false</visible>
+                <parameters></parameters>
+                <messages></messages>
+                <dependents>
+                    <task label="" type="Complete" value="">routine_kd_retrieve_active_kinops_environments_1</task>
+                </dependents>
+            </task>
+            <task definition_id="routine_kd_retrieve_active_kinops_environments" id="routine_kd_retrieve_active_kinops_environments_1" name="Retrieve Active Spaces" x="182" y="12">
+                <version>1</version>
+                <configured>true</configured>
+                <defers>true</defers>
+                <deferrable>true</deferrable>
+                <visible>false</visible>
+                <parameters></parameters>
+                <messages>
+                    <message type="Create"></message>
+                    <message type="Update"></message>
+                    <message type="Complete"></message>
+                </messages>
+                <dependents>
+                    <task label="" type="Complete" value="">utilities_echo_v1_2</task>
+                </dependents>
+            </task>
+            <task definition_id="utilities_echo_v1" id="utilities_echo_v1_2" name="Check Health" x="365" y="20">
+                <version>1</version>
+                <configured>true</configured>
+                <defers>false</defers>
+                <deferrable>false</deferrable>
+                <visible>true</visible>
+                <parameters>
+                    <parameter id="input" label="Input" menu="" required="true" tooltip="">&lt;%
+require 'net/http'
+require 'uri'
+
+module HealthCheck
+  def self.response_health_url(space_slug)
+    "https://#{space_slug}.kinops.io/kinetic-response/api/v1/announcements"
+  end
+  def self.task_health_url(space_slug)
+    "https://#{space_slug}.kinops.io/kinetic-task/app/api/v1/version"
+  end
+
+  def self.healthy_response?(space_slug)
+    self.healthy?(self.fetch(self.response_health_url(space_slug)))
+  end
+  def self.healthy_task?(space_slug)
+    self.healthy?(self.fetch(self.task_health_url(space_slug)))
+  end
+
+  private 
+
+  def self.fetch(uri_str, limit = 10)
+    raise StandardError, 'HTTP redirect too deep' if limit == 0
+
+    begin
+      uri = URI.parse(uri_str)
+      Net::HTTP.start(uri.host, uri.port, :use_ssl =&gt; uri.scheme == 'https') do |http|
+        req = Net::HTTP::Get.new(uri.path, {'User-Agent' =&gt; 'Health Check'})
+        res = http.request(req)
+
+        case res
+        when Net::HTTPRedirection then 
+          new_uri = URI.parse(res['Location'])
+          if new_uri.relative?
+            new_uri.scheme = uri.scheme
+            new_uri.host = uri.host
+          end
+          self.fetch(new_uri.to_s, limit - 1)
+        else
+          res
+        end
+      end
+    rescue
+      nil
+    end
+  end
+
+  def self.healthy?(http_response)
+    [
+      Net::HTTPForbidden,
+      Net::HTTPOK,
+      Net::HTTPSuccess,
+      Net::HTTPUnauthorized      
+    ].include?(http_response.class)
+  end
+end
+
+
+unhealthy = {}
+JSON.parse(@results['Retrieve Active Spaces']['Environments']).each do |space|
+  space_slug = space['values']['Space Slug']
+
+  healthy_task = space['values']['Shared Workflow Engine'].to_s.downcase != 'true' ?
+    HealthCheck.healthy_task?(space_slug) : true
+  if !healthy_task
+    unhealthy[space_slug] = (unhealthy[space_slug] || []) &lt;&lt; "Kinetic Task"
+  end
+
+  healthy_response = space['values']['Uses Response'].to_s.downcase == 'true' ?
+    HealthCheck.healthy_response?(space_slug) : true
+  if !healthy_response
+    unhealthy[space_slug] = (unhealthy[space_slug] || []) &lt;&lt; "Kinetic Response"
+  end
+end
+%&gt;
+&lt;%= {'unhealthy' =&gt; unhealthy}.to_json %&gt;
+</parameter>
+                </parameters>
+                <messages>
+                    <message type="Create"></message>
+                    <message type="Update"></message>
+                    <message type="Complete"></message>
+                </messages>
+                <dependents>
+                    <task label="Schedule Another Run" type="Complete" value="@inputs['Schedule Another Run'].to_s.downcase == 'true' &amp;&amp; (@inputs['Number of Recurring Runs'].to_i == -1 || @inputs['Number of Recurring Runs'].to_i &gt; 0)">system_wait_v1_4</task>
+                    <task label="" type="Complete" value="">utilities_echo_v1_7</task>
+                </dependents>
+            </task>
+            <task definition_id="routine_kd_notification_send_using_template_v1" id="routine_kd_notification_send_using_template_v1_3" name="Send Notification" x="363" y="345">
+                <version>1</version>
+                <configured>true</configured>
+                <defers>true</defers>
+                <deferrable>true</deferrable>
+                <visible>false</visible>
+                <parameters>
+                    <parameter id="Recipient List" label="Recipient List" menu="" required="true" tooltip="Comma separated list of recipients (Usernames, SMTP Addresses, and/or Team Names)">james.davies@kineticdata.com,jack.boespflug@kineticdata.com</parameter>
+                    <parameter id="Notification Template Name" label="Notification Template Name" menu="" required="true" tooltip="Name of the notification template to use when sending this email">Health Check</parameter>
+                    <parameter id="JSON Vars" label="JSON Vars" menu="" required="false" tooltip="JSON input of miscellaneous values.  These values are used to replace placeholder content in notification messages.">&lt;%
+unhealthy_html = "&lt;div&gt;&lt;ul&gt;"
+JSON.parse(@results['Unhealthy']['output']).each do |space_slug,apps|
+  apps.each do |app|
+    unhealthy_html += "&lt;li&gt;#{space_slug} - #{app}&lt;/li&gt;"
+  end
+end
+unhealthy_html += "&lt;/ul&gt;&lt;/div&gt;"
+%&gt;
+&lt;%=
+{
+    "Timestamp" =&gt; Time.now.utc,
+    "Unhealthy" =&gt; unhealthy_html
+}.to_json
+%&gt;
+</parameter>
+                    <parameter id="System" label="System" menu="" required="false" tooltip="System to search for ID. Defaults to Request">kinops</parameter>
+                    <parameter id="Space Slug" label="Space Slug" menu="" required="true" tooltip="Space Slug of the submission to get values for. Used to retrieve Request submissions, notification templates, users.">manage</parameter>
+                    <parameter id="ID" label="ID" menu="" required="false" tooltip="Id of the submission to get values for, required if using those or attachments in the message"></parameter>
+                    <parameter id="Admin Kapp Slug" label="Admin Kapp Slug" menu="" required="true" tooltip="Slug of this spaces admin kapp (typically admin)">admin</parameter>
+                    <parameter id="Kapp Slug Initiating Notification" label="Kapp Slug Initiating Notification" menu="" required="true" tooltip="The slug of the Kapp sending the notification (ex: catalog, queue, etc.)">support</parameter>
+                </parameters>
+                <messages>
+                    <message type="Create"></message>
+                    <message type="Update"></message>
+                    <message type="Complete"></message>
+                </messages>
+                <dependents></dependents>
+            </task>
+            <task definition_id="system_wait_v1" id="system_wait_v1_4" name="Schedule Another Run" x="589" y="24">
+                <version>1</version>
+                <configured>true</configured>
+                <defers>true</defers>
+                <deferrable>true</deferrable>
+                <visible>true</visible>
+                <parameters>
+                    <parameter id="Time to wait" label="Wait time:" menu="" required="true" tooltip="Time you want to wait for deferred task">&lt;%=@inputs['Schedule Delay'].to_i &gt; 0 ? @inputs['Schedule Delay'].to_i : 720%&gt;</parameter>
+                    <parameter id="Time unit" label="Time unit:" menu="Second,Minute,Hour,Day,Week" required="true" tooltip="Unit of measurement for time (Seconds, Minutes, Hours, Days, Weeks)">Minute</parameter>
+                </parameters>
+                <messages>
+                    <message type="Create"></message>
+                    <message type="Update"></message>
+                    <message type="Complete"></message>
+                </messages>
+                <dependents>
+                    <task label="" type="Complete" value="">routine_health_check_5</task>
+                </dependents>
+            </task>
+            <task definition_id="routine_health_check" id="routine_health_check_5" name="Health Check" x="757" y="34">
+                <version>1</version>
+                <configured>true</configured>
+                <defers>true</defers>
+                <deferrable>true</deferrable>
+                <visible>false</visible>
+                <parameters>
+                    <parameter id="Schedule Another Run" label="Schedule Another Run" menu="" required="false" tooltip="Will schedule another run if set to True">&lt;%=@inputs['Schedule Another Run'] || 'False'%&gt;</parameter>
+                    <parameter id="Schedule Delay" label="Schedule Delay" menu="" required="false" tooltip="Number of minutes delay for the next scheduled run">&lt;%=@inputs['Schedule Delay']%&gt;</parameter>
+                    <parameter id="Number of Recurring Runs" label="Number of Recurring Runs" menu="" required="false" tooltip="Number of times to schedule another run (-1 to recur forever)">&lt;% times = @inputs['Number of Recurring Runs'].to_i %&gt;
+&lt;%= times == -1 ? -1 : times &gt; 0 ? times-1 : 0 %&gt;</parameter>
+                </parameters>
+                <messages>
+                    <message type="Create"></message>
+                    <message type="Update"></message>
+                    <message type="Complete"></message>
+                </messages>
+                <dependents>
+                    <task label="" type="Complete" value="">system_tree_return_v1_6</task>
+                </dependents>
+            </task>
+            <task definition_id="system_tree_return_v1" id="system_tree_return_v1_6" name="Return" x="901" y="47">
+                <version>1</version>
+                <configured>true</configured>
+                <defers>false</defers>
+                <deferrable>false</deferrable>
+                <visible>false</visible>
+                <parameters></parameters>
+                <messages>
+                    <message type="Create"></message>
+                    <message type="Update"></message>
+                    <message type="Complete"></message>
+                </messages>
+                <dependents></dependents>
+            </task>
+            <task definition_id="utilities_echo_v1" id="utilities_echo_v1_7" name="Unhealthy" x="363" y="198">
+                <version>1</version>
+                <configured>true</configured>
+                <defers>false</defers>
+                <deferrable>false</deferrable>
+                <visible>true</visible>
+                <parameters>
+                    <parameter id="input" label="Input" menu="" required="true" tooltip="">&lt;%=JSON.parse(@results['Check Health']['output'])['unhealthy'].to_json%&gt;</parameter>
+                </parameters>
+                <messages>
+                    <message type="Create"></message>
+                    <message type="Update"></message>
+                    <message type="Complete"></message>
+                </messages>
+                <dependents>
+                    <task label="Problem Found" type="Complete" value="JSON.parse(@results['Unhealthy']['output']).size &gt; 0">routine_kd_notification_send_using_template_v1_3</task>
+                </dependents>
+            </task>
+            <task definition_id="routine_repair_spaces" id="routine_repair_spaces_8" name="Repair Spaces" x="784" y="226">
+                <version>1</version>
+                <configured>true</configured>
+                <defers>false</defers>
+                <deferrable>true</deferrable>
+                <visible>false</visible>
+                <parameters>
+                    <parameter id="Space Slugs (comma separated)" label="Space Slugs (comma separated)" menu="" required="false" tooltip="">&lt;%=JSON.parse(@results['Unhealthy']['output']).keys.join(',')%&gt;</parameter>
+                    <parameter id="Launch Type" label="Launch Type" menu="" required="false" tooltip="">EC2</parameter>
+                    <parameter id="AWS Task Definition - Task" label="AWS Task Definition - Task" menu="" required="false" tooltip="">Task-EC2-WithoutSpaceContext-SNAPSHOT</parameter>
+                    <parameter id="AWS Task Definition - Response" label="AWS Task Definition - Response" menu="" required="false" tooltip="">Response-EC2-WithoutSpaceContext</parameter>
+                    <parameter id="Property File Uri" label="Property File Uri" menu="" required="false" tooltip="">s3://private.kinops.io/kinops.yaml</parameter>
+                    <parameter id="Provisioner Git Branch" label="Provisioner Git Branch" menu="" required="false" tooltip="">master</parameter>
+                    <parameter id="Kinetic SDK Git Branch" label="Kinetic SDK Git Branch" menu="" required="false" tooltip="">master</parameter>
+                    <parameter id="Platform Template Git Repository URL" label="Platform Template Git Repository URL" menu="" required="false" tooltip="">git@github.com:kineticdata/platform-template.git</parameter>
+                    <parameter id="Platform Template Git Branch" label="Platform Template Git Branch" menu="" required="false" tooltip="">master</parameter>
+                </parameters>
+                <messages>
+                    <message type="Create"></message>
+                    <message type="Update"></message>
+                    <message type="Complete"></message>
+                </messages>
+                <dependents></dependents>
+            </task>
+        </request>
+    </taskTree>
+</tree>

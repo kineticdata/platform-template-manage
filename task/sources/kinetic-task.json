@@ -1,0 +1,13 @@
+{
+  "name": "Kinetic Task",
+  "status": "Active",
+  "type": "Kinetic Task",
+  "policyRules": [
+    {
+      "name": "Allow All",
+      "rule": "true",
+      "message": "Unrestricted access",
+      "type": "API Access"
+    }
+  ]
+}

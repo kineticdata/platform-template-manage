@@ -1,0 +1,517 @@
+{
+  "anonymous": false,
+  "attributes": [
+    {
+      "name": "Icon",
+      "values": [
+        "fa-plus-square-o"
+      ]
+    }
+  ],
+  "bridgedResources": [
+
+  ],
+  "categorizations": [
+    {
+      "category": {
+        "slug": "space-activities"
+      }
+    }
+  ],
+  "customHeadContent": "",
+  "description": "Form used to provision a space.",
+  "name": "Space Proivision",
+  "notes": null,
+  "pages": [
+    {
+      "advanceCondition": "",
+      "displayCondition": null,
+      "displayPage": "",
+      "elements": [
+        {
+          "type": "section",
+          "renderType": null,
+          "name": "Header",
+          "title": "",
+          "visible": true,
+          "omitWhenHidden": null,
+          "renderAttributes": {
+
+          },
+          "elements": [
+            {
+              "type": "content",
+              "renderType": "html",
+              "name": "Enter Info Below",
+              "text": "<h5>Please enter your information below to get started</h5><br>",
+              "visible": true,
+              "renderAttributes": {
+
+              }
+            }
+          ]
+        },
+        {
+          "type": "section",
+          "renderType": null,
+          "name": "Customer Info Section",
+          "title": "",
+          "visible": true,
+          "omitWhenHidden": null,
+          "renderAttributes": {
+
+          },
+          "elements": [
+            {
+              "type": "field",
+              "name": "Company Name",
+              "label": "Company Name",
+              "key": "f2",
+              "defaultValue": null,
+              "defaultResourceName": null,
+              "visible": true,
+              "enabled": true,
+              "required": true,
+              "requiredMessage": "Please enter a company name",
+              "omitWhenHidden": null,
+              "pattern": {
+                "regex": "^[\\w ]+$",
+                "message": "Company Names must only contain Alphanumeric characters"
+              },
+              "constraints": [
+
+              ],
+              "events": [
+
+              ],
+              "renderAttributes": {
+
+              },
+              "dataType": "string",
+              "renderType": "text",
+              "rows": 1
+            },
+            {
+              "type": "field",
+              "name": "First Name",
+              "label": "First Name",
+              "key": "f5",
+              "defaultValue": null,
+              "defaultResourceName": null,
+              "visible": true,
+              "enabled": true,
+              "required": true,
+              "requiredMessage": null,
+              "omitWhenHidden": null,
+              "pattern": null,
+              "constraints": [
+
+              ],
+              "events": [
+
+              ],
+              "renderAttributes": {
+
+              },
+              "dataType": "string",
+              "renderType": "text",
+              "rows": 1
+            },
+            {
+              "type": "field",
+              "name": "Last Name",
+              "label": "Last Name",
+              "key": "f6",
+              "defaultValue": null,
+              "defaultResourceName": null,
+              "visible": true,
+              "enabled": true,
+              "required": true,
+              "requiredMessage": null,
+              "omitWhenHidden": null,
+              "pattern": null,
+              "constraints": [
+
+              ],
+              "events": [
+
+              ],
+              "renderAttributes": {
+
+              },
+              "dataType": "string",
+              "renderType": "text",
+              "rows": 1
+            },
+            {
+              "type": "field",
+              "name": "Email",
+              "label": "Email",
+              "key": "f3",
+              "defaultValue": "${identity('username')}",
+              "defaultResourceName": null,
+              "visible": true,
+              "enabled": true,
+              "required": true,
+              "requiredMessage": "Please enter an Email",
+              "omitWhenHidden": null,
+              "pattern": {
+                "regex": "(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])",
+                "message": "Please enter a valid email address."
+              },
+              "constraints": [
+
+              ],
+              "events": [
+
+              ],
+              "renderAttributes": {
+
+              },
+              "dataType": "string",
+              "renderType": "text",
+              "rows": 1
+            },
+            {
+              "type": "field",
+              "name": "Phone Number",
+              "label": "Phone Number",
+              "key": "f7",
+              "defaultValue": null,
+              "defaultResourceName": null,
+              "visible": true,
+              "enabled": true,
+              "required": false,
+              "requiredMessage": null,
+              "omitWhenHidden": null,
+              "pattern": null,
+              "constraints": [
+
+              ],
+              "events": [
+
+              ],
+              "renderAttributes": {
+
+              },
+              "dataType": "string",
+              "renderType": "text",
+              "rows": 1
+            }
+          ]
+        },
+        {
+          "type": "section",
+          "renderType": null,
+          "name": "Space Info Section",
+          "title": "",
+          "visible": true,
+          "omitWhenHidden": null,
+          "renderAttributes": {
+
+          },
+          "elements": [
+            {
+              "type": "field",
+              "name": "Custom Space Slug",
+              "label": "Custom Space Slug",
+              "key": "f10",
+              "defaultValue": "No",
+              "defaultResourceName": null,
+              "visible": true,
+              "enabled": true,
+              "required": true,
+              "requiredMessage": null,
+              "omitWhenHidden": null,
+              "pattern": null,
+              "constraints": [
+
+              ],
+              "events": [
+                {
+                  "name": "Enable Submit Button on No",
+                  "type": "Change",
+                  "action": "Custom",
+                  "code": "if ( K('field[Custom Space Slug]').value() === \"Yes\" ){\n\tK('button[Submit Button]').disable();\n} else {\n\tK('button[Submit Button]').enable();\n}",
+                  "runIf": ""
+                }
+              ],
+              "renderAttributes": {
+
+              },
+              "dataType": "string",
+              "renderType": "dropdown",
+              "choicesResourceName": null,
+              "choicesRunIf": null,
+              "choices": [
+                {
+                  "label": "Yes",
+                  "value": "Yes"
+                },
+                {
+                  "label": "No",
+                  "value": "No"
+                }
+              ]
+            },
+            {
+              "type": "field",
+              "name": "Space Slug",
+              "label": "Space Slug",
+              "key": "f8",
+              "defaultValue": null,
+              "defaultResourceName": null,
+              "visible": "values('Custom Space Slug') === \"Yes\"",
+              "enabled": true,
+              "required": "values('Custom Space Slug') === \"Yes\"",
+              "requiredMessage": "Space Slug is required",
+              "omitWhenHidden": true,
+              "pattern": {
+                "regex": "^[a-z0-9\\-]*$",
+                "message": "Must be a valid slug (lower case alpha, numeric, and hyphens only)"
+              },
+              "constraints": [
+
+              ],
+              "events": [
+
+              ],
+              "renderAttributes": {
+
+              },
+              "dataType": "string",
+              "renderType": "text",
+              "rows": 1
+            },
+            {
+              "type": "field",
+              "name": "Default Locale",
+              "label": "Default Locale",
+              "key": "f22",
+              "defaultValue": "",
+              "defaultResourceName": null,
+              "visible": true,
+              "enabled": true,
+              "required": false,
+              "requiredMessage": null,
+              "omitWhenHidden": null,
+              "pattern": null,
+              "constraints": [
+
+              ],
+              "events": [
+
+              ],
+              "renderAttributes": {
+
+              },
+              "dataType": "string",
+              "renderType": "dropdown",
+              "choicesResourceName": null,
+              "choicesRunIf": null,
+              "choices": [
+
+              ]
+            },
+            {
+              "type": "field",
+              "name": "Default Timezone",
+              "label": "Default Timezone",
+              "key": "f23",
+              "defaultValue": "",
+              "defaultResourceName": null,
+              "visible": true,
+              "enabled": true,
+              "required": false,
+              "requiredMessage": null,
+              "omitWhenHidden": null,
+              "pattern": null,
+              "constraints": [
+
+              ],
+              "events": [
+
+              ],
+              "renderAttributes": {
+
+              },
+              "dataType": "string",
+              "renderType": "dropdown",
+              "choicesResourceName": null,
+              "choicesRunIf": null,
+              "choices": [
+
+              ]
+            }
+          ]
+        },
+        {
+          "type": "section",
+          "renderType": null,
+          "name": "Container Details Section",
+          "title": "",
+          "visible": true,
+          "omitWhenHidden": null,
+          "renderAttributes": {
+
+          },
+          "elements": [
+          ]
+        },
+        {
+          "type": "section",
+          "renderType": null,
+          "name": "Provisioning Details Section",
+          "title": "",
+          "visible": true,
+          "omitWhenHidden": null,
+          "renderAttributes": {
+
+          },
+          "elements": [
+            {
+              "type": "field",
+              "name": "Platform Template Git Repository",
+              "label": "Platform Template Git Repository",
+              "key": "f17",
+              "defaultValue": "https://github.com/kineticdata/platform-template-base.git",
+              "defaultResourceName": null,
+              "visible": true,
+              "enabled": true,
+              "required": false,
+              "requiredMessage": null,
+              "omitWhenHidden": null,
+              "pattern": null,
+              "constraints": [
+
+              ],
+              "events": [
+
+              ],
+              "renderAttributes": {
+
+              },
+              "dataType": "string",
+              "renderType": "text",
+              "rows": 1
+            },
+            {
+              "type": "field",
+              "name": "Platform Template Version Type",
+              "label": "Platform Template Version Type",
+              "key": "f18",
+              "defaultValue": "branch",
+              "defaultResourceName": null,
+              "visible": true,
+              "enabled": true,
+              "required": false,
+              "requiredMessage": null,
+              "omitWhenHidden": null,
+              "pattern": null,
+              "constraints": [
+
+              ],
+              "events": [
+
+              ],
+              "renderAttributes": {
+
+              },
+              "dataType": "string",
+              "renderType": "text",
+              "rows": 1
+            },
+            {
+              "type": "field",
+              "name": "Platform Template Version Value",
+              "label": "Platform Template Version Value",
+              "key": "f15",
+              "defaultValue": "master",
+              "defaultResourceName": null,
+              "visible": true,
+              "enabled": true,
+              "required": false,
+              "requiredMessage": null,
+              "omitWhenHidden": null,
+              "pattern": null,
+              "constraints": [
+
+              ],
+              "events": [
+
+              ],
+              "renderAttributes": {
+
+              },
+              "dataType": "string",
+              "renderType": "text",
+              "rows": 1
+            }
+          ]
+        },
+        {
+          "type": "section",
+          "renderType": null,
+          "name": "Buttons",
+          "title": null,
+          "visible": true,
+          "omitWhenHidden": null,
+          "renderAttributes": {
+
+          },
+          "elements": [
+            {
+              "type": "button",
+              "label": "Submit",
+              "name": "Submit Button",
+              "visible": true,
+              "enabled": true,
+              "renderType": "submit-page",
+              "renderAttributes": {
+
+              }
+            }
+          ]
+        }
+      ],
+      "events": [
+        {
+          "name": "Email to Lower Case",
+          "type": "Submit",
+          "action": "Set Fields",
+          "mappings": [
+            {
+              "field": "Email",
+              "value": "${values('Email').toLowerCase()}",
+              "visible": null
+            }
+          ]
+        },
+        {
+          "name": "Set Locales List",
+          "type": "Load",
+          "action": "Custom",
+          "code": "let sel = jQuery('select[name=\"Default Locale\"]');\njQuery.get(\"/app/api/v1/meta/locales\", function(data,status) {\n  _.each(data['locales'], function(l) {\n    let opt = jQuery(\"<option>\").val(l[\"code\"]).html(l[\"name\"])\n    if (l[\"code\"] === \"en\") {\n      opt.attr(\"selected\", \"selected\");\n    }\n    sel.append(opt);\n  });\n});\n",
+          "runIf": ""
+        },
+        {
+          "name": "Set Timezones List",
+          "type": "Load",
+          "action": "Custom",
+          "code": "let sel = jQuery('select[name=\"Default Timezone\"]');\njQuery.get(\"/app/api/v1/meta/timezones\", function(data,status) {\n  _.each(data['timezones'], function(l) {\n    let opt = jQuery(\"<option>\").val(l[\"id\"]).html(l[\"id\"])\n    if (l[\"id\"] === \"America/Chicago\") {\n      opt.attr(\"selected\", \"selected\");\n    }\n    sel.append(opt);\n  });\n});\n",
+          "runIf": ""
+        }
+      ],
+      "name": "Signup",
+      "renderType": "submittable",
+      "type": "page"
+    }
+  ],
+  "securityPolicies": [
+
+  ],
+  "slug": "space-provision",
+  "status": "Active",
+  "submissionLabelExpression": "${values('Space Slug')} - ${values('Company Name')} - ${values('Email')}",
+  "type": "Service"
+}

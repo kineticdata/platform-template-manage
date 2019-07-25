@@ -1,0 +1,127 @@
+[
+  {
+    "allowsMultiple": false,
+    "description": "Slug of this spaces Admin Kapp (typically admin)",
+    "name": "Admin Kapp Slug"
+  },
+  {
+    "allowsMultiple": false,
+    "description": "CSV of aws credentials (aws_credentials.csv)",
+    "name": "AWS Credentials File"
+  },
+  {
+    "allowsMultiple": false,
+    "description": "Cluster used for housing response and task containers",
+    "name": "AWS ECS Cluster"
+  },
+  {
+    "allowsMultiple": false,
+    "description": "Property File Used by the Provisioner",
+    "name": "AWS Property File"
+  },
+  {
+    "allowsMultiple": false,
+    "description": null,
+    "name": "AWS Property File - Nagios"
+  },
+  {
+    "allowsMultiple": false,
+    "description": "Region in which this kinops instance lives",
+    "name": "AWS Region"
+  },
+  {
+    "allowsMultiple": false,
+    "description": "AWS Bucket which holds tenant spaces",
+    "name": "AWS Tenant S3 Bucket"
+  },
+  {
+    "allowsMultiple": false,
+    "description": null,
+    "name": "Background Image"
+  },
+  {
+    "allowsMultiple": false,
+    "description": "Slug of this spaces Catalog Kapp (typically catalog)",
+    "name": "Catalog Kapp Slug"
+  },
+  {
+    "allowsMultiple": false,
+    "description": "Name of the company that owns this space. May also be an environment name.",
+    "name": "Company Name"
+  },
+  {
+    "allowsMultiple": false,
+    "description": null,
+    "name": "Default Kapp Display"
+  },
+  {
+    "allowsMultiple": false,
+    "description": null,
+    "name": "Discussion Server Url"
+  },
+  {
+    "allowsMultiple": false,
+    "description": "Name of the Space Bundle which allows for sharing of headers and footers",
+    "name": "Footer Bundle Path"
+  },
+  {
+    "allowsMultiple": false,
+    "description": "Name of the Space Bundle which allows for sharing of headers and footers",
+    "name": "Header Bundle Path"
+  },
+  {
+    "allowsMultiple": false,
+    "description": "Email address used to notify sales of new customer sign ups.",
+    "name": "kinops Sales Email Address"
+  },
+  {
+    "allowsMultiple": false,
+    "description": "Email Address Used to notify support of issues.",
+    "name": "kinops Support Email Address"
+  },
+  {
+    "allowsMultiple": false,
+    "description": "Name of the Space Bundle which allows for sharing of libraries between bundles.",
+    "name": "Libraries Bundle Path"
+  },
+  {
+    "allowsMultiple": false,
+    "description": "Brand name to put in titles, e.g. kinops.",
+    "name": "Page Title Prefix"
+  },
+  {
+    "allowsMultiple": false,
+    "description": null,
+    "name": "Service Days Due"
+  },
+  {
+    "allowsMultiple": false,
+    "description": null,
+    "name": "Task Assignee Individual"
+  },
+  {
+    "allowsMultiple": false,
+    "description": null,
+    "name": "Task Assignee Team"
+  },
+  {
+    "allowsMultiple": false,
+    "description": null,
+    "name": "Task Form Slug"
+  },
+  {
+    "allowsMultiple": false,
+    "description": "Url of this spaces workflow engine",
+    "name": "Task Server Url"
+  },
+  {
+    "allowsMultiple": false,
+    "description": "Name of the source for this space in the workflow engine",
+    "name": "Task Source Name"
+  },
+  {
+    "allowsMultiple": false,
+    "description": "Url of the request web server that this space exists",
+    "name": "Web Server Url"
+  }
+]

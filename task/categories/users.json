@@ -1,0 +1,20 @@
+{
+  "name": "Users",
+  "description": "Functions for interacting with Kinetic Users",
+  "type": "Stored",
+  "handlers": [
+    "kinetic_request_ce_user_generate_password_token_v1"
+  ],
+  "policyRules": [
+
+  ],
+  "trees": [
+    "routine_kinetic_user_create_v1",
+    "routine_kinetic_user_delete_v1",
+    "routine_kinetic_user_password_reset_token_create_in_space_v1",
+    "routine_kinetic_user_password_reset_token_create_v1",
+    "routine_kinetic_user_retrieve_v1",
+    "routine_kinetic_user_update_v1",
+    "routine_kinetic_users_retrieve_list_v1"
+  ]
+}

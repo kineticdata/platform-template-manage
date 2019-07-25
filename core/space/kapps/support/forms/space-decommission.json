@@ -1,0 +1,174 @@
+{
+  "anonymous": false,
+  "attributes": [
+    {
+      "name": "Icon",
+      "values": [
+        "fa-bomb"
+      ]
+    }
+  ],
+  "bridgedResources": [
+
+  ],
+  "categorizations": [
+    {
+      "category": {
+        "slug": "space-activities"
+      }
+    }
+  ],
+  "customHeadContent": null,
+  "description": "Decommissions and deletes a space.",
+  "name": "Space Decommission",
+  "notes": null,
+  "pages": [
+    {
+      "advanceCondition": "",
+      "displayCondition": null,
+      "displayPage": null,
+      "elements": [
+        {
+          "type": "content",
+          "renderType": "html",
+          "name": "Warning",
+          "text": "<div class=\"well\">\n  <h3><strong style=\"color:red;\">WARNING!!!</strong>  This will completely remove the selected kinops environment, it's related task engine, task engine database, filehub and bridgehub entries.</h3>\n  <br>\n</div>",
+          "visible": true,
+          "renderAttributes": {
+
+          }
+        },
+        {
+          "type": "field",
+          "name": "Username",
+          "label": "Please enter your username to continue",
+          "key": "f4",
+          "defaultValue": null,
+          "defaultResourceName": null,
+          "visible": true,
+          "enabled": true,
+          "required": true,
+          "requiredMessage": null,
+          "omitWhenHidden": null,
+          "pattern": null,
+          "constraints": [
+
+          ],
+          "events": [
+            {
+              "name": "Validate Username",
+              "type": "Change",
+              "action": "Custom",
+              "code": "var username = K('field[Username]').value()\nif (K('identity').username !== username) {\n  alert('The username entered does not have access to decomission this space');\n  $(K('field[Username]').element()).focus();\n  K('field[Username]').value(null);\n}else{\n  K('button[Submit Button]').enable();\n}",
+              "runIf": "values('Username') !== null"
+            }
+          ],
+          "renderAttributes": {
+
+          },
+          "dataType": "string",
+          "renderType": "text",
+          "rows": 1
+        },
+        {
+          "type": "field",
+          "name": "Reason",
+          "label": "Reason",
+          "key": "f5",
+          "defaultValue": null,
+          "defaultResourceName": null,
+          "visible": true,
+          "enabled": true,
+          "required": true,
+          "requiredMessage": null,
+          "omitWhenHidden": null,
+          "pattern": null,
+          "constraints": [
+
+          ],
+          "events": [
+
+          ],
+          "renderAttributes": {
+
+          },
+          "dataType": "string",
+          "renderType": "text",
+          "rows": 3
+        },
+        {
+          "type": "field",
+          "name": "Space Slug",
+          "label": "Space Slug",
+          "key": "f3",
+          "defaultValue": "",
+          "defaultResourceName": null,
+          "visible": true,
+          "enabled": true,
+          "required": true,
+          "requiredMessage": "A Space Slug is required when submitting this form.",
+          "omitWhenHidden": false,
+          "pattern": {
+            "regex": "^[a-z0-9\\-]*$",
+            "message": "Must be a valid slug (lower case alpha, numeric, and hyphens only)"
+          },
+          "constraints": [
+
+          ],
+          "events": [
+
+          ],
+          "renderAttributes": {
+
+          },
+          "dataType": "string",
+          "renderType": "text",
+          "rows": 1
+        },
+        {
+          "type": "section",
+          "renderType": null,
+          "name": "Buttons",
+          "title": null,
+          "visible": true,
+          "omitWhenHidden": null,
+          "renderAttributes": {
+
+          },
+          "elements": [
+            {
+              "type": "button",
+              "label": "Submit",
+              "name": "Submit Button",
+              "visible": true,
+              "enabled": true,
+              "renderType": "submit-page",
+              "renderAttributes": {
+
+              }
+            }
+          ]
+        }
+      ],
+      "events": [
+        {
+          "name": "Disable Submit Button",
+          "type": "Load",
+          "action": "Custom",
+          "code": "!K('form').reviewMode() && K('button[Submit Button]').disable()",
+          "runIf": "false"
+        }
+      ],
+      "name": "Page 1",
+      "renderType": "submittable",
+      "type": "page"
+    }
+  ],
+  "securityPolicies": [
+
+  ],
+  "slug": "space-decommission",
+  "status": "Active",
+  "submissionLabelExpression": "${values('Space Slug')} - ${values('Username')}",
+  "type": "Service"
+}

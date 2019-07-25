@@ -1,0 +1,139 @@
+<tree schema_version="1.0">
+    <sourceName>-</sourceName>
+    <sourceGroup>-</sourceGroup>
+    <definitionId>routine_retrieve_ecs_cluster_tasks_v1</definitionId>
+    <type>Global Routine</type>
+    <status>Active</status>
+    <taskTree builder_version="" schema_version="1.0" version="">
+        <name>Retrieve ECS Cluster Tasks</name>
+        <author></author>
+        <notes></notes>
+        <lastID>9</lastID>
+        <taskDefinition id="routine_retrieve_ecs_cluster_tasks_v1" name="Retrieve ECS Cluster Tasks" schema_version="1.0" version="1">
+            <visible>false</visible>
+            <deferrable>true</deferrable>
+            <parameters>
+                <parameter id="S3 Bucket" label="S3 Bucket" required="true" tooltip=""></parameter>
+                <parameter id="S3 Filename" label="S3 Filename" required="true" tooltip=""></parameter>
+                <parameter id="AWS Region" label="AWS Region" required="true" tooltip=""></parameter>
+                <parameter id="ECS Cluster" label="ECS Cluster" required="true" tooltip=""></parameter>
+                <parameter id="Env Name" label="Env Name" required="true" tooltip=""></parameter>
+            </parameters>
+            <handler name="system_tree_call" version="1"></handler>
+            <results format="xml">
+                <result name="Tasks" tooltip=""></result>
+            </results>
+        </taskDefinition>
+        <request>
+            <task definition_id="system_start_v1" id="start" name="Start" x="10" y="10">
+                <version>1</version>
+                <configured>true</configured>
+                <defers>false</defers>
+                <deferrable>false</deferrable>
+                <visible>false</visible>
+                <parameters></parameters>
+                <messages></messages>
+                <dependents>
+                    <task label="" type="Complete" value="">aws_ecs_task_list_v2_8</task>
+                </dependents>
+            </task>
+            <task definition_id="routine_retrieve_ecs_cluster_tasks_v1" id="routine_retrieve_ecs_cluster_tasks_v1_3" name="Re-Retrieve ECS Cluster Tasks" x="518" y="99">
+                <version>1</version>
+                <configured>true</configured>
+                <defers>true</defers>
+                <deferrable>true</deferrable>
+                <visible>false</visible>
+                <parameters>
+                    <parameter id="S3 Bucket" label="S3 Bucket" menu="" required="true" tooltip="">&lt;%=@inputs['S3 Bucket']%&gt;</parameter>
+                    <parameter id="S3 Filename" label="S3 Filename" menu="" required="true" tooltip="">&lt;%=@inputs['S3 Filename']%&gt;</parameter>
+                    <parameter id="AWS Region" label="AWS Region" menu="" required="true" tooltip="">&lt;%=@inputs['AWS Region']%&gt;</parameter>
+                    <parameter id="ECS Cluster" label="ECS Cluster" menu="" required="true" tooltip="">&lt;%=@inputs['ECS Cluster']%&gt;</parameter>
+                    <parameter id="Env Name" label="Env Name" menu="" required="true" tooltip="">&lt;%=@inputs['Env Name']%&gt;</parameter>
+                </parameters>
+                <messages>
+                    <message type="Create"></message>
+                    <message type="Update"></message>
+                    <message type="Complete"></message>
+                </messages>
+                <dependents>
+                    <task label="" type="Complete" value="">system_tree_return_v1_6</task>
+                </dependents>
+            </task>
+            <task definition_id="system_tree_return_v1" id="system_tree_return_v1_5" name="Return" x="152" y="252">
+                <version>1</version>
+                <configured>true</configured>
+                <defers>false</defers>
+                <deferrable>false</deferrable>
+                <visible>false</visible>
+                <parameters>
+                    <parameter id="Tasks" label="Tasks" menu="" required="false" tooltip="">&lt;%=@results['Retrieve ECS Cluster Tasks']['Tasks']%&gt;</parameter>
+                </parameters>
+                <messages>
+                    <message type="Create"></message>
+                    <message type="Update"></message>
+                    <message type="Complete"></message>
+                </messages>
+                <dependents></dependents>
+            </task>
+            <task definition_id="system_tree_return_v1" id="system_tree_return_v1_6" name="Return from Error" x="521" y="242">
+                <version>1</version>
+                <configured>true</configured>
+                <defers>false</defers>
+                <deferrable>false</deferrable>
+                <visible>false</visible>
+                <parameters>
+                    <parameter id="Tasks" label="Tasks" menu="" required="false" tooltip="">&lt;%=@results['Re-Retrieve ECS Cluster Tasks']['Tasks']%&gt;</parameter>
+                </parameters>
+                <messages>
+                    <message type="Create"></message>
+                    <message type="Update"></message>
+                    <message type="Complete"></message>
+                </messages>
+                <dependents></dependents>
+            </task>
+            <task definition_id="system_wait_v1" id="system_wait_v1_7" name="Wait Before Retry" x="327" y="99">
+                <version>1</version>
+                <configured>true</configured>
+                <defers>true</defers>
+                <deferrable>true</deferrable>
+                <visible>true</visible>
+                <parameters>
+                    <parameter id="Time to wait" label="Wait time:" menu="" required="true" tooltip="Time you want to wait for deferred task">1</parameter>
+                    <parameter id="Time unit" label="Time unit:" menu="Second,Minute,Hour,Day,Week" required="true" tooltip="Unit of measurement for time (Seconds, Minutes, Hours, Days, Weeks)">Hour</parameter>
+                </parameters>
+                <messages>
+                    <message type="Create"></message>
+                    <message type="Update"></message>
+                    <message type="Complete"></message>
+                </messages>
+                <dependents>
+                    <task label="" type="Complete" value="">routine_retrieve_ecs_cluster_tasks_v1_3</task>
+                </dependents>
+            </task>
+            <task definition_id="aws_ecs_task_list_v2" id="aws_ecs_task_list_v2_8" name="Retrieve ECS Cluster Tasks" x="168" y="58">
+                <version>2</version>
+                <configured>true</configured>
+                <defers>false</defers>
+                <deferrable>false</deferrable>
+                <visible>true</visible>
+                <parameters>
+                    <parameter id="aws_region" label="AWS Region" menu="" required="true" tooltip="Name of the AWS Region (ex: us-west-2)">&lt;%=@inputs['AWS Region']%&gt;</parameter>
+                    <parameter id="aws_credentials_s3_bucket" label="S3 Bucket" menu="" required="true" tooltip="S3 Bucket for AWS Credentials">&lt;%=@inputs['S3 Bucket']%&gt;</parameter>
+                    <parameter id="aws_credentials_s3_filename" label="S3 Filename" menu="" required="true" tooltip="S3 Filename for AWS Credentials">&lt;%=@inputs['S3 Filename']%&gt;</parameter>
+                    <parameter id="ecs_cluster" label="ECS Cluster" menu="" required="true" tooltip="Name of the ECS Cluster">&lt;%=@inputs['ECS Cluster']%&gt;</parameter>
+                    <parameter id="env_name" label="Env Name" menu="" required="true" tooltip="Environment Variable Name">&lt;%=@inputs['Env Name']%&gt;</parameter>
+                    <parameter id="error_handling" label="Error Handling" menu="Error Message,Raise Error" required="true" tooltip="Determine what to return if an error is encountered.">Error Message</parameter>
+                </parameters>
+                <messages>
+                    <message type="Create"></message>
+                    <message type="Update"></message>
+                    <message type="Complete"></message>
+                </messages>
+                <dependents>
+                    <task label="No Error" type="Complete" value="@results['Retrieve ECS Cluster Tasks']['Handler Error Message'].to_s.strip.size == 0">system_tree_return_v1_5</task>
+                    <task label="Error" type="Complete" value="@results['Retrieve ECS Cluster Tasks']['Handler Error Message'].to_s.strip.size &gt; 0">system_wait_v1_7</task>
+                </dependents>
+            </task>
+        </request>
+    </taskTree>
+</tree>

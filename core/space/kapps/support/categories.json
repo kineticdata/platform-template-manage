@@ -1,0 +1,14 @@
+[
+  {
+    "attributes": [
+      {
+        "name": "Icon",
+        "values": [
+          "fa-building"
+        ]
+      }
+    ],
+    "name": "Space Activities",
+    "slug": "space-activities"
+  }
+]

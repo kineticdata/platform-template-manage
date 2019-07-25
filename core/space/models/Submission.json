@@ -1,0 +1,171 @@
+{
+  "activeMappingName": "Kinetic Core Submissions",
+  "attributes": [
+    {
+      "name": "Closed At"
+    },
+    {
+      "name": "Closed By"
+    },
+    {
+      "name": "Core State"
+    },
+    {
+      "name": "Created At"
+    },
+    {
+      "name": "Created By"
+    },
+    {
+      "name": "Id"
+    },
+    {
+      "name": "Label"
+    },
+    {
+      "name": "Submitted At"
+    },
+    {
+      "name": "Submitted By"
+    },
+    {
+      "name": "Type"
+    },
+    {
+      "name": "Updated At"
+    },
+    {
+      "name": "Updated By"
+    },
+    {
+      "name": "Values"
+    }
+  ],
+  "mappings": [
+    {
+      "attributes": [
+        {
+          "name": "Closed At",
+          "structureField": "${fields('closedAt')}"
+        },
+        {
+          "name": "Closed By",
+          "structureField": "${fields('closedBy')}"
+        },
+        {
+          "name": "Core State",
+          "structureField": "${fields('coreState')}"
+        },
+        {
+          "name": "Created At",
+          "structureField": "${fields('createdAt')}"
+        },
+        {
+          "name": "Created By",
+          "structureField": "${fields('createdBy')}"
+        },
+        {
+          "name": "Id",
+          "structureField": "${fields('id')}"
+        },
+        {
+          "name": "Submitted At",
+          "structureField": "${fields('submittedAt')}"
+        },
+        {
+          "name": "Submitted By",
+          "structureField": "${fields('submittedBy')}"
+        },
+        {
+          "name": "Type",
+          "structureField": "${fields('type')}"
+        },
+        {
+          "name": "Updated At",
+          "structureField": "${fields('updatedAt')}"
+        },
+        {
+          "name": "Updated By",
+          "structureField": "${fields('updatedBy')}"
+        },
+        {
+          "name": "Values",
+          "structureField": "${fields('values')}"
+        },
+        {
+          "name": "Label",
+          "structureField": "${fields('label')}"
+        }
+      ],
+      "bridgeName": "Kinetic Core",
+      "name": "Kinetic Core Submissions",
+      "qualifications": [
+        {
+          "name": "By Form",
+          "query": "kappSlug=${parameters('Kapp Slug')}&formSlug=${parameters('Form Slug')}"
+        },
+        {
+          "name": "By Kapp",
+          "query": "kappSlug=${parameters('Kapp Slug')}"
+        },
+        {
+          "name": "By Type",
+          "query": "type=${parameters('Type')}"
+        },
+        {
+          "name": "By Id",
+          "query": "id=${parameters('Id')}"
+        }
+      ],
+      "structure": "Submissions"
+    }
+  ],
+  "name": "Submission",
+  "qualifications": [
+    {
+      "name": "By Form",
+      "parameters": [
+        {
+          "name": "Form Slug",
+          "notes": null
+        },
+        {
+          "name": "Kapp Slug",
+          "notes": ""
+        }
+      ],
+      "resultType": "Multiple"
+    },
+    {
+      "name": "By Id",
+      "parameters": [
+        {
+          "name": "Id",
+          "notes": null
+        }
+      ],
+      "resultType": "Single"
+    },
+    {
+      "name": "By Kapp",
+      "parameters": [
+        {
+          "name": "Kapp Slug",
+          "notes": null
+        }
+      ],
+      "resultType": "Multiple"
+    },
+    {
+      "name": "By Type",
+      "parameters": [
+        {
+          "name": "Type",
+          "notes": null
+        }
+      ],
+      "resultType": "Multiple"
+    }
+  ],
+  "status": "Active"
+}

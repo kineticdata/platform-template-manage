@@ -1,0 +1,47 @@
+[
+  {
+    "allowsMultiple": false,
+    "description": null,
+    "name": "Approver"
+  },
+  {
+    "allowsMultiple": false,
+    "description": null,
+    "name": "Icon"
+  },
+  {
+    "allowsMultiple": false,
+    "description": null,
+    "name": "Notification Template Name - Complete"
+  },
+  {
+    "allowsMultiple": false,
+    "description": null,
+    "name": "Notification Template Name - Create"
+  },
+  {
+    "allowsMultiple": false,
+    "description": null,
+    "name": "Service Days Due"
+  },
+  {
+    "allowsMultiple": false,
+    "description": null,
+    "name": "Service Owner Team"
+  },
+  {
+    "allowsMultiple": false,
+    "description": null,
+    "name": "Task Assignee Individual"
+  },
+  {
+    "allowsMultiple": false,
+    "description": null,
+    "name": "Task Assignee Team"
+  },
+  {
+    "allowsMultiple": false,
+    "description": null,
+    "name": "Task Form Slug"
+  }
+]

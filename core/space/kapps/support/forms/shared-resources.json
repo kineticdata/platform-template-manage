@@ -1,0 +1,246 @@
+{
+  "anonymous": false,
+  "attributes": [
+
+  ],
+  "bridgedResources": [
+    {
+      "model": "Person",
+      "name": "Person - By Email",
+      "order": [
+        {
+          "attribute": "Email",
+          "direction": "asc"
+        }
+      ],
+      "parameters": [
+        {
+          "mapping": "${values('Email')}",
+          "name": "Email"
+        }
+      ],
+      "qualification": "By Email",
+      "status": "Active"
+    },
+    {
+      "model": "Person",
+      "name": "Person - By Username",
+      "order": [
+
+      ],
+      "parameters": [
+        {
+          "mapping": "${values('Username')}",
+          "name": "Username"
+        }
+      ],
+      "qualification": "By Username",
+      "status": "Active"
+    },
+    {
+      "model": "Submission",
+      "name": "Submission - By Id",
+      "order": [
+
+      ],
+      "parameters": [
+        {
+          "mapping": "${values('Submission Id')}",
+          "name": "Id"
+        }
+      ],
+      "qualification": "By Id",
+      "status": "Active"
+    },
+    {
+      "model": "Submission",
+      "name": "Submissions - By Kapp",
+      "order": [
+        {
+          "attribute": "Submitted At",
+          "direction": "desc"
+        }
+      ],
+      "parameters": [
+        {
+          "mapping": "${kapp('slug')}",
+          "name": "Kapp Slug"
+        }
+      ],
+      "qualification": "By Kapp",
+      "status": "Active"
+    }
+  ],
+  "categorizations": [
+
+  ],
+  "customHeadContent": null,
+  "description": "Form that holds fields for bridge searching and other resources that are shared across forms.",
+  "name": "Shared Resources",
+  "notes": null,
+  "pages": [
+    {
+      "advanceCondition": null,
+      "displayCondition": null,
+      "displayPage": null,
+      "elements": [
+        {
+          "type": "section",
+          "renderType": null,
+          "name": "Information Section",
+          "title": null,
+          "visible": true,
+          "omitWhenHidden": null,
+          "renderAttributes": {
+
+          },
+          "elements": [
+            {
+              "type": "content",
+              "renderType": "html",
+              "name": "Information",
+              "text": "<h1>Purpose</h1>\n<p>The purpose of the <strong>Shared Resources</strong> form is to define common bridged resources that will be used on more than one form.</p>\n\n<h1>Additional Info</h1>\n<p>This form is not meant to be a submittable form, hence the reason there is no submit button.</p>\n",
+              "visible": true,
+              "renderAttributes": {
+
+              }
+            }
+          ]
+        },
+        {
+          "type": "section",
+          "renderType": null,
+          "name": "Fields Section",
+          "title": "Fields",
+          "visible": true,
+          "omitWhenHidden": null,
+          "renderAttributes": {
+
+          },
+          "elements": [
+            {
+              "type": "section",
+              "renderType": null,
+              "name": "Person Section",
+              "title": null,
+              "visible": true,
+              "omitWhenHidden": null,
+              "renderAttributes": {
+
+              },
+              "elements": [
+                {
+                  "type": "field",
+                  "name": "Username",
+                  "label": "Username",
+                  "key": "f1",
+                  "defaultValue": "${identity('username')}",
+                  "defaultResourceName": null,
+                  "visible": true,
+                  "enabled": true,
+                  "required": false,
+                  "requiredMessage": null,
+                  "omitWhenHidden": null,
+                  "pattern": null,
+                  "constraints": [
+
+                  ],
+                  "events": [
+
+                  ],
+                  "renderAttributes": {
+
+                  },
+                  "dataType": "string",
+                  "renderType": "text",
+                  "rows": 1
+                },
+                {
+                  "type": "field",
+                  "name": "Email",
+                  "label": "Email",
+                  "key": "f2",
+                  "defaultValue": "${identity('email')}",
+                  "defaultResourceName": null,
+                  "visible": true,
+                  "enabled": true,
+                  "required": false,
+                  "requiredMessage": null,
+                  "omitWhenHidden": null,
+                  "pattern": null,
+                  "constraints": [
+
+                  ],
+                  "events": [
+
+                  ],
+                  "renderAttributes": {
+
+                  },
+                  "dataType": "string",
+                  "renderType": "text",
+                  "rows": 1
+                }
+              ]
+            },
+            {
+              "type": "section",
+              "renderType": null,
+              "name": "Submission Section",
+              "title": null,
+              "visible": true,
+              "omitWhenHidden": null,
+              "renderAttributes": {
+
+              },
+              "elements": [
+                {
+                  "type": "field",
+                  "name": "Submission Id",
+                  "label": "Submission Id",
+                  "key": "f12",
+                  "defaultValue": null,
+                  "defaultResourceName": null,
+                  "visible": true,
+                  "enabled": true,
+                  "required": false,
+                  "requiredMessage": null,
+                  "omitWhenHidden": null,
+                  "pattern": null,
+                  "constraints": [
+
+                  ],
+                  "events": [
+
+                  ],
+                  "renderAttributes": {
+
+                  },
+                  "dataType": "string",
+                  "renderType": "text",
+                  "rows": 1
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "events": [
+
+      ],
+      "name": "Shared Resources",
+      "renderType": "submittable",
+      "type": "page"
+    }
+  ],
+  "securityPolicies": [
+    {
+      "endpoint": "Display",
+      "name": "Everyone"
+    }
+  ],
+  "slug": "shared-resources",
+  "status": "Inactive",
+  "submissionLabelExpression": null,
+  "type": "Content"
+}

@@ -1,0 +1,146 @@
+{
+  "activeMappingName": "Notification Headers and Footers",
+  "attributes": [
+    {
+      "name": "HTML Content"
+    },
+    {
+      "name": "id"
+    },
+    {
+      "name": "Last Updated"
+    },
+    {
+      "name": "Name"
+    },
+    {
+      "name": "Status"
+    },
+    {
+      "name": "Text Content"
+    },
+    {
+      "name": "Type"
+    }
+  ],
+  "mappings": [
+    {
+      "attributes": [
+        {
+          "name": "HTML Content",
+          "structureField": "${fields('values[HTML Content]')}"
+        },
+        {
+          "name": "id",
+          "structureField": "${fields('id')}"
+        },
+        {
+          "name": "Last Updated",
+          "structureField": "${fields('updatedAt')}"
+        },
+        {
+          "name": "Name",
+          "structureField": "${fields('values[Name]')}"
+        },
+        {
+          "name": "Status",
+          "structureField": "${fields('values[Status]')}"
+        },
+        {
+          "name": "Text Content",
+          "structureField": "${fields('values[Text Content]')}"
+        },
+        {
+          "name": "Type",
+          "structureField": "${fields('values[Record Type]')}"
+        }
+      ],
+      "bridgeName": "Kinetic Core",
+      "name": "Notification Headers and Footers",
+      "qualifications": [
+        {
+          "name": "All",
+          "query": "kappSlug=admin&formSlug=notification-headers-and-footers&limit=999"
+        },
+        {
+          "name": "Get Active",
+          "query": "kappSlug=admin&formSlug=notification-headers-and-footers&limit=999&values[Status]=Active"
+        },
+        {
+          "name": "Get Active Footers",
+          "query": "kappSlug=admin&formSlug=notification-headers-and-footers&limit=999&values[Status]=Active&values[Record Type]=Footer"
+        },
+        {
+          "name": "Get Active Headers",
+          "query": "kappSlug=admin&formSlug=notification-headers-and-footers&limit=999&values[Status]=Active&values[Record Type]=Header"
+        },
+        {
+          "name": "Get Inactive",
+          "query": "kappSlug=admin&formSlug=notification-headers-and-footers&limit=999&values[Status]=Inactive"
+        },
+        {
+          "name": "Get Inactive Footers",
+          "query": "\t kappSlug=admin&formSlug=notification-headers-and-footers&limit=999&values[Status]=Inactive&values[Record Type]=Footer"
+        },
+        {
+          "name": "Get Inactive Headers",
+          "query": "kappSlug=admin&formSlug=notification-headers-and-footers&limit=999&values[Status]=Inactive&values[Record Type]=Header"
+        }
+      ],
+      "structure": "Submissions"
+    }
+  ],
+  "name": "Notification Headers and Footers",
+  "qualifications": [
+    {
+      "name": "All",
+      "parameters": [
+
+      ],
+      "resultType": "Multiple"
+    },
+    {
+      "name": "Get Active",
+      "parameters": [
+
+      ],
+      "resultType": "Multiple"
+    },
+    {
+      "name": "Get Active Footers",
+      "parameters": [
+
+      ],
+      "resultType": "Multiple"
+    },
+    {
+      "name": "Get Active Headers",
+      "parameters": [
+
+      ],
+      "resultType": "Multiple"
+    },
+    {
+      "name": "Get Inactive",
+      "parameters": [
+
+      ],
+      "resultType": "Multiple"
+    },
+    {
+      "name": "Get Inactive Footers",
+      "parameters": [
+
+      ],
+      "resultType": "Multiple"
+    },
+    {
+      "name": "Get Inactive Headers",
+      "parameters": [
+
+      ],
+      "resultType": "Multiple"
+    }
+  ],
+  "status": "Active"
+}

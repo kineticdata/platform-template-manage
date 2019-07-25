@@ -1,0 +1,88 @@
+{
+  "name": "Admins",
+  "rule": "@identity.get_property('spaceAdmin') == 'true'",
+  "message": "Must be a space admin.",
+  "type": "Console Access",
+  "consolePolicyRules": [
+    {
+      "name": "Access Keys",
+      "policyRule": "Admins"
+    },
+    {
+      "name": "ApiV2",
+      "policyRule": "Admins"
+    },
+    {
+      "name": "Categories",
+      "policyRule": "Admins"
+    },
+    {
+      "name": "Console Access",
+      "policyRule": "Admins"
+    },
+    {
+      "name": "Dashboard",
+      "policyRule": "Admins"
+    },
+    {
+      "name": "Engine",
+      "policyRule": "Admins"
+    },
+    {
+      "name": "Environment",
+      "policyRule": "Admins"
+    },
+    {
+      "name": "Errors",
+      "policyRule": "Admins"
+    },
+    {
+      "name": "Groups",
+      "policyRule": "Admins"
+    },
+    {
+      "name": "Handlers",
+      "policyRule": "Admins"
+    },
+    {
+      "name": "Logs",
+      "policyRule": "Admins"
+    },
+    {
+      "name": "Policy Rules",
+      "policyRule": "Admins"
+    },
+    {
+      "name": "Routines",
+      "policyRule": "Admins"
+    },
+    {
+      "name": "Runs",
+      "policyRule": "Admins"
+    },
+    {
+      "name": "Setup",
+      "policyRule": "Admins"
+    },
+    {
+      "name": "Sources",
+      "policyRule": "Admins"
+    },
+    {
+      "name": "Staged",
+      "policyRule": "Admins"
+    },
+    {
+      "name": "System Errors",
+      "policyRule": "Admins"
+    },
+    {
+      "name": "Trees",
+      "policyRule": "Admins"
+    },
+    {
+      "name": "Users",
+      "policyRule": "Admins"
+    }
+  ]
+}

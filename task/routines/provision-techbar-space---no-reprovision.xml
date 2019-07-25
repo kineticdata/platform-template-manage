@@ -1,0 +1,258 @@
+<tree schema_version="1.0">
+    <sourceName>-</sourceName>
+    <sourceGroup>-</sourceGroup>
+    <definitionId>routine_provision_techbar_space_no_reprovision</definitionId>
+    <type>Global Routine</type>
+    <status>Active</status>
+    <taskTree builder_version="" schema_version="1.0" version="">
+        <name>Provision Techbar Space - No Reprovision</name>
+        <author></author>
+        <notes></notes>
+        <lastID>22</lastID>
+        <taskDefinition id="routine_provision_techbar_space_no_reprovision" name="Provision Techbar Space - No Reprovision" schema_version="1.0" version="1">
+            <visible>false</visible>
+            <deferrable>true</deferrable>
+            <parameters>
+                <parameter id="Space Name" label="Space Name" required="true" tooltip="The name of the space to provision"></parameter>
+                <parameter id="Requester Name" label="Requester Name" required="true" tooltip="The name of the person who requested the space"></parameter>
+                <parameter id="Requester Email" label="Requester Email" required="true" tooltip="The email of the person who requested the space"></parameter>
+                <parameter id="Default Locale" label="Default Locale" required="false" tooltip="">en</parameter>
+                <parameter id="Default Timezone" label="Default Timezone" required="false" tooltip="">America/Chicago</parameter>
+            </parameters>
+            <handler name="system_tree_call" version="1"></handler>
+            <results format="xml">
+                <result name="Login Link" tooltip="Link to login and reset password"></result>
+                <result name="Space Slug" tooltip="Space Slug of Allocated Space"></result>
+            </results>
+        </taskDefinition>
+        <request>
+            <task definition_id="system_start_v1" id="start" name="Start" x="71" y="11">
+                <version>1</version>
+                <configured>true</configured>
+                <defers>false</defers>
+                <deferrable>false</deferrable>
+                <visible>false</visible>
+                <parameters></parameters>
+                <messages></messages>
+                <dependents>
+                    <task label="" type="Complete" value="">utilities_echo_v1_1</task>
+                </dependents>
+            </task>
+            <task definition_id="utilities_echo_v1" id="utilities_echo_v1_1" name="CONFIG: Unallocated Key" x="66" y="85">
+                <version>1</version>
+                <configured>true</configured>
+                <defers>false</defers>
+                <deferrable>false</deferrable>
+                <visible>true</visible>
+                <parameters>
+                    <parameter id="input" label="Input" menu="" required="true" tooltip="">UNALLOCATED TECHBAR</parameter>
+                </parameters>
+                <messages>
+                    <message type="Create"></message>
+                    <message type="Update"></message>
+                    <message type="Complete"></message>
+                </messages>
+                <dependents>
+                    <task label="" type="Complete" value="">routine_kinops_allocate_temporary_space_2</task>
+                </dependents>
+            </task>
+            <task definition_id="routine_kinops_allocate_temporary_space" id="routine_kinops_allocate_temporary_space_2" name="Allocate Space" x="209" y="99">
+                <version>1</version>
+                <configured>true</configured>
+                <defers>true</defers>
+                <deferrable>true</deferrable>
+                <visible>false</visible>
+                <parameters>
+                    <parameter id="Unallocated Key" label="Unallocated Key" menu="" required="true" tooltip="The Company Name to use when searching for unallocated Spaces. (ie UNALLOCATED-TECHBAR)">&lt;%=@results['CONFIG: Unallocated Key']['output']%&gt;</parameter>
+                    <parameter id="Space Name" label="Space Name" menu="" required="true" tooltip="What to rename the space to">&lt;%=@inputs['Space Name']%&gt;</parameter>
+                    <parameter id="Default Locale" label="Default Locale" menu="" required="false" tooltip="The default locale to set the Space to">en</parameter>
+                    <parameter id="Default Timezone" label="Default Timezone" menu="" required="false" tooltip="The default timezone to set the Space to">America/Chicago</parameter>
+                    <parameter id="Tries" label="Tries" menu="" required="false" tooltip="The number of tries this process has run"></parameter>
+                </parameters>
+                <messages>
+                    <message type="Create"></message>
+                    <message type="Update"></message>
+                    <message type="Complete"></message>
+                </messages>
+                <dependents>
+                    <task label="Space Allocated" type="Complete" value="!@results['Allocate Space']['Space Slug'].to_s.empty?">kinetic_request_ce_user_create_v1_3</task>
+                </dependents>
+            </task>
+            <task definition_id="kinetic_request_ce_user_create_v1" id="kinetic_request_ce_user_create_v1_3" name="Create Requester User" x="416" y="88">
+                <version>1</version>
+                <configured>true</configured>
+                <defers>false</defers>
+                <deferrable>false</deferrable>
+                <visible>true</visible>
+                <parameters>
+                    <parameter id="error_handling" label="Error Handling" menu="Error Message,Raise Error" required="true" tooltip="Determine what to return if an error is encountered.">Error Message</parameter>
+                    <parameter id="space_slug" label="Space Slug" menu="" required="false" tooltip="The Space the submission is being retrieved from (defaults to info value if not provided).">&lt;%=@results['Allocate Space']['Space Slug']%&gt;</parameter>
+                    <parameter id="username" label="Username" menu="" required="true" tooltip="The unique username for the user.">&lt;%=@inputs['Requester Email']%&gt;</parameter>
+                    <parameter id="password" label="Password" menu="" required="true" tooltip="The password for this user record.">&lt;%=(0...30).map { (65 + rand(26)).chr }.join%&gt;</parameter>
+                    <parameter id="space_admin" label="Space Admin" menu="" required="true" tooltip="Should the user have space administration rights. (Yes / No)">Yes</parameter>
+                    <parameter id="email" label="Email" menu="" required="false" tooltip="The email address for this user record.">&lt;%=@inputs['Requester Email']%&gt;</parameter>
+                    <parameter id="display_name" label="Display Name" menu="" required="false" tooltip="The display name for this user record.">&lt;%=@inputs['Requester Name']%&gt;</parameter>
+                </parameters>
+                <messages>
+                    <message type="Create"></message>
+                    <message type="Update"></message>
+                    <message type="Complete"></message>
+                </messages>
+                <dependents>
+                    <task label="" type="Complete" value="">kinetic_request_ce_user_update_v5_4</task>
+                </dependents>
+            </task>
+            <task definition_id="kinetic_request_ce_user_update_v5" id="kinetic_request_ce_user_update_v5_4" name="Add Requester Roles and Teams" x="548" y="77">
+                <version>5</version>
+                <configured>true</configured>
+                <defers>false</defers>
+                <deferrable>false</deferrable>
+                <visible>true</visible>
+                <parameters>
+                    <parameter id="error_handling" label="Error Handling" menu="Error Message,Raise Error" required="true" tooltip="Determine what to return if an error is encountered.">Raise Error</parameter>
+                    <parameter id="space_slug" label="Space Slug" menu="" required="true" tooltip="Space slug of which the user you are trying to updates belongs to (defaults to info value if not provided).">&lt;%=@results['Allocate Space']['Space Slug']%&gt;</parameter>
+                    <parameter id="current_username" label="Current User Name" menu="" required="true" tooltip="User name of user you wish to update.">&lt;%=@results['Create Requester User']['Username']%&gt;</parameter>
+                    <parameter id="display_name" label="Display Name" menu="" required="false" tooltip="The displayName for the user."></parameter>
+                    <parameter id="email" label="Email" menu="" required="false" tooltip="The email for this user profile."></parameter>
+                    <parameter id="preferred_locale" label="Preferred Locale" menu="" required="false" tooltip="The preferred language for the user, in the format languageabbreviation[_COUNTRYABBREVIATION].  Examples:  en, fr, es, en_GB, es_MX"></parameter>
+                    <parameter id="enabled" label="Enabled" menu="" required="false" tooltip="Select if this user profile will be enabled (boolean)"></parameter>
+                    <parameter id="password" label="Password" menu="" required="false" tooltip="Reset password for a user."></parameter>
+                    <parameter id="space_admin" label="Space Admin" menu="" required="false" tooltip="Select if you desire for this user to have space admin privledges.(boolean)">true</parameter>
+                    <parameter id="new_username" label="New Username" menu="" required="false" tooltip="Change the username for this user."></parameter>
+                    <parameter id="append_or_replace" label="Append or Replace attributes?" menu="Append,Replace" required="true" tooltip="Append or replace the existing attribute values with the attributes provided.">Append</parameter>
+                    <parameter id="attributes" label="Attributes" menu="" required="false" tooltip="Change the attributes for this user. JSON formatted string: [{&quot;name&quot;: &quot;Attribute Name&quot;,&quot;values&quot;: [&quot;Attribute Value&quot;,&quot;Attribute Value&quot;,...]},{&quot;name&quot;: &quot;Attribute Name2&quot;,&quot;values&quot;: [&quot;Attribute Value&quot;,...]},...]"></parameter>
+                    <parameter id="profile_attributes" label="Profile Attributes" menu="" required="false" tooltip="Change the profile attributes for this user. JSON formatted string: [{&quot;name&quot;: &quot;Profile Attribute Name&quot;,&quot;values&quot;: [&quot;Profile Attribute Value&quot;,&quot;Profile Attribute Value&quot;,...]},{&quot;name&quot;: &quot;Profile Attribute Name2&quot;,&quot;values&quot;: [&quot;Profile Attribute Value&quot;,...]},...]"></parameter>
+                    <parameter id="append_or_replace_memberships" label="Append or Replace memberships?" menu="Append,Replace" required="true" tooltip="Append or replace the existing memberships with the memberships provided.">Replace</parameter>
+                    <parameter id="memberships" label="Memberships" menu="" required="false" tooltip="Change the memberships (e.g. teams) for this user. JSON formatted string: [{&quot;team&quot;: {&quot;name&quot;: &quot;Facilities&quot;}}, {&quot;team&quot;: {&quot;name&quot;: &quot;Engineers&quot;}},...]">&lt;%=[
+  {"team" =&gt; {"name" =&gt; "Default"}},
+  {"team" =&gt; {"name" =&gt; "Role::Employee"}},
+  {"team" =&gt; {"name" =&gt; "Role::Tech Bar Display::HQ TechBar"}},
+  {"team" =&gt; {"name" =&gt; "Role::Scheduler"}},
+  {"team" =&gt; {"name" =&gt; "Scheduler::HQ TechBar"}}
+].to_json%&gt;</parameter>
+                </parameters>
+                <messages>
+                    <message type="Create"></message>
+                    <message type="Update"></message>
+                    <message type="Complete"></message>
+                </messages>
+                <dependents>
+                    <task label="" type="Complete" value="">routine_kinetic_datastore_submission_update_v1_13</task>
+                </dependents>
+            </task>
+            <task definition_id="routine_kinetic_datastore_submission_update_v1" id="routine_kinetic_datastore_submission_update_v1_13" name="Set Admin Name and Email on Datastore" x="677" y="77">
+                <version>1</version>
+                <configured>true</configured>
+                <defers>true</defers>
+                <deferrable>true</deferrable>
+                <visible>false</visible>
+                <parameters>
+                    <parameter id="Id" label="Id" menu="" required="true" tooltip="The id of the submission to update">&lt;%=@results['Allocate Space']['Space Datastore Submission Id']%&gt;</parameter>
+                    <parameter id="Updated - Core State" label="Updated - Core State" menu="" required="false" tooltip="The submissions core state"></parameter>
+                    <parameter id="Updated - Current Page Name" label="Updated - Current Page Name" menu="" required="false" tooltip="The page to set the submission to"></parameter>
+                    <parameter id="Updated - Current Page Navigation" label="Updated - Current Page Navigation" menu="" required="false" tooltip="The direction of the next page (next or previous)"></parameter>
+                    <parameter id="Updated - Values JSON" label="Updated - Values JSON" menu="" required="false" tooltip="A JSON representation of the submissions values">&lt;%={
+  "Admin Name" =&gt; @inputs['Requester Name'],
+  "Admin Email" =&gt; @inputs['Requester Email']
+}.to_json%&gt;</parameter>
+                </parameters>
+                <messages>
+                    <message type="Create"></message>
+                    <message type="Update"></message>
+                    <message type="Complete"></message>
+                </messages>
+                <dependents>
+                    <task label="" type="Complete" value="">kinetic_request_ce_delete_v1_15</task>
+                </dependents>
+            </task>
+            <task definition_id="kinetic_request_ce_delete_v1" id="kinetic_request_ce_delete_v1_15" name="Delete temp.user@kinops.io" x="825" y="89">
+                <version>1</version>
+                <configured>true</configured>
+                <defers>false</defers>
+                <deferrable>false</deferrable>
+                <visible>false</visible>
+                <parameters>
+                    <parameter id="error_handling" label="Error Handling" menu="Error Message,Raise Error" required="true" tooltip="Determine what to return if an error is encountered.">Error Message</parameter>
+                    <parameter id="domain" label="Domain/Server" menu="" required="false" tooltip="server/domain this space is on"></parameter>
+                    <parameter id="space_slug" label="Space Slug" menu="" required="false" tooltip="The Space the submission is being deleted from (defaults to info value if not provided).">&lt;%=@results['Allocate Space']['Space Slug']%&gt;</parameter>
+                    <parameter id="type" label="Type of Record to Delete" menu="" required="true" tooltip="Type of record you want to delete. Valid Values are: Space, Kapp, Bridge, Bridge Model, Categories, Form, Form Type, Team, User, Webhook, Security Policy Definition, Datastore Form.">User</parameter>
+                    <parameter id="kapp" label="Kapp Slug" menu="" required="false" tooltip="Please Specify the Kapp if deleting Submission, Form, Form Type, or Categories"></parameter>
+                    <parameter id="slug" label="Item Name or Slug" menu="" required="true" tooltip="The slug (or name if slug not appropriate for the item) of the item you are deleting.">temp.user@kinops.io</parameter>
+                </parameters>
+                <messages>
+                    <message type="Create"></message>
+                    <message type="Update"></message>
+                    <message type="Complete"></message>
+                </messages>
+                <dependents>
+                    <task label="" type="Complete" value="">routine_kinetic_datastore_submissions_retrieve_list_v1_19</task>
+                </dependents>
+            </task>
+            <task definition_id="routine_kinetic_datastore_submissions_retrieve_list_v1" id="routine_kinetic_datastore_submissions_retrieve_list_v1_19" name="Retrieve Kinops Environmnt Id" x="823" y="216">
+                <version>1</version>
+                <configured>true</configured>
+                <defers>true</defers>
+                <deferrable>true</deferrable>
+                <visible>false</visible>
+                <parameters>
+                    <parameter id="Form Slug" label="Form Slug" menu="" required="false" tooltip="The slug of the Form to find submissions in.">kinops-environments</parameter>
+                    <parameter id="Index To Search" label="Index To Search" menu="" required="false" tooltip="The Index definition to search (i.e. values[Name],values[Status])">values[Space Slug]</parameter>
+                    <parameter id="Core State" label="Core State" menu="" required="false" tooltip="Searches for submissions that have a core state that matches this parameter. If no value is provided, the results will contain submissions in all core states."></parameter>
+                    <parameter id="Direction" label="Direction" menu="" required="false" tooltip="Result Set sorting direction. The default value is ascending."></parameter>
+                    <parameter id="Limit" label="Limit" menu="" required="false" tooltip="Limit the number of results returned. If not provided, the server will limit the results to 25 submissions. Maximum limit 1000">1</parameter>
+                    <parameter id="Query" label="Query" menu="" required="false" tooltip="Query to use to fetch submissions. (i.e values[First Name]=&quot;Fred&quot;)">values[Space Slug] = "&lt;%=@results['Allocate Space']['Space Slug']%&gt;"</parameter>
+                    <parameter id="Next Page Token" label="Next Page Token" menu="" required="false" tooltip="The value to use as the offset for the page of submissions to return. The submission that matches this value will not be included in the results."></parameter>
+                </parameters>
+                <messages>
+                    <message type="Create"></message>
+                    <message type="Update"></message>
+                    <message type="Complete"></message>
+                </messages>
+                <dependents>
+                    <task label="" type="Complete" value="">routine_kinetic_datastore_submission_update_v1_21</task>
+                </dependents>
+            </task>
+            <task definition_id="routine_kinetic_datastore_submission_update_v1" id="routine_kinetic_datastore_submission_update_v1_21" name="Update space with Flavor" x="824" y="319">
+                <version>1</version>
+                <configured>true</configured>
+                <defers>true</defers>
+                <deferrable>true</deferrable>
+                <visible>false</visible>
+                <parameters>
+                    <parameter id="Id" label="Id" menu="" required="true" tooltip="The id of the submission to update">&lt;%=JSON.parse(@results['Retrieve Kinops Environmnt Id']['Submissions List JSON'])[0]['id']%&gt;</parameter>
+                    <parameter id="Updated - Core State" label="Updated - Core State" menu="" required="false" tooltip="The submissions core state"></parameter>
+                    <parameter id="Updated - Current Page Name" label="Updated - Current Page Name" menu="" required="false" tooltip="The page to set the submission to"></parameter>
+                    <parameter id="Updated - Current Page Navigation" label="Updated - Current Page Navigation" menu="" required="false" tooltip="The direction of the next page (next or previous)"></parameter>
+                    <parameter id="Updated - Values JSON" label="Updated - Values JSON" menu="" required="false" tooltip="A JSON representation of the submissions values">&lt;%=
+{"Flavor" =&gt; "Tech Bar HDI 2019"}.to_json
+%&gt;</parameter>
+                </parameters>
+                <messages>
+                    <message type="Create"></message>
+                    <message type="Update"></message>
+                    <message type="Complete"></message>
+                </messages>
+                <dependents>
+                    <task label="" type="Complete" value="">system_tree_return_v1_22</task>
+                </dependents>
+            </task>
+            <task definition_id="system_tree_return_v1" id="system_tree_return_v1_22" name="Return" x="826" y="429">
+                <version>1</version>
+                <configured>true</configured>
+                <defers>false</defers>
+                <deferrable>false</deferrable>
+                <visible>false</visible>
+                <parameters>
+                    <parameter id="Login Link" label="Login Link" menu="" required="false" tooltip="Link to login and reset password"></parameter>
+                    <parameter id="Space Slug" label="Space Slug" menu="" required="false" tooltip="Space Slug of Allocated Space">&lt;%=@results['Allocate Space']['Space Slug']%&gt;</parameter>
+                </parameters>
+                <messages>
+                    <message type="Create"></message>
+                    <message type="Update"></message>
+                    <message type="Complete"></message>
+                </messages>
+                <dependents></dependents>
+            </task>
+        </request>
+    </taskTree>
+</tree>

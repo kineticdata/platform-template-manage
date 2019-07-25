@@ -1,0 +1,412 @@
+<tree schema_version="1.0">
+    <sourceName>-</sourceName>
+    <sourceGroup>-</sourceGroup>
+    <definitionId>routine_decomission_kinops_instance_v1</definitionId>
+    <type>Global Routine</type>
+    <status>Active</status>
+    <taskTree builder_version="" schema_version="1.0" version="">
+        <name>Decomission kinops Instance</name>
+        <author></author>
+        <notes></notes>
+        <lastID>40</lastID>
+        <taskDefinition id="routine_decomission_kinops_instance_v1" name="Decomission kinops Instance" schema_version="1.0" version="1">
+            <visible>false</visible>
+            <deferrable>true</deferrable>
+            <parameters>
+                <parameter id="Space Slug" label="Space Slug" required="true" tooltip=""></parameter>
+                <parameter id="Property File Uri" label="Property File Uri" required="true" tooltip=""></parameter>
+                <parameter id="Kinops AWS Region" label="Kinops AWS Region" required="true" tooltip=""></parameter>
+                <parameter id="Kinops AWS Credentials" label="Kinops AWS Credentials" required="true" tooltip="CSV Credentials file used to connect to S3 (aws_credentials.csv)"></parameter>
+                <parameter id="Kinops AWS ECS Cluster" label="Kinops AWS ECS Cluster" required="true" tooltip="ECS Cluster that houses Response and Task"></parameter>
+                <parameter id="Kinops Space Bucket" label="Kinops Space Bucket" required="true" tooltip="AWS S3 Bucket that holds tenant space data"></parameter>
+            </parameters>
+            <handler name="system_tree_call" version="1"></handler>
+            <results format="xml"></results>
+        </taskDefinition>
+        <request>
+            <task definition_id="system_start_v1" id="start" name="Start" x="319" y="66">
+                <version>1</version>
+                <configured>true</configured>
+                <defers>false</defers>
+                <deferrable>false</deferrable>
+                <visible>false</visible>
+                <parameters></parameters>
+                <messages></messages>
+                <dependents>
+                    <task label="" type="Complete" value="">utilities_echo_v1_28</task>
+                </dependents>
+            </task>
+            <task definition_id="utilities_echo_v1" id="utilities_echo_v1_5" name="Task ARNs to XML" x="1187" y="132">
+                <version>1</version>
+                <configured>true</configured>
+                <defers>false</defers>
+                <deferrable>false</deferrable>
+                <visible>false</visible>
+                <parameters>
+                    <parameter id="input" label="Input" menu="" required="true" tooltip="">&lt;% 
+    require 'json'
+    xml = "&lt;tasks&gt;"
+    JSON.parse(@results['Space ECS Tasks']['Tasks']).each do |task|
+      xml += "&lt;taskArn&gt;#{task['taskArn']}&lt;/taskArn&gt;"
+    end
+    xml += "&lt;/tasks&gt;"
+    %&gt;
+    &lt;%= xml %&gt;</parameter>
+                </parameters>
+                <messages>
+                    <message type="Create"></message>
+                    <message type="Update"></message>
+                    <message type="Complete"></message>
+                </messages>
+                <dependents>
+                    <task label="" type="Complete" value="">system_loop_head_v1_6</task>
+                </dependents>
+            </task>
+            <task definition_id="system_loop_head_v1" id="system_loop_head_v1_6" name="Stop ECS Task Loop Begin" x="1192" y="271">
+                <version>1</version>
+                <configured>true</configured>
+                <defers>false</defers>
+                <deferrable>false</deferrable>
+                <visible>false</visible>
+                <parameters>
+                    <parameter id="data_source" label="Data Source:" menu="" required="true" tooltip="The source that contains the data to use to create each task in the loop.">&lt;%=@results['Task ARNs to XML']['output']%&gt;</parameter>
+                    <parameter id="loop_path" label="Loop Path:" menu="" required="true" tooltip="The XPath statement to indicate what data records to process.">/tasks/taskArn</parameter>
+                    <parameter id="var_name" label="Variable Name:" menu="" required="false" tooltip="The local variable name used to represent the data used in loop tasks.">taskArn</parameter>
+                </parameters>
+                <messages>
+                    <message type="Create"></message>
+                    <message type="Update"></message>
+                    <message type="Complete"></message>
+                </messages>
+                <dependents>
+                    <task label="" type="Complete" value="">system_loop_tail_v1_8</task>
+                    <task label="" type="Complete" value="">aws_ecs_task_stop_v2_38</task>
+                </dependents>
+            </task>
+            <task definition_id="system_loop_tail_v1" id="system_loop_tail_v1_8" name="Stop ECS Task Loop End" x="1103" y="404">
+                <version>1</version>
+                <configured>true</configured>
+                <defers>false</defers>
+                <deferrable>false</deferrable>
+                <visible>false</visible>
+                <parameters>
+                    <parameter id="type" label="Type:" menu="All,Some,Any" required="true" tooltip="How many loop processes must be completed before continuing?">All</parameter>
+                    <parameter dependsOnId="type" dependsOnValue="Some" id="number" label="Number:" menu="" required="false" tooltip="If some, how many?"></parameter>
+                </parameters>
+                <messages>
+                    <message type="Create"></message>
+                    <message type="Update"></message>
+                    <message type="Complete"></message>
+                </messages>
+                <dependents>
+                    <task label="CE" type="Complete" value="">kinops_space_decommission_v1_12</task>
+                </dependents>
+            </task>
+            <task definition_id="system_junction_v1" id="system_junction_v1_11" name="All Tasks Complete" x="328" y="442">
+                <version>1</version>
+                <configured>true</configured>
+                <defers>false</defers>
+                <deferrable>false</deferrable>
+                <visible>false</visible>
+                <parameters></parameters>
+                <messages>
+                    <message type="Create"></message>
+                    <message type="Update"></message>
+                    <message type="Complete"></message>
+                </messages>
+                <dependents>
+                    <task label="" type="Complete" value="">system_tree_return_v1_29</task>
+                </dependents>
+            </task>
+            <task definition_id="kinops_space_decommission_v1" id="kinops_space_decommission_v1_12" name="Decommission Kinops Space" x="836" y="404">
+                <version>1</version>
+                <configured>true</configured>
+                <defers>false</defers>
+                <deferrable>false</deferrable>
+                <visible>true</visible>
+                <parameters>
+                    <parameter id="error_handling" label="Error Handling" menu="Error Message,Raise Error" required="true" tooltip="Determine what to return if an error is encountered.">Raise Error</parameter>
+                    <parameter id="kinops_s3_bucket" label="Kinops Config S3 Bucket" menu="" required="true" tooltip="Kinops configuration S3 Bucket">&lt;%=@results['Kinops Private Bucket']['output']%&gt;</parameter>
+                    <parameter id="kinops_s3_filename" label="Kinops Config S3 Filename" menu="" required="true" tooltip="Kinops configuration S3 Filename">&lt;%=@results['Kinops Config File']['output']%&gt;</parameter>
+                    <parameter id="space_slug" label="Space Slug" menu="" required="true" tooltip="Space Slug to Decommission">&lt;%= @inputs['Space Slug']%&gt;</parameter>
+                </parameters>
+                <messages>
+                    <message type="Create"></message>
+                    <message type="Update"></message>
+                    <message type="Complete"></message>
+                </messages>
+                <dependents>
+                    <task label="AWS S3" type="Complete" value="">system_noop_v1_26</task>
+                    <task label="" type="Complete" value="">kinetic_request_ce_datastore_submission_retrieve_v1_36</task>
+                </dependents>
+            </task>
+            <task definition_id="utilities_echo_v1" id="utilities_echo_v1_13" name="Kinops Private Bucket" x="557" y="124">
+                <version>1</version>
+                <configured>true</configured>
+                <defers>false</defers>
+                <deferrable>false</deferrable>
+                <visible>true</visible>
+                <parameters>
+                    <parameter id="input" label="Input" menu="" required="true" tooltip="">&lt;%=URI.parse(@inputs['Property File Uri']).host%&gt;</parameter>
+                </parameters>
+                <messages>
+                    <message type="Create"></message>
+                    <message type="Update"></message>
+                    <message type="Complete"></message>
+                </messages>
+                <dependents>
+                    <task label="" type="Complete" value="">utilities_echo_v1_20</task>
+                </dependents>
+            </task>
+            <task definition_id="utilities_echo_v1" id="utilities_echo_v1_20" name="Kinops Config File" x="710" y="135">
+                <version>1</version>
+                <configured>true</configured>
+                <defers>false</defers>
+                <deferrable>false</deferrable>
+                <visible>true</visible>
+                <parameters>
+                    <parameter id="input" label="Input" menu="" required="true" tooltip="">&lt;%=URI.parse(@inputs['Property File Uri']).path.split("/")[1]%&gt;</parameter>
+                </parameters>
+                <messages>
+                    <message type="Create"></message>
+                    <message type="Update"></message>
+                    <message type="Complete"></message>
+                </messages>
+                <dependents>
+                    <task label="" type="Complete" value="">utilities_echo_v1_21</task>
+                </dependents>
+            </task>
+            <task definition_id="utilities_echo_v1" id="utilities_echo_v1_21" name="Kinops AWS ECS Env" x="852" y="123">
+                <version>1</version>
+                <configured>true</configured>
+                <defers>false</defers>
+                <deferrable>false</deferrable>
+                <visible>true</visible>
+                <parameters>
+                    <parameter id="input" label="Input" menu="" required="true" tooltip="">space_slug</parameter>
+                </parameters>
+                <messages>
+                    <message type="Create"></message>
+                    <message type="Update"></message>
+                    <message type="Complete"></message>
+                </messages>
+                <dependents>
+                    <task label="Task and Response" type="Complete" value="">aws_ecs_task_list_by_env_v2_37</task>
+                </dependents>
+            </task>
+            <task definition_id="system_noop_v1" id="system_noop_v1_26" name="Delete S3 Folders" x="641" y="425">
+                <version>1</version>
+                <configured>true</configured>
+                <defers>false</defers>
+                <deferrable>false</deferrable>
+                <visible>false</visible>
+                <parameters></parameters>
+                <messages>
+                    <message type="Create"></message>
+                    <message type="Update"></message>
+                    <message type="Complete"></message>
+                </messages>
+                <dependents>
+                    <task label="" type="Complete" value="">aws_s3_folder_delete_v2_39</task>
+                    <task label="" type="Complete" value="">aws_s3_folder_delete_v2_40</task>
+                </dependents>
+            </task>
+            <task definition_id="utilities_echo_v1" id="utilities_echo_v1_28" name="Is System Space" x="318" y="145">
+                <version>1</version>
+                <configured>true</configured>
+                <defers>false</defers>
+                <deferrable>false</deferrable>
+                <visible>true</visible>
+                <parameters>
+                    <parameter id="input" label="Input" menu="" required="true" tooltip="">&lt;%=["manage","kinops-gold"].include?(@inputs['Space Slug'])%&gt;</parameter>
+                </parameters>
+                <messages>
+                    <message type="Create"></message>
+                    <message type="Update"></message>
+                    <message type="Complete"></message>
+                </messages>
+                <dependents>
+                    <task label="System Space" type="Complete" value="@results['Is System Space']['output'] == &quot;true&quot;">system_junction_v1_11</task>
+                    <task label="Not System Space" type="Complete" value="@results['Is System Space']['output'] != &quot;true&quot;">utilities_echo_v1_13</task>
+                </dependents>
+            </task>
+            <task definition_id="system_tree_return_v1" id="system_tree_return_v1_29" name="Return" x="339" y="573">
+                <version>1</version>
+                <configured>true</configured>
+                <defers>false</defers>
+                <deferrable>false</deferrable>
+                <visible>false</visible>
+                <parameters>
+                    <parameter id="Login Link" label="Login Link" menu="" required="false" tooltip="Link to send to user with deferral token"></parameter>
+                </parameters>
+                <messages>
+                    <message type="Create"></message>
+                    <message type="Update"></message>
+                    <message type="Complete"></message>
+                </messages>
+                <dependents></dependents>
+            </task>
+            <task definition_id="kinetic_request_ce_submission_update_v1" id="kinetic_request_ce_submission_update_v1_31" name="Update Kinops Env Status - Inactive" x="980" y="648">
+                <version>1</version>
+                <configured>true</configured>
+                <defers>false</defers>
+                <deferrable>false</deferrable>
+                <visible>true</visible>
+                <parameters>
+                    <parameter id="error_handling" label="Error Handling" menu="Error Message,Raise Error" required="true" tooltip="Determine what to return if an error is encountered.">Raise Error</parameter>
+                    <parameter id="space_slug" label="Space Slug" menu="" required="false" tooltip="The Space the submission is being retrieved from."></parameter>
+                    <parameter id="submission_id" label="Submission Id" menu="" required="true" tooltip="The id of the submission being updated.">&lt;%=@results['Find Kinops Environment Record']['ID']%&gt;</parameter>
+                    <parameter id="state" label="State" menu="" required="false" tooltip="The value used to set the submission state."></parameter>
+                    <parameter id="values" label="Values" menu="" required="false" tooltip="A JSON map of field names to values that should be set.">&lt;%={
+  "Environment Status" =&gt; "Inactive"
+}.to_json%&gt;</parameter>
+                    <parameter id="current_page_name" label="Current Page Name:" menu="" required="false" tooltip="Set the current page name."></parameter>
+                    <parameter id="current_page_navigation" label="Current Page Navigation:" menu="" required="false" tooltip="Set the current page navigation."></parameter>
+                    <parameter id="origin_id" label="Origin ID:" menu="" required="false" tooltip="Set the origin ID."></parameter>
+                    <parameter id="parent_id" label="Parent ID:" menu="" required="false" tooltip="Set the parent ID."></parameter>
+                </parameters>
+                <messages>
+                    <message type="Create"></message>
+                    <message type="Update"></message>
+                    <message type="Complete"></message>
+                </messages>
+                <dependents></dependents>
+            </task>
+            <task definition_id="kinetic_request_ce_datastore_submission_delete_v1" id="kinetic_request_ce_datastore_submission_delete_v1_35" name="Delete Datastore Record" x="692" y="673">
+                <version>1</version>
+                <configured>true</configured>
+                <defers>false</defers>
+                <deferrable>false</deferrable>
+                <visible>true</visible>
+                <parameters>
+                    <parameter id="error_handling" label="Error Handling" menu="Error Message,Raise Error" required="true" tooltip="Determine what to return if an error is encountered.">Error Message</parameter>
+                    <parameter id="space_slug" label="Space Slug" menu="" required="false" tooltip="The Space the submission is being deleted from (defaults to info value if not provided)."></parameter>
+                    <parameter id="submission_id" label="Datastore Submission Id" menu="" required="true" tooltip="The id of the submission being deleted.">&lt;%=@results['Find Kinops Environment Record']['ID']%&gt;</parameter>
+                </parameters>
+                <messages>
+                    <message type="Create"></message>
+                    <message type="Update"></message>
+                    <message type="Complete"></message>
+                </messages>
+                <dependents></dependents>
+            </task>
+            <task definition_id="kinetic_request_ce_datastore_submission_retrieve_v1" id="kinetic_request_ce_datastore_submission_retrieve_v1_36" name="Find Kinops Environment Record" x="693" y="517">
+                <version>1</version>
+                <configured>true</configured>
+                <defers>false</defers>
+                <deferrable>false</deferrable>
+                <visible>true</visible>
+                <parameters>
+                    <parameter id="error_handling" label="Error Handling" menu="Error Message,Raise Error" required="true" tooltip="Determine what to return if an error is encountered.">Error Message</parameter>
+                    <parameter id="space_slug" label="Space Slug" menu="" required="false" tooltip="The Space the submission is being retrieved from (defaults to info value if not provided)."></parameter>
+                    <parameter id="retrieve_by" label="Retrieve By" menu="Id,Query" required="true" tooltip="How to retrieve the submission. Id or Query.">Query</parameter><!-- Retrieve By Query parameters -->
+                    <parameter dependsOnId="retrieve_by" dependsOnValue="Query" id="form_slug" label="Datastore Form Slug" menu="" required="false" tooltip="Slug of the form to query">kinops-environments</parameter>
+                    <parameter dependsOnId="retrieve_by" dependsOnValue="Query" id="index" label="Index" menu="" required="false" tooltip="The index to use for the search/retrieval">values[Space Slug]</parameter>
+                    <parameter dependsOnId="retrieve_by" dependsOnValue="Query" id="query" label="Query" menu="" required="false" tooltip="A query that will retrieve a single submission">values[Space Slug]="&lt;%=@inputs['Space Slug']%&gt;"</parameter><!-- Retrieve By Id parameters -->
+                    <parameter dependsOnId="retrieve_by" dependsOnValue="Id" id="submission_id" label="Datastore Submission Id" menu="" required="false" tooltip="The id of the submission being retrieved."></parameter>
+                </parameters>
+                <messages>
+                    <message type="Create"></message>
+                    <message type="Update"></message>
+                    <message type="Complete"></message>
+                </messages>
+                <dependents>
+                    <task label="Has Env Record" type="Complete" value="!@results['Find Kinops Environment Record'].nil? &amp;&amp; !@results['Find Kinops Environment Record']['ID'].nil?">kinetic_request_ce_datastore_submission_delete_v1_35</task>
+                </dependents>
+            </task>
+            <task definition_id="aws_ecs_task_list_by_env_v2" id="aws_ecs_task_list_by_env_v2_37" name="Space ECS Tasks" x="1023.2999877929688" y="114.41665649414062">
+                <version>2</version>
+                <configured>true</configured>
+                <defers>false</defers>
+                <deferrable>false</deferrable>
+                <visible>false</visible>
+                <parameters>
+                    <parameter id="aws_region" label="AWS Region" menu="" required="true" tooltip="Name of the AWS Region (ex: us-west-2)">&lt;%=@inputs['Kinops AWS Region']%&gt;</parameter>
+                    <parameter id="aws_credentials_s3_bucket" label="S3 Bucket" menu="" required="true" tooltip="S3 Bucket for AWS Credentials">&lt;%=@results['Kinops Private Bucket']['output']%&gt;</parameter>
+                    <parameter id="aws_credentials_s3_filename" label="S3 Filename" menu="" required="true" tooltip="S3 Filename for AWS Credentials">&lt;%=@inputs['Kinops AWS Credentials']%&gt;</parameter>
+                    <parameter id="ecs_cluster" label="ECS Cluster" menu="" required="true" tooltip="Name of the ECS Cluster">&lt;%=@inputs['Kinops AWS ECS Cluster']%&gt;</parameter>
+                    <parameter id="env_name" label="Env Name" menu="" required="true" tooltip="Environment Variable Name">&lt;%=@results['Kinops AWS ECS Env']['output']%&gt;</parameter>
+                    <parameter id="env_value" label="Env Value" menu="" required="true" tooltip="Environment Variable Value">&lt;%= @inputs['Space Slug']%&gt;</parameter>
+                    <parameter id="error_handling" label="Error Handling" menu="Error Message,Raise Error" required="true" tooltip="Determine what to return if an error is encountered.">Error Message</parameter>
+                </parameters>
+                <messages>
+                    <message type="Create"></message>
+                    <message type="Update"></message>
+                    <message type="Complete"></message>
+                </messages>
+                <dependents>
+                    <task label="" type="Complete" value="">utilities_echo_v1_5</task>
+                </dependents>
+            </task>
+            <task definition_id="aws_ecs_task_stop_v2" id="aws_ecs_task_stop_v2_38" name="Stop ECS Task" x="1270" y="413">
+                <version>2</version>
+                <configured>true</configured>
+                <defers>false</defers>
+                <deferrable>false</deferrable>
+                <visible>true</visible>
+                <parameters>
+                    <parameter id="aws_region" label="AWS Region" menu="" required="true" tooltip="Name of the AWS Region (ex: us-west-2)">&lt;%=@inputs['Kinops AWS Region']%&gt;</parameter>
+                    <parameter id="aws_credentials_s3_bucket" label="S3 Bucket" menu="" required="true" tooltip="S3 Bucket for AWS Credentials">&lt;%=@results['Kinops Private Bucket']['output']%&gt;</parameter>
+                    <parameter id="aws_credentials_s3_filename" label="S3 Filename" menu="" required="true" tooltip="S3 Filename for AWS Credentials">&lt;%=@inputs['Kinops AWS Credentials']%&gt;</parameter>
+                    <parameter id="ecs_cluster" label="ECS Cluster" menu="" required="true" tooltip="Name of the ECS Cluster">&lt;%=@inputs['Kinops AWS ECS Cluster']%&gt;</parameter>
+                    <parameter id="ecs_task_arn" label="ECS Task Arn" menu="" required="true" tooltip="AWS Resource Name of the ECS Task">&lt;%=@results['Stop ECS Task Loop Begin']['Value']%&gt;</parameter>
+                    <parameter id="error_handling" label="Error Handling" menu="Error Message,Raise Error" required="true" tooltip="Determine what to return if an error is encountered.">Raise Error</parameter>
+                </parameters>
+                <messages>
+                    <message type="Create"></message>
+                    <message type="Update"></message>
+                    <message type="Complete"></message>
+                </messages>
+                <dependents>
+                    <task label="" type="Complete" value="">system_loop_tail_v1_8</task>
+                </dependents>
+            </task>
+            <task definition_id="aws_s3_folder_delete_v2" id="aws_s3_folder_delete_v2_39" name="Delete S3 Filehub Folder" x="485" y="396">
+                <version>2</version>
+                <configured>true</configured>
+                <defers>false</defers>
+                <deferrable>false</deferrable>
+                <visible>true</visible>
+                <parameters>
+                    <parameter id="aws_region" label="AWS Region" menu="" required="true" tooltip="Name of the AWS Region (ex: us-west-2)">&lt;%=@inputs['Kinops AWS Region']%&gt;</parameter>
+                    <parameter id="aws_credentials_s3_bucket" label="S3 Credentials Bucket" menu="" required="true" tooltip="S3 Bucket for AWS Credentials">&lt;%=@results['Kinops Private Bucket']['output']%&gt;</parameter>
+                    <parameter id="aws_credentials_s3_filename" label="S3 Credentials Filename" menu="" required="true" tooltip="S3 Filename for AWS Credentials">&lt;%=@inputs['Kinops AWS Credentials']%&gt;</parameter>
+                    <parameter id="aws_s3_bucket" label="S3 Bucket" menu="" required="true" tooltip="Name of the S3 bucket that contains the folder.">&lt;%=@inputs['Kinops Space Bucket']%&gt;</parameter>
+                    <parameter id="aws_s3_folder" label="S3 Folder" menu="" required="true" tooltip="Name of the S3 folder to delete">&lt;%= @inputs['Space Slug']%&gt;</parameter>
+                    <parameter id="error_handling" label="Error Handling" menu="Error Message,Raise Error" required="true" tooltip="Determine what to return if an error is encountered.">Raise Error</parameter>
+                </parameters>
+                <messages>
+                    <message type="Create"></message>
+                    <message type="Update"></message>
+                    <message type="Complete"></message>
+                </messages>
+                <dependents>
+                    <task label="" type="Complete" value="">system_junction_v1_11</task>
+                </dependents>
+            </task>
+            <task definition_id="aws_s3_folder_delete_v2" id="aws_s3_folder_delete_v2_40" name="Delete S3 Response Folder" x="485" y="503">
+                <version>2</version>
+                <configured>true</configured>
+                <defers>false</defers>
+                <deferrable>false</deferrable>
+                <visible>true</visible>
+                <parameters>
+                    <parameter id="aws_region" label="AWS Region" menu="" required="true" tooltip="Name of the AWS Region (ex: us-west-2)">&lt;%=@inputs['Kinops AWS Region']%&gt;</parameter>
+                    <parameter id="aws_credentials_s3_bucket" label="S3 Credentials Bucket" menu="" required="true" tooltip="S3 Bucket for AWS Credentials">&lt;%=@results['Kinops Private Bucket']['output']%&gt;</parameter>
+                    <parameter id="aws_credentials_s3_filename" label="S3 Credentials Filename" menu="" required="true" tooltip="S3 Filename for AWS Credentials">&lt;%=@inputs['Kinops AWS Credentials']%&gt;</parameter>
+                    <parameter id="aws_s3_bucket" label="S3 Bucket" menu="" required="true" tooltip="Name of the S3 bucket that contains the folder.">&lt;%=@inputs['Kinops Space Bucket']%&gt;</parameter>
+                    <parameter id="aws_s3_folder" label="S3 Folder" menu="" required="true" tooltip="Name of the S3 folder to delete">&lt;%= @inputs['Space Slug']%&gt;-response</parameter>
+                    <parameter id="error_handling" label="Error Handling" menu="Error Message,Raise Error" required="true" tooltip="Determine what to return if an error is encountered.">Raise Error</parameter>
+                </parameters>
+                <messages>
+                    <message type="Create"></message>
+                    <message type="Update"></message>
+                    <message type="Complete"></message>
+                </messages>
+                <dependents>
+                    <task label="" type="Complete" value="">system_junction_v1_11</task>
+                </dependents>
+            </task>
+        </request>
+    </taskTree>
+</tree>
