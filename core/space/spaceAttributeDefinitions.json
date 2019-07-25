@@ -6,36 +6,6 @@
   },
   {
     "allowsMultiple": false,
-    "description": "CSV of aws credentials (aws_credentials.csv)",
-    "name": "AWS Credentials File"
-  },
-  {
-    "allowsMultiple": false,
-    "description": "Cluster used for housing response and task containers",
-    "name": "AWS ECS Cluster"
-  },
-  {
-    "allowsMultiple": false,
-    "description": "Property File Used by the Provisioner",
-    "name": "AWS Property File"
-  },
-  {
-    "allowsMultiple": false,
-    "description": null,
-    "name": "AWS Property File - Nagios"
-  },
-  {
-    "allowsMultiple": false,
-    "description": "Region in which this kinops instance lives",
-    "name": "AWS Region"
-  },
-  {
-    "allowsMultiple": false,
-    "description": "AWS Bucket which holds tenant spaces",
-    "name": "AWS Tenant S3 Bucket"
-  },
-  {
-    "allowsMultiple": false,
     "description": null,
     "name": "Background Image"
   },

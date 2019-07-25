@@ -3,13 +3,12 @@
   "description": "Special to kinops",
   "type": "Stored",
   "handlers": [
-    "kinops_space_create_handler_v1"
+
   ],
   "policyRules": [
 
   ],
   "trees": [
-    "routine_email_all_tenant_users",
     "routine_kinops_space_create_v1"
   ]
 }

@@ -11,26 +11,7 @@
   "trees": [
     "routine_create_kinops_instance_v1",
     "routine_handler_failure_error_process_v1",
-    "routine_import_forms_to_space",
-    "routine_import_handlers_to_space",
-    "routine_import_trees_to_space",
     "routine_kd_notification_send_using_template_v1",
-    "routine_kd_notifications_standardize_recipients_v1",
-    "routine_kd_retrieve_active_kinops_environments",
-    "routine_kd_retrieve_repairable_kinops_environments",
-    "routine_kinetic_request_ce_submission_create_v1",
-    "routine_kinetic_request_ce_submission_retrieve_associated_attributes_v1",
-    "routine_kinetic_request_ce_submission_retrieve_by_query_v1",
-    "routine_kinetic_request_ce_submission_retrieve_v1",
-    "routine_kinetic_request_ce_submission_update_v1",
-    "routine_kinetic_request_ce_team_retrieve_v1",
-    "routine_kinetic_request_ce_user_retrieve_v1",
-    "routine_rename_kinops_instance_v1",
-    "routine_repair_all_spaces_v1",
-    "routine_repair_kinops_instance_v1",
-    "routine_repair_spaces",
-    "routine_retrieve_all_spaces_v1",
-    "routine_retrieve_ecs_cluster_tasks_v1",
-    "routine_update_handler_properties_in_space"
+    "routine_kd_notifications_standardize_recipients_v1"
   ]
 }

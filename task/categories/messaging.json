@@ -3,7 +3,7 @@
   "description": "Handlers used for messaging: Email, SMS, etc...",
   "type": "Stored",
   "handlers": [
-    "kinetic_request_ce_notification_template_send_v2",
+    "kinetic_request_ce_notification_template_send_v3",
     "smtp_email_send_v1"
   ],
   "policyRules": [

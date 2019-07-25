@@ -251,34 +251,6 @@
                     <task label="" type="Complete" value="">utilities_echo_v1_29</task>
                 </dependents>
             </task>
-            <task definition_id="routine_create_kinops_instance_v1" id="routine_create_kinops_instance_v1_46" name="Create kinops Instance 1" x="452" y="-73">
-                <version>1</version>
-                <configured>true</configured>
-                <defers>true</defers>
-                <deferrable>true</deferrable>
-                <visible>false</visible>
-                <parameters>
-                    <parameter id="Space Name" label="Space Name" menu="" required="true" tooltip="">&lt;%= @values['Company Name']%&gt;</parameter>
-                    <parameter id="Space Slug" label="Space Slug" menu="" required="true" tooltip="">&lt;%=@results['Slug']['output']%&gt;</parameter>
-                    <parameter id="Requester Email" label="Requester Email" menu="" required="true" tooltip="">&lt;%= @values['Email']%&gt;</parameter>
-                    <parameter id="Requester Name" label="Requester Name" menu="" required="true" tooltip="">&lt;%=@results['Full Name']['output']%&gt;</parameter>
-                    <parameter id="Dedicated Task Engine" label="Dedicated Task Engine" menu="" required="false" tooltip="">&lt;%= @values['Dedicated Task Engine']%&gt;</parameter>
-                    <parameter id="Property File Uri" label="Property File Uri" menu="" required="true" tooltip="">&lt;%= @values['Properties File'].strip.size &gt; 0 ? @values['Properties File'] : @space_attributes['AWS Property File']%&gt;</parameter>
-                    <parameter id="Launch Type" label="Launch Type" menu="" required="false" tooltip="">&lt;%= @values['Launch Type']%&gt;</parameter>
-                    <parameter id="AWS Task Definition - Task" label="AWS Task Definition - Task" menu="" required="false" tooltip="">&lt;%= @values['AWS Task Definition - Task']%&gt;</parameter>
-                    <parameter id="AWS Task Definition - Response" label="AWS Task Definition - Response" menu="" required="false" tooltip="">&lt;%= @values['AWS Task Definition - Response']%&gt;</parameter>
-                    <parameter id="Provisioner Git Branch" label="Provisioner Git Branch" menu="" required="false" tooltip="">&lt;%= @values['Provisioner Git Branch']%&gt;</parameter>
-                    <parameter id="Kinetic SDK Git Branch" label="Kinetic SDK Git Branch" menu="" required="false" tooltip="">&lt;%= @values['Kinetic SDK Git Branch']%&gt;</parameter>
-                    <parameter id="Platform Template Git Branch" label="Platform Template Git Branch" menu="" required="false" tooltip="">&lt;%= @values['Platform Template Git Branch']%&gt;</parameter>
-                    <parameter id="Platform Template Git Repository URL" label="Platform Template Git Repository URL" menu="" required="false" tooltip="">&lt;%= @values['Platform Template Git Repository']%&gt;</parameter>
-                </parameters>
-                <messages>
-                    <message type="Create"></message>
-                    <message type="Update"></message>
-                    <message type="Complete"></message>
-                </messages>
-                <dependents></dependents>
-            </task>
             <task definition_id="routine_create_kinops_instance_v1" id="routine_create_kinops_instance_v1_47" name="Create kinops Instance" x="462" y="46">
                 <version>1</version>
                 <configured>true</configured>

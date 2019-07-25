@@ -8,42 +8,6 @@
       ]
     },
     {
-      "name": "AWS Credentials File",
-      "values": [
-        "aws_credentials.csv"
-      ]
-    },
-    {
-      "name": "AWS ECS Cluster",
-      "values": [
-        "kinops"
-      ]
-    },
-    {
-      "name": "AWS Property File",
-      "values": [
-        "s3://private.kinops.io/kinops.yaml"
-      ]
-    },
-    {
-      "name": "AWS Property File - Nagios",
-      "values": [
-        "s3://private.kinops.io/kinops-nagios.yaml"
-      ]
-    },
-    {
-      "name": "AWS Region",
-      "values": [
-        "us-east-1"
-      ]
-    },
-    {
-      "name": "AWS Tenant S3 Bucket",
-      "values": [
-        "tenants.kinops.io"
-      ]
-    },
-    {
       "name": "Catalog Kapp Slug",
       "values": [
         "public"
@@ -128,9 +92,27 @@
       ]
     },
     {
+      "name": "Task Server Host",
+      "values": [
+        "manage.kinops-test.io"
+      ]
+    },
+    {
+      "name": "Task Server Scheme",
+      "values": [
+        "https"
+      ]
+    },
+    {
+      "name": "Task Server Space Slug",
+      "values": [
+        "manage"
+      ]
+    },
+    {
       "name": "Task Server Url",
       "values": [
-        "https://manage.kinops.io/kinetic-task"
+        "https://manage.kinops-test.io/kinetic-task"
       ]
     },
     {
@@ -142,7 +124,7 @@
     {
       "name": "Web Server Url",
       "values": [
-        "https://kinops.io"
+        "https://manage.kinops-test.io"
       ]
     }
   ],
@@ -152,21 +134,25 @@
   ],
   "defaultDatastoreFormConfirmationPage": null,
   "defaultDatastoreFormDisplayPage": null,
-  "defaultLocale": null,
-  "defaultTimezone": null,
+  "defaultLocale": "en-US",
+  "defaultTimezone": "America/Chicago",
   "displayType": "Single Page App",
   "displayValue": "spa.jsp?location=https://s3.amazonaws.com/kinops.io/bundles/kinetic/releases/2.x.x",
   "enabledLocales": [
-
+    "en-US"
   ],
   "filestore": {
-    "filehubUrl": "https://kinops.io/kinetic-filehub",
-    "slug": "ce-manage"
+    "filehubUrl": "https://kinops-test.io/kinetic-filehub",
+    "slug": "manage-core"
   },
   "loginPage": null,
   "name": "Manage",
   "resetPasswordPage": null,
   "securityPolicies": [
+    {
+      "endpoint": "Discussion Creation",
+      "name": "Authenticated Users"
+    },
     {
       "endpoint": "Display",
       "name": "Authenticated Users"
@@ -176,8 +162,28 @@
       "name": "Authenticated Users"
     },
     {
+      "endpoint": "Team Creation",
+      "name": "Admins"
+    },
+    {
+      "endpoint": "Team Membership Modification",
+      "name": "Admins"
+    },
+    {
+      "endpoint": "Team Modification",
+      "name": "Admins"
+    },
+    {
       "endpoint": "Users Access",
       "name": "Authenticated Users"
+    },
+    {
+      "endpoint": "User Creation",
+      "name": "Admins"
+    },
+    {
+      "endpoint": "User Modification",
+      "name": "Admins"
     }
   ],
   "sessionInactiveLimitInSeconds": 2592000,
@@ -185,10 +191,11 @@
   "slug": "manage",
   "trustedFrameDomains": [
     "*.kineticdata.com",
-    "*.kinops.io",
-    "http://localhost:4567"
+    "*.kinops-test.io",
+    "*.kinops.io"
   ],
   "trustedResourceDomains": [
+    "https://kinops-test.io",
     "https://kinops.io"
   ]
 }

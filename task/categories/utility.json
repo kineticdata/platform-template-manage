@@ -3,15 +3,14 @@
   "description": null,
   "type": "Stored",
   "handlers": [
-    "kinetic_request_ce_delete_v1"
+    "utility_csv_to_xml_v1",
+    "utility_json_to_xml_v1",
+    "utility_message_formatter_v1"
   ],
   "policyRules": [
 
   ],
   "trees": [
-    "routine_allocate_hdi_tech_bars_v1",
-    "routine_decommission_multiple_instances_given_json_array_of_slugs",
-    "routine_reminder_email_hdi_tech_bars",
-    "routine_tech_bar_provision_unalocated_loop_v1"
+
   ]
 }
