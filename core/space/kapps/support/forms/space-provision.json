@@ -82,7 +82,19 @@
 
               ],
               "events": [
-
+                {
+                  "name": "Set Space Name",
+                  "type": "Change",
+                  "action": "Set Fields",
+                  "mappings": [
+                    {
+                      "field": "Space Name",
+                      "value": "${values('Company Name')}",
+                      "visible": null
+                    }
+                  ],
+                  "runIf": "values('Space Name') === null"
+                }
               ],
               "renderAttributes": {
 
@@ -213,6 +225,32 @@
           "elements": [
             {
               "type": "field",
+              "name": "Space Name",
+              "label": "Space Name",
+              "key": "f22",
+              "defaultValue": "",
+              "defaultResourceName": null,
+              "visible": true,
+              "enabled": true,
+              "required": false,
+              "requiredMessage": null,
+              "omitWhenHidden": null,
+              "pattern": null,
+              "constraints": [
+
+              ],
+              "events": [
+
+              ],
+              "renderAttributes": {
+
+              },
+              "dataType": "string",
+              "renderType": "text",
+              "rows": 1
+            },
+            {
+              "type": "field",
               "name": "Custom Space Slug",
               "label": "Custom Space Slug",
               "key": "f10",
@@ -274,7 +312,13 @@
 
               ],
               "events": [
-
+                {
+                  "name": "Enable Submit Button",
+                  "type": "Change",
+                  "action": "Custom",
+                  "code": "if ( K('field[Space Slug]').value() === null ){\n\tK('button[Submit Button]').disable();\n} else {\n\tK('button[Submit Button]').enable();\n}",
+                  "runIf": "values('Custom Space Slug') === \"Yes\""
+                }
               ],
               "renderAttributes": {
 
@@ -282,81 +326,7 @@
               "dataType": "string",
               "renderType": "text",
               "rows": 1
-            },
-            {
-              "type": "field",
-              "name": "Default Locale",
-              "label": "Default Locale",
-              "key": "f22",
-              "defaultValue": "",
-              "defaultResourceName": null,
-              "visible": true,
-              "enabled": true,
-              "required": false,
-              "requiredMessage": null,
-              "omitWhenHidden": null,
-              "pattern": null,
-              "constraints": [
-
-              ],
-              "events": [
-
-              ],
-              "renderAttributes": {
-
-              },
-              "dataType": "string",
-              "renderType": "dropdown",
-              "choicesResourceName": null,
-              "choicesRunIf": null,
-              "choices": [
-
-              ]
-            },
-            {
-              "type": "field",
-              "name": "Default Timezone",
-              "label": "Default Timezone",
-              "key": "f23",
-              "defaultValue": "",
-              "defaultResourceName": null,
-              "visible": true,
-              "enabled": true,
-              "required": false,
-              "requiredMessage": null,
-              "omitWhenHidden": null,
-              "pattern": null,
-              "constraints": [
-
-              ],
-              "events": [
-
-              ],
-              "renderAttributes": {
-
-              },
-              "dataType": "string",
-              "renderType": "dropdown",
-              "choicesResourceName": null,
-              "choicesRunIf": null,
-              "choices": [
-
-              ]
             }
-          ]
-        },
-        {
-          "type": "section",
-          "renderType": null,
-          "name": "Container Details Section",
-          "title": "",
-          "visible": true,
-          "omitWhenHidden": null,
-          "renderAttributes": {
-
-          },
-          "elements": [
-
           ]
         },
         {
@@ -370,6 +340,32 @@
 
           },
           "elements": [
+            {
+              "type": "field",
+              "name": "Host",
+              "label": "Host",
+              "key": "f23",
+              "defaultValue": "https://kinops-test.io",
+              "defaultResourceName": null,
+              "visible": true,
+              "enabled": true,
+              "required": false,
+              "requiredMessage": null,
+              "omitWhenHidden": null,
+              "pattern": null,
+              "constraints": [
+
+              ],
+              "events": [
+
+              ],
+              "renderAttributes": {
+
+              },
+              "dataType": "string",
+              "renderType": "text",
+              "rows": 1
+            },
             {
               "type": "field",
               "name": "Platform Template Git Repository",
@@ -427,7 +423,7 @@
               "name": "Platform Template Version Value",
               "label": "Platform Template Version Value",
               "key": "f15",
-              "defaultValue": "master",
+              "defaultValue": "develop",
               "defaultResourceName": null,
               "visible": true,
               "enabled": true,
@@ -447,6 +443,84 @@
               "dataType": "string",
               "renderType": "text",
               "rows": 1
+            },
+            {
+              "type": "field",
+              "name": "Kinetic Task Image Name",
+              "label": "Kinetic Task Image Name",
+              "key": "f19",
+              "defaultValue": "kineticdata/kinetic-task",
+              "defaultResourceName": null,
+              "visible": true,
+              "enabled": true,
+              "required": false,
+              "requiredMessage": null,
+              "omitWhenHidden": null,
+              "pattern": null,
+              "constraints": [
+
+              ],
+              "events": [
+
+              ],
+              "renderAttributes": {
+
+              },
+              "dataType": "string",
+              "renderType": "text",
+              "rows": 1
+            },
+            {
+              "type": "field",
+              "name": "Kinetic Task Image Tag",
+              "label": "Kinetic Task Image Tag",
+              "key": "f20",
+              "defaultValue": "4.5.0-SNAPSHOT",
+              "defaultResourceName": null,
+              "visible": true,
+              "enabled": true,
+              "required": false,
+              "requiredMessage": null,
+              "omitWhenHidden": null,
+              "pattern": null,
+              "constraints": [
+
+              ],
+              "events": [
+
+              ],
+              "renderAttributes": {
+
+              },
+              "dataType": "string",
+              "renderType": "text",
+              "rows": 1
+            },
+            {
+              "type": "field",
+              "name": "Kinetic Task License",
+              "label": "Kinetic Task License",
+              "key": "f21",
+              "defaultValue": "",
+              "defaultResourceName": null,
+              "visible": true,
+              "enabled": true,
+              "required": false,
+              "requiredMessage": null,
+              "omitWhenHidden": null,
+              "pattern": null,
+              "constraints": [
+
+              ],
+              "events": [
+
+              ],
+              "renderAttributes": {
+
+              },
+              "dataType": "string",
+              "renderType": "text",
+              "rows": 6
             }
           ]
         },
@@ -487,20 +561,6 @@
               "visible": null
             }
           ]
-        },
-        {
-          "name": "Set Locales List",
-          "type": "Load",
-          "action": "Custom",
-          "code": "let sel = jQuery('select[name=\"Default Locale\"]');\njQuery.get(\"/app/api/v1/meta/locales\", function(data,status) {\n  _.each(data['locales'], function(l) {\n    let opt = jQuery(\"<option>\").val(l[\"code\"]).html(l[\"name\"])\n    if (l[\"code\"] === \"en\") {\n      opt.attr(\"selected\", \"selected\");\n    }\n    sel.append(opt);\n  });\n});\n",
-          "runIf": ""
-        },
-        {
-          "name": "Set Timezones List",
-          "type": "Load",
-          "action": "Custom",
-          "code": "let sel = jQuery('select[name=\"Default Timezone\"]');\njQuery.get(\"/app/api/v1/meta/timezones\", function(data,status) {\n  _.each(data['timezones'], function(l) {\n    let opt = jQuery(\"<option>\").val(l[\"id\"]).html(l[\"id\"])\n    if (l[\"id\"] === \"America/Chicago\") {\n      opt.attr(\"selected\", \"selected\");\n    }\n    sel.append(opt);\n  });\n});\n",
-          "runIf": ""
         }
       ],
       "name": "Signup",

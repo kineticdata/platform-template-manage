@@ -9,7 +9,6 @@
 
   ],
   "trees": [
-    "routine_create_kinops_instance_v1",
     "routine_handler_failure_error_process_v1",
     "routine_kd_notification_send_using_template_v1",
     "routine_kd_notifications_standardize_recipients_v1"

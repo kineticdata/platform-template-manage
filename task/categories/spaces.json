@@ -1,5 +1,5 @@
 {
-  "name": "Kinops Provisioning",
+  "name": "Spaces",
   "description": null,
   "type": "Stored",
   "handlers": [
@@ -9,6 +9,6 @@
 
   ],
   "trees": [
-    "routine_kd_build_and_validate_space_slug_v1"
+    "routine_kinetic_space_retrieve_v1"
   ]
 }

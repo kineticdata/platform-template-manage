@@ -1,0 +1,25 @@
+{
+  "name": "Teams",
+  "description": null,
+  "type": "Stored",
+  "handlers": [
+
+  ],
+  "policyRules": [
+
+  ],
+  "trees": [
+    "routine_kinetic_team_attribute_definition_create_v1",
+    "routine_kinetic_team_attribute_definition_delete_v1",
+    "routine_kinetic_team_attribute_definition_retrieve_v1",
+    "routine_kinetic_team_attribute_definition_update_v1",
+    "routine_kinetic_team_attribute_definitions_retrieve_list_v1",
+    "routine_kinetic_team_create_v1",
+    "routine_kinetic_team_delete_v1",
+    "routine_kinetic_team_membership_create_v1",
+    "routine_kinetic_team_membership_delete_v1",
+    "routine_kinetic_team_retrieve_v1",
+    "routine_kinetic_team_update_v1",
+    "routine_kinetic_teams_retrieve_list_v1"
+  ]
+}

@@ -107,7 +107,7 @@
           "enabled": true,
           "required": true,
           "requiredMessage": "A Space Slug is required when submitting this form.",
-          "omitWhenHidden": false,
+          "omitWhenHidden": null,
           "pattern": {
             "regex": "^[a-z0-9\\-]*$",
             "message": "Must be a valid slug (lower case alpha, numeric, and hyphens only)"
@@ -124,6 +124,65 @@
           "dataType": "string",
           "renderType": "text",
           "rows": 1
+        },
+        {
+          "type": "field",
+          "name": "Host",
+          "label": "Host",
+          "key": "f6",
+          "defaultValue": "https://kinops-test.io",
+          "defaultResourceName": null,
+          "visible": true,
+          "enabled": true,
+          "required": false,
+          "requiredMessage": null,
+          "omitWhenHidden": null,
+          "pattern": null,
+          "constraints": [
+
+          ],
+          "events": [
+
+          ],
+          "renderAttributes": {
+
+          },
+          "dataType": "string",
+          "renderType": "text",
+          "rows": 1
+        },
+        {
+          "type": "field",
+          "name": "Options",
+          "label": "Options",
+          "key": "f7",
+          "defaultValue": "[\"Uninstall\"]",
+          "defaultResourceName": null,
+          "visible": true,
+          "enabled": true,
+          "required": false,
+          "requiredMessage": null,
+          "omitWhenHidden": null,
+          "pattern": null,
+          "constraints": [
+
+          ],
+          "events": [
+
+          ],
+          "renderAttributes": {
+
+          },
+          "dataType": "json",
+          "renderType": "checkbox",
+          "choicesResourceName": null,
+          "choicesRunIf": null,
+          "choices": [
+            {
+              "label": "Uninstall",
+              "value": "Uninstall"
+            }
+          ]
         },
         {
           "type": "section",

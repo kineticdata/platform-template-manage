@@ -7,9 +7,9 @@
         <name>Submitted</name>
         <author></author>
         <notes></notes>
-        <lastID>47</lastID>
+        <lastID>54</lastID>
         <request>
-            <task definition_id="system_start_v1" id="start" name="Start" x="129" y="-24">
+            <task definition_id="system_start_v1" id="start" name="Start" x="38" y="65">
                 <version>1</version>
                 <configured>true</configured>
                 <defers>false</defers>
@@ -18,10 +18,10 @@
                 <parameters></parameters>
                 <messages></messages>
                 <dependents>
-                    <task label="" type="Complete" value="">kinetic_request_ce_submission_activity_create_v1_33</task>
+                    <task label="" type="Complete" value="">routine_kinetic_submission_activity_create_v1_48</task>
                 </dependents>
             </task>
-            <task definition_id="utilities_echo_v1" id="utilities_echo_v1_4" name="END" x="1114" y="69">
+            <task definition_id="utilities_echo_v1" id="utilities_echo_v1_4" name="END" x="584" y="618">
                 <version>1</version>
                 <configured>true</configured>
                 <defers>false</defers>
@@ -37,7 +37,7 @@
                 </messages>
                 <dependents></dependents>
             </task>
-            <task definition_id="utilities_echo_v1" id="utilities_echo_v1_25" name="Full Name" x="139" y="220">
+            <task definition_id="utilities_echo_v1" id="utilities_echo_v1_25" name="Full Name" x="125" y="281">
                 <version>1</version>
                 <configured>true</configured>
                 <defers>false</defers>
@@ -56,7 +56,7 @@
                     <task label="Custom Space Slug" type="Complete" value="@values['Custom Space Slug'] == &quot;Yes&quot; &amp;&amp; !@values['Space Slug'].to_s.empty?">system_join_v1_43</task>
                 </dependents>
             </task>
-            <task definition_id="routine_kd_build_and_validate_space_slug_v1" id="routine_kd_build_and_validate_space_slug_v1_26" name="Build Slug" x="143" y="360">
+            <task definition_id="routine_kd_build_and_validate_space_slug_v1" id="routine_kd_build_and_validate_space_slug_v1_26" name="Build Slug" x="323" y="371">
                 <version>1</version>
                 <configured>true</configured>
                 <defers>true</defers>
@@ -72,7 +72,7 @@
                     <task label="" type="Complete" value="">system_join_v1_43</task>
                 </dependents>
             </task>
-            <task definition_id="utilities_echo_v1" id="utilities_echo_v1_29" name="Slug" x="314" y="148">
+            <task definition_id="utilities_echo_v1" id="utilities_echo_v1_29" name="Slug" x="349" y="65">
                 <version>1</version>
                 <configured>true</configured>
                 <defers>false</defers>
@@ -87,10 +87,10 @@
                     <message type="Complete"></message>
                 </messages>
                 <dependents>
-                    <task label="" type="Complete" value="">kinetic_request_ce_submission_activity_create_v1_34</task>
+                    <task label="" type="Complete" value="">routine_kinetic_submission_activity_create_v1_49</task>
                 </dependents>
             </task>
-            <task definition_id="routine_kd_notification_send_using_template_v1" id="routine_kd_notification_send_using_template_v1_30" name="Notify Completed" x="870" y="57">
+            <task definition_id="routine_kd_notification_send_using_template_v1" id="routine_kd_notification_send_using_template_v1_30" name="Notify Completed" x="769" y="420">
                 <version>1</version>
                 <configured>true</configured>
                 <defers>true</defers>
@@ -111,128 +111,9 @@
                     <message type="Update"></message>
                     <message type="Complete"></message>
                 </messages>
-                <dependents>
-                    <task label="" type="Complete" value="">kinetic_request_ce_submission_activity_create_v1_35</task>
-                </dependents>
+                <dependents></dependents>
             </task>
-            <task definition_id="kinetic_request_ce_submission_close_v1" id="kinetic_request_ce_submission_close_v1_31" name="Close Submission" x="737" y="53">
-                <version>1</version>
-                <configured>true</configured>
-                <defers>false</defers>
-                <deferrable>false</deferrable>
-                <visible>true</visible>
-                <parameters>
-                    <parameter id="error_handling" label="Error Handling" menu="Error Message,Raise Error" required="true" tooltip="Determine what to return if an error is encountered.">Raise Error</parameter>
-                    <parameter id="space_slug" label="Space Slug" menu="" required="false" tooltip="The Space the submission is being retrieved from.">&lt;%= @space['Slug']%&gt;</parameter>
-                    <parameter id="submission_id" label="Submission Id" menu="" required="true" tooltip="The id of the submission being updated.">&lt;%= @submission['Id']%&gt;</parameter>
-                </parameters>
-                <messages>
-                    <message type="Create"></message>
-                    <message type="Update"></message>
-                    <message type="Complete"></message>
-                </messages>
-                <dependents>
-                    <task label="" type="Complete" value="">routine_kd_notification_send_using_template_v1_30</task>
-                </dependents>
-            </task>
-            <task definition_id="kinetic_request_ce_submission_activity_create_v1" id="kinetic_request_ce_submission_activity_create_v1_33" name="Submission Submitted" x="135" y="67">
-                <version>1</version>
-                <configured>true</configured>
-                <defers>false</defers>
-                <deferrable>false</deferrable>
-                <visible>true</visible>
-                <parameters>
-                    <parameter id="error_handling" label="Error Handling" menu="Error Message,Raise Error" required="true" tooltip="Determine what to return if an error is encountered.">Error Message</parameter>
-                    <parameter id="space_slug" label="Space Slug" menu="" required="false" tooltip="The Space the submission exists in."></parameter>
-                    <parameter id="submission_id" label="Submission Id" menu="" required="true" tooltip="The id of the submission for which the activity is being created for.">&lt;%= @submission['Id']%&gt;</parameter>
-                    <parameter id="label" label="Label" menu="" required="false" tooltip="The label for the submission activity.">Submission Submitted</parameter>
-                    <parameter id="description" label="Description" menu="" required="false" tooltip="The description of the submission activity.">Your submission has been received</parameter>
-                    <parameter id="type" label="Type" menu="" required="false" tooltip="Specifies the a submission activity 'Type', which should indicate what type of data is included.">Submission Submitted</parameter>
-                    <parameter id="data" label="Data" menu="" required="false" tooltip="Additional data that can be used by resources consuming the submission activity record (for example a Request bundle may render submission details based upon JSON content in the activity data)."></parameter>
-                </parameters>
-                <messages>
-                    <message type="Create"></message>
-                    <message type="Update"></message>
-                    <message type="Complete"></message>
-                </messages>
-                <dependents>
-                    <task label="" type="Complete" value="">utilities_echo_v1_25</task>
-                </dependents>
-            </task>
-            <task definition_id="kinetic_request_ce_submission_activity_create_v1" id="kinetic_request_ce_submission_activity_create_v1_34" name="Action In Progress" x="320" y="55">
-                <version>1</version>
-                <configured>true</configured>
-                <defers>false</defers>
-                <deferrable>false</deferrable>
-                <visible>true</visible>
-                <parameters>
-                    <parameter id="error_handling" label="Error Handling" menu="Error Message,Raise Error" required="true" tooltip="Determine what to return if an error is encountered.">Error Message</parameter>
-                    <parameter id="space_slug" label="Space Slug" menu="" required="false" tooltip="The Space the submission exists in."></parameter>
-                    <parameter id="submission_id" label="Submission Id" menu="" required="true" tooltip="The id of the submission for which the activity is being created for.">&lt;%= @submission['Id']%&gt;</parameter>
-                    <parameter id="label" label="Label" menu="" required="false" tooltip="The label for the submission activity.">&lt;%= @form['Name']%&gt;</parameter>
-                    <parameter id="description" label="Description" menu="" required="false" tooltip="The description of the submission activity.">&lt;%= @form['Name']%&gt;</parameter>
-                    <parameter id="type" label="Type" menu="" required="false" tooltip="Specifies the a submission activity 'Type', which should indicate what type of data is included.">&lt;%= @form['Name']%&gt;</parameter>
-                    <parameter id="data" label="Data" menu="" required="false" tooltip="Additional data that can be used by resources consuming the submission activity record (for example a Request bundle may render submission details based upon JSON content in the activity data).">{"Status":"In Progress","Space Slug":"&lt;%=@results['Slug']['output']%&gt;"}</parameter>
-                </parameters>
-                <messages>
-                    <message type="Create"></message>
-                    <message type="Update"></message>
-                    <message type="Complete"></message>
-                </messages>
-                <dependents>
-                    <task label="" type="Complete" value="">routine_create_kinops_instance_v1_47</task>
-                </dependents>
-            </task>
-            <task definition_id="kinetic_request_ce_submission_activity_create_v1" id="kinetic_request_ce_submission_activity_create_v1_35" name="Submission Completed" x="992" y="57">
-                <version>1</version>
-                <configured>true</configured>
-                <defers>false</defers>
-                <deferrable>false</deferrable>
-                <visible>true</visible>
-                <parameters>
-                    <parameter id="error_handling" label="Error Handling" menu="Error Message,Raise Error" required="true" tooltip="Determine what to return if an error is encountered.">Error Message</parameter>
-                    <parameter id="space_slug" label="Space Slug" menu="" required="false" tooltip="The Space the submission exists in."></parameter>
-                    <parameter id="submission_id" label="Submission Id" menu="" required="true" tooltip="The id of the submission for which the activity is being created for.">&lt;%= @submission['Id']%&gt;</parameter>
-                    <parameter id="label" label="Label" menu="" required="false" tooltip="The label for the submission activity.">Submission Completed</parameter>
-                    <parameter id="description" label="Description" menu="" required="false" tooltip="The description of the submission activity.">Your submission has been completed</parameter>
-                    <parameter id="type" label="Type" menu="" required="false" tooltip="Specifies the a submission activity 'Type', which should indicate what type of data is included.">Submission Completed</parameter>
-                    <parameter id="data" label="Data" menu="" required="false" tooltip="Additional data that can be used by resources consuming the submission activity record (for example a Request bundle may render submission details based upon JSON content in the activity data)."></parameter>
-                </parameters>
-                <messages>
-                    <message type="Create"></message>
-                    <message type="Update"></message>
-                    <message type="Complete"></message>
-                </messages>
-                <dependents>
-                    <task label="" type="Complete" value="">utilities_echo_v1_4</task>
-                </dependents>
-            </task>
-            <task definition_id="kinetic_request_ce_submission_activity_update_v1" id="kinetic_request_ce_submission_activity_update_v1_36" name="Action Completed" x="605" y="52">
-                <version>1</version>
-                <configured>true</configured>
-                <defers>false</defers>
-                <deferrable>false</deferrable>
-                <visible>true</visible>
-                <parameters>
-                    <parameter id="error_handling" label="Error Handling" menu="Error Message,Raise Error" required="true" tooltip="Determine what to return if an error is encountered.">Error Message</parameter>
-                    <parameter id="space_slug" label="Space Slug" menu="" required="false" tooltip="The Space the submission exists in."></parameter>
-                    <parameter id="submission_id" label="Submission Id" menu="" required="true" tooltip="The id of the submission for which the activity is being created for.">&lt;%= @submission['Id']%&gt;</parameter>
-                    <parameter id="submission_activity_id" label="Submission Activity Id" menu="" required="true" tooltip="The id of the submission for which the activity is being created for.">&lt;%=@results['Action In Progress']['Id']%&gt;</parameter>
-                    <parameter id="label" label="Label" menu="" required="false" tooltip="The label for the submission activity."></parameter>
-                    <parameter id="description" label="Description" menu="" required="false" tooltip="The description of the submission activity."></parameter>
-                    <parameter id="type" label="Type" menu="" required="false" tooltip="Specifies the a submission activity 'Type', which should indicate what type of data is included."></parameter>
-                    <parameter id="data" label="Data" menu="" required="false" tooltip="Additional data that can be used by resources consuming the submission activity record (for example a Request bundle may render submission details based upon JSON content in the activity data).">{"Status":"Completed","Space Slug":"&lt;%=@results['Slug']['output']%&gt;"}</parameter>
-                </parameters>
-                <messages>
-                    <message type="Create"></message>
-                    <message type="Update"></message>
-                    <message type="Complete"></message>
-                </messages>
-                <dependents>
-                    <task label="" type="Complete" value="">kinetic_request_ce_submission_close_v1_31</task>
-                </dependents>
-            </task>
-            <task definition_id="system_join_v1" id="system_join_v1_43" name="system_join_v1_43" x="378" y="352">
+            <task definition_id="system_join_v1" id="system_join_v1_43" name="system_join_v1_43" x="364" y="196">
                 <version>1</version>
                 <configured>true</configured>
                 <defers>false</defers>
@@ -251,28 +132,18 @@
                     <task label="" type="Complete" value="">utilities_echo_v1_29</task>
                 </dependents>
             </task>
-            <task definition_id="routine_create_kinops_instance_v1" id="routine_create_kinops_instance_v1_47" name="Create kinops Instance" x="462" y="46">
+            <task definition_id="routine_kinetic_submission_activity_create_v1" id="routine_kinetic_submission_activity_create_v1_48" name="Submission Submitted" x="186" y="64">
                 <version>1</version>
                 <configured>true</configured>
                 <defers>true</defers>
                 <deferrable>true</deferrable>
                 <visible>false</visible>
                 <parameters>
-                    <parameter id="Space Name" label="Space Name" menu="" required="true" tooltip="">&lt;%= @values['Company Name']%&gt;</parameter>
-                    <parameter id="Space Slug" label="Space Slug" menu="" required="true" tooltip="">&lt;%=@results['Slug']['output']%&gt;</parameter>
-                    <parameter id="Requester Email" label="Requester Email" menu="" required="true" tooltip="">&lt;%= @values['Email']%&gt;</parameter>
-                    <parameter id="Requester Name" label="Requester Name" menu="" required="true" tooltip="">&lt;%=@results['Full Name']['output']%&gt;</parameter>
-                    <parameter id="Dedicated Task Engine" label="Dedicated Task Engine" menu="" required="false" tooltip="">&lt;%= @values['Dedicated Task Engine']%&gt;</parameter>
-                    <parameter id="Property File Uri" label="Property File Uri" menu="" required="true" tooltip="">&lt;%= @values['Properties File'].strip.size &gt; 0 ? @values['Properties File'] : @space_attributes['AWS Property File']%&gt;</parameter>
-                    <parameter id="Launch Type" label="Launch Type" menu="" required="false" tooltip="">&lt;%= @values['Launch Type']%&gt;</parameter>
-                    <parameter id="AWS Task Definition - Task" label="AWS Task Definition - Task" menu="" required="false" tooltip="">&lt;%= @values['AWS Task Definition - Task']%&gt;</parameter>
-                    <parameter id="AWS Task Definition - Response" label="AWS Task Definition - Response" menu="" required="false" tooltip="">&lt;%= @values['AWS Task Definition - Response']%&gt;</parameter>
-                    <parameter id="Provisioner Git Branch" label="Provisioner Git Branch" menu="" required="false" tooltip="">&lt;%= @values['Provisioner Git Branch']%&gt;</parameter>
-                    <parameter id="Kinetic SDK Git Branch" label="Kinetic SDK Git Branch" menu="" required="false" tooltip="">&lt;%= @values['Kinetic SDK Git Branch']%&gt;</parameter>
-                    <parameter id="Platform Template Git Branch" label="Platform Template Git Branch" menu="" required="false" tooltip="">&lt;%= @values['Platform Template Git Branch']%&gt;</parameter>
-                    <parameter id="Platform Template Git Repository URL" label="Platform Template Git Repository URL" menu="" required="false" tooltip="">&lt;%= @values['Platform Template Git Repository']%&gt;</parameter>
-                    <parameter id="Default Locale" label="Default Locale" menu="" required="false" tooltip="">&lt;%= @values['Default Locale']%&gt;</parameter>
-                    <parameter id="Default Timezone" label="Default Timezone" menu="" required="false" tooltip="">&lt;%= @values['Default Timezone']%&gt;</parameter>
+                    <parameter id="Submission Id" label="Submission Id" menu="" required="true" tooltip="Id of the submission to create the activity record for">&lt;%= @submission['Id']%&gt;</parameter>
+                    <parameter id="Data" label="Data" menu="" required="false" tooltip="Data to store in the submission activity"></parameter>
+                    <parameter id="Description" label="Description" menu="" required="false" tooltip="Description of the submission activity">Your submission has been received</parameter>
+                    <parameter id="Label" label="Label" menu="" required="false" tooltip="Label for the submission activity">Submission Submitted</parameter>
+                    <parameter id="Type" label="Type" menu="" required="false" tooltip="Type of submission activity">Submission Submitted</parameter>
                 </parameters>
                 <messages>
                     <message type="Create"></message>
@@ -280,7 +151,165 @@
                     <message type="Complete"></message>
                 </messages>
                 <dependents>
-                    <task label="" type="Complete" value="">kinetic_request_ce_submission_activity_update_v1_36</task>
+                    <task label="" type="Complete" value="">utilities_echo_v1_25</task>
+                </dependents>
+            </task>
+            <task definition_id="routine_kinetic_submission_activity_create_v1" id="routine_kinetic_submission_activity_create_v1_49" name="Action In Progress" x="588" y="55">
+                <version>1</version>
+                <configured>true</configured>
+                <defers>true</defers>
+                <deferrable>true</deferrable>
+                <visible>false</visible>
+                <parameters>
+                    <parameter id="Submission Id" label="Submission Id" menu="" required="true" tooltip="Id of the submission to create the activity record for">&lt;%= @submission['Id']%&gt;</parameter>
+                    <parameter id="Data" label="Data" menu="" required="false" tooltip="Data to store in the submission activity">{"Status":"In Progress","Space Slug":"&lt;%=@results['Slug']['output']%&gt;"}</parameter>
+                    <parameter id="Description" label="Description" menu="" required="false" tooltip="Description of the submission activity">&lt;%= @form['Name']%&gt;</parameter>
+                    <parameter id="Label" label="Label" menu="" required="false" tooltip="Label for the submission activity">&lt;%= @form['Name']%&gt;</parameter>
+                    <parameter id="Type" label="Type" menu="" required="false" tooltip="Type of submission activity">&lt;%= @form['Name']%&gt;</parameter>
+                </parameters>
+                <messages>
+                    <message type="Create"></message>
+                    <message type="Update"></message>
+                    <message type="Complete"></message>
+                </messages>
+                <dependents>
+                    <task label="" type="Complete" value="">utilities_echo_v1_53</task>
+                </dependents>
+            </task>
+            <task definition_id="routine_kinetic_submission_activity_update_v1" id="routine_kinetic_submission_activity_update_v1_50" name="Action Completed" x="583" y="321">
+                <version>1</version>
+                <configured>true</configured>
+                <defers>true</defers>
+                <deferrable>true</deferrable>
+                <visible>false</visible>
+                <parameters>
+                    <parameter id="Submission Id" label="Submission Id" menu="" required="true" tooltip="The Id of the submission in which the activity is related">&lt;%= @submission['Id']%&gt;</parameter>
+                    <parameter id="Activity Id" label="Activity Id" menu="" required="true" tooltip="The Id of the submission activity">&lt;%=@results['Action In Progress']['Id']%&gt;</parameter>
+                    <parameter id="Updated - Data" label="Updated - Data" menu="" required="false" tooltip="Data to store in the submission activity">{"Status":"Completed","Space Slug":"&lt;%=@results['Slug']['output']%&gt;"}</parameter>
+                    <parameter id="Updated - Description" label="Updated - Description" menu="" required="false" tooltip="Description of the submission activity"></parameter>
+                    <parameter id="Updated - Label" label="Updated - Label" menu="" required="false" tooltip="Label for the submission activity"></parameter>
+                    <parameter id="Updated - Type" label="Updated - Type" menu="" required="false" tooltip="Type of submission activity"></parameter>
+                </parameters>
+                <messages>
+                    <message type="Create"></message>
+                    <message type="Update"></message>
+                    <message type="Complete"></message>
+                </messages>
+                <dependents>
+                    <task label="" type="Complete" value="">routine_kinetic_submission_update_status_v1_51</task>
+                </dependents>
+            </task>
+            <task definition_id="routine_kinetic_submission_update_status_v1" id="routine_kinetic_submission_update_status_v1_51" name="Close Submission" x="583" y="420">
+                <version>1</version>
+                <configured>true</configured>
+                <defers>true</defers>
+                <deferrable>true</deferrable>
+                <visible>false</visible>
+                <parameters>
+                    <parameter id="Submission Id" label="Submission Id" menu="" required="true" tooltip="Id of the Submission that is being updated">&lt;%= @submission['Id']%&gt;</parameter>
+                    <parameter id="Status" label="Status" menu="" required="true" tooltip="Status to set the submission to. (e.g. Submitted, In Progress)">Closed</parameter>
+                </parameters>
+                <messages>
+                    <message type="Create"></message>
+                    <message type="Update"></message>
+                    <message type="Complete"></message>
+                </messages>
+                <dependents>
+                    <task label="" type="Complete" value="">routine_kd_notification_send_using_template_v1_30</task>
+                    <task label="" type="Complete" value="">routine_kinetic_submission_activity_create_v1_52</task>
+                </dependents>
+            </task>
+            <task definition_id="routine_kinetic_submission_activity_create_v1" id="routine_kinetic_submission_activity_create_v1_52" name="Submission Completed" x="583" y="518">
+                <version>1</version>
+                <configured>true</configured>
+                <defers>true</defers>
+                <deferrable>true</deferrable>
+                <visible>false</visible>
+                <parameters>
+                    <parameter id="Submission Id" label="Submission Id" menu="" required="true" tooltip="Id of the submission to create the activity record for">&lt;%= @submission['Id']%&gt;</parameter>
+                    <parameter id="Data" label="Data" menu="" required="false" tooltip="Data to store in the submission activity"></parameter>
+                    <parameter id="Description" label="Description" menu="" required="false" tooltip="Description of the submission activity">Your submission has been completed</parameter>
+                    <parameter id="Label" label="Label" menu="" required="false" tooltip="Label for the submission activity">Submission Completed</parameter>
+                    <parameter id="Type" label="Type" menu="" required="false" tooltip="Type of submission activity">Submission Completed</parameter>
+                </parameters>
+                <messages>
+                    <message type="Create"></message>
+                    <message type="Update"></message>
+                    <message type="Complete"></message>
+                </messages>
+                <dependents>
+                    <task label="" type="Complete" value="">utilities_echo_v1_4</task>
+                </dependents>
+            </task>
+            <task definition_id="utilities_echo_v1" id="utilities_echo_v1_53" name="Build Post Data" x="580.2999877929688" y="138.4166717529297">
+                <version>1</version>
+                <configured>true</configured>
+                <defers>false</defers>
+                <deferrable>false</deferrable>
+                <visible>true</visible>
+                <parameters>
+                    <parameter id="input" label="Input" menu="" required="true" tooltip="">&lt;%= {
+  "action" =&gt; "install",
+  "slug" =&gt; "#{@results['Slug']['output']}",
+  "host" =&gt; "#{@values['Host']}",
+  "http_options" =&gt; {
+    "log_level" =&gt; "info",
+    "ssl_ca_file" =&gt; "/app/cert/tls.crt",
+    "ssl_verify_mode" =&gt; "none"
+  },
+  "components" =&gt; {
+    "core" =&gt; {
+      "space" =&gt; {
+        "name" =&gt; "#{@values['Space Name']}"
+      }
+    },
+    "task" =&gt; {
+      "license" =&gt; "#{@values['Kinetic Task License']}",
+      "container" =&gt; {
+        "image" =&gt; "#{@values['Kinetic Task Image Name']}",
+        "tag" =&gt; "#{@values['Kinetic Task Image Tag']}"
+      }
+    }
+  },
+  "templates" =&gt; [
+    {
+      "url" =&gt; "#{@values['Platform Template Git Repository']}",
+      "#{@values['Platform Template Version Type']}" =&gt; "#{@values['Platform Template Version Value']}"
+    }
+  ],
+  "templateData" =&gt; {},
+  "templateDataSecrets" =&gt; { "smtp" =&gt; "smtp-default" }
+}.to_json %&gt;</parameter>
+                </parameters>
+                <messages>
+                    <message type="Create"></message>
+                    <message type="Update"></message>
+                    <message type="Complete"></message>
+                </messages>
+                <dependents>
+                    <task label="" type="Complete" value="">generic_http_v1_54</task>
+                </dependents>
+            </task>
+            <task definition_id="generic_http_v1" id="generic_http_v1_54" name="Call Tenant Manager" x="588" y="226">
+                <version>1</version>
+                <configured>true</configured>
+                <defers>false</defers>
+                <deferrable>false</deferrable>
+                <visible>true</visible>
+                <parameters>
+                    <parameter id="error_handling" label="Error Handling" menu="Error Message,Raise Error" required="true" tooltip="Determine what to return if an error is encountered.">Error Message</parameter>
+                    <parameter id="method" label="Method" menu="GET,POST,PUT,PATCH,DELETE" required="true" tooltip="GET,POST,PUT,PATCH,DELETE (Defaults to GET)">POST</parameter>
+                    <parameter id="url" label="URL" menu="" required="true" tooltip="Example: http://www.yahoo.com">http://tenant-data-manager.kinetic.svc.cluster.local/install</parameter>
+                    <parameter id="body" label="Body" menu="" required="false" tooltip="Body if applicable (POST,PUT,PATCH)">&lt;%=@results['Build Post Data']['output']%&gt;</parameter>
+                    <parameter id="content_type" label="Content Type" menu="" required="false" tooltip="Content Type of the Body if applicable (POST,PUT,PATCH). Use application/json for JSON content, or application/x-www-form-urlencoded for HTML forms.">application/json</parameter>
+                </parameters>
+                <messages>
+                    <message type="Create"></message>
+                    <message type="Update"></message>
+                    <message type="Complete"></message>
+                </messages>
+                <dependents>
+                    <task label="" type="Complete" value="">routine_kinetic_submission_activity_update_v1_50</task>
                 </dependents>
             </task>
         </request>

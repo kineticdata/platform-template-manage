@@ -3,6 +3,7 @@
   "description": null,
   "type": "Stored",
   "handlers": [
+    "generic_http_v1",
     "utility_csv_to_xml_v1",
     "utility_json_to_xml_v1",
     "utility_message_formatter_v1"
