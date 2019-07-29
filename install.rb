@@ -402,7 +402,7 @@ task_sdk.find_handlers.content['handlers'].each do |handler|
     logger.info "Updating handler #{handler_definition_id}"
     task_sdk.update_handler(handler_definition_id, {
       "properties" => task_handler_configurations[handler_definition_id]
-    ))
+    })
   else
     if handler_definition_id.start_with?("kinetic_core_api_v1")
       logger.info "Updating handler #{handler_definition_id}"
