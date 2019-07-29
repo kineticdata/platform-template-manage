@@ -56,8 +56,8 @@
 #     "log_level" => "info",
 #     "gateway_retry_limit" => 5,
 #     "gateway_retry_delay" => 1.0,
-#     "ssl_ca_file" => "/etc/ca.crt",
-#     "ssl_verify_mode" => "none"
+#     "ssl_ca_file" => "/app/ssl/tls.crt",
+#     "ssl_verify_mode" => "peer"
 #   },
 #   "data" => {
 #     "users" => [
@@ -65,6 +65,13 @@
 #         "username" => "joe.user"
 #       }
 #     ],
+#     "handlers" => {
+#       "kinetic_core_system_api_v1" => {
+#         "api_username" => "admin",
+#         "api_password" => "password",
+#         "api_location" => "http://localhost:8080/app/api/v1"
+#       }
+#     }
 #     "smtp" => {
 #       "server" => "smtp.gmail.com",
 #       "port" => "587",
@@ -190,6 +197,7 @@ task_handler_configurations = {
     "enable_debug_logging" => "No"
   }
 }
+task_handler_configurations.merge(vars["data"]["handlers"] || {})
 
 http_options = (vars["http_options"] || {}).each_with_object({}) do |(k,v),result|
   result[k.to_sym] = v
@@ -389,62 +397,70 @@ task_sdk.import_trees(true)
 task_sdk.find_handlers.content['handlers'].each do |handler|
   handler_definition_id = handler["definitionId"]
 
-  if handler_definition_id.start_with?("kinetic_core_api_v1")
+
+  if task_handler_configurations.has_key?(handler_definition_id)
     logger.info "Updating handler #{handler_definition_id}"
     task_sdk.update_handler(handler_definition_id, {
-      "properties" => {
-        "api_location" => vars["core"]["api"],
-        "api_username" => vars["core"]["service_user_username"],
-        "api_password" => vars["core"]["service_user_password"]
-      }
-    })
-  elsif handler_definition_id.start_with?("kinetic_discussions_api_v1")
-    logger.info "Updating handler #{handler_definition_id}"
-    task_sdk.update_handler(handler_definition_id, {
-      "properties" => {
-        "api_oauth_location" => "#{vars["core"]["server"]}/app/oauth/token?grant_type=client_credentials&response_type=token",
-        "api_location" => vars["discussions"]["api"],
-        "api_username" => vars["core"]["service_user_username"],
-        "api_password" => vars["core"]["service_user_password"]
-      }
-    })
-  elsif handler_definition_id.start_with?("kinetic_task_api_v1")
-    logger.info "Updating handler #{handler_definition_id}"
-    task_sdk.update_handler(handler_definition_id, {
-      "properties" => {
-        "api_location" => vars["task"]["api"],
-        "api_username" => vars["task"]["service_user_username"],
-        "api_password" => vars["task"]["service_user_password"],
-        "api_access_key_identifier" => task_access_keys[core_task_access_key]['identifier'],
-        "api_access_key_secret" => task_access_keys[core_task_access_key]['secret']
-      }
-    })
-  elsif handler_definition_id.start_with?("kinetic_task_api_v2")
-    logger.info "Updating handler #{handler_definition_id}"
-    task_sdk.update_handler(handler_definition_id, {
-      "properties" => {
-        "api_location" => vars["task"]["api_v2"],
-        "api_username" => vars["task"]["service_user_username"],
-        "api_password" => vars["task"]["service_user_password"]
-      }
-    })
-  elsif handler_definition_id.start_with?("kinetic_request_ce_notification_template_send_v")
-    task_sdk.update_handler(handler_definition_id, {
-      "properties" => task_handler_configurations["kinetic_request_ce_notification_template_send"]
-    })
-  elsif handler_definition_id.start_with?("smtp_email_send")
-    task_sdk.update_handler(handler_definition_id, {
-      "properties" => task_handler_configurations["smtp_email_send"]
-    })
-  elsif handler_definition_id.start_with?("kinetic_request_ce")
-    task_sdk.update_handler(handler_definition_id, {
-      "properties" => {
-        'api_server' => vars["core"]["server"],
-        'api_username' => vars["core"]["service_user_username"],
-        'api_password' => vars["core"]["service_user_password"],
-        'space_slug' => nil,
-      }
-    })
+      "properties" => task_handler_configurations[handler_definition_id]
+    ))
+  else
+    if handler_definition_id.start_with?("kinetic_core_api_v1")
+      logger.info "Updating handler #{handler_definition_id}"
+      task_sdk.update_handler(handler_definition_id, {
+        "properties" => {
+          "api_location" => vars["core"]["api"],
+          "api_username" => vars["core"]["service_user_username"],
+          "api_password" => vars["core"]["service_user_password"]
+        }
+      })
+    elsif handler_definition_id.start_with?("kinetic_discussions_api_v1")
+      logger.info "Updating handler #{handler_definition_id}"
+      task_sdk.update_handler(handler_definition_id, {
+        "properties" => {
+          "api_oauth_location" => "#{vars["core"]["server"]}/app/oauth/token?grant_type=client_credentials&response_type=token",
+          "api_location" => vars["discussions"]["api"],
+          "api_username" => vars["core"]["service_user_username"],
+          "api_password" => vars["core"]["service_user_password"]
+        }
+      })
+    elsif handler_definition_id.start_with?("kinetic_task_api_v1")
+      logger.info "Updating handler #{handler_definition_id}"
+      task_sdk.update_handler(handler_definition_id, {
+        "properties" => {
+          "api_location" => vars["task"]["api"],
+          "api_username" => vars["task"]["service_user_username"],
+          "api_password" => vars["task"]["service_user_password"],
+          "api_access_key_identifier" => task_access_keys[core_task_access_key]['identifier'],
+          "api_access_key_secret" => task_access_keys[core_task_access_key]['secret']
+        }
+      })
+    elsif handler_definition_id.start_with?("kinetic_task_api_v2")
+      logger.info "Updating handler #{handler_definition_id}"
+      task_sdk.update_handler(handler_definition_id, {
+        "properties" => {
+          "api_location" => vars["task"]["api_v2"],
+          "api_username" => vars["task"]["service_user_username"],
+          "api_password" => vars["task"]["service_user_password"]
+        }
+      })
+    elsif handler_definition_id.start_with?("kinetic_request_ce_notification_template_send_v")
+      task_sdk.update_handler(handler_definition_id, {
+        "properties" => task_handler_configurations["kinetic_request_ce_notification_template_send"]
+      })
+    elsif handler_definition_id.start_with?("smtp_email_send")
+      task_sdk.update_handler(handler_definition_id, {
+        "properties" => task_handler_configurations["smtp_email_send"]
+      })
+    elsif handler_definition_id.start_with?("kinetic_request_ce")
+      task_sdk.update_handler(handler_definition_id, {
+        "properties" => {
+          'api_server' => vars["core"]["server"],
+          'api_username' => vars["core"]["service_user_username"],
+          'api_password' => vars["core"]["service_user_password"],
+          'space_slug' => nil,
+        }
+      })
+    end
   end
 end
 
