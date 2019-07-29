@@ -198,6 +198,8 @@ task_handler_configurations = {
   }
 }
 task_handler_configurations.merge(vars["data"]["handlers"] || {})
+logger.warn "Handler Configuration Data: #{vars['data']['handlers']}"
+logger.warn "Handler Configurations: #{task_handler_configurations}"
 
 http_options = (vars["http_options"] || {}).each_with_object({}) do |(k,v),result|
   result[k.to_sym] = v
