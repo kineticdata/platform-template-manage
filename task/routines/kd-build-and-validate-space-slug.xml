@@ -8,7 +8,7 @@
         <name>KD Build and Validate Space Slug</name>
         <author></author>
         <notes></notes>
-        <lastID>8</lastID>
+        <lastID>9</lastID>
         <taskDefinition id="routine_kd_build_and_validate_space_slug_v1" name="KD Build and Validate Space Slug" schema_version="1.0" version="1">
             <visible>false</visible>
             <deferrable>true</deferrable>
@@ -46,26 +46,7 @@
                     <message type="Complete"></message>
                 </messages>
                 <dependents>
-                    <task label="" type="Complete" value="">generic_http_v1_8</task>
-                </dependents>
-            </task>
-            <task definition_id="kinetic_request_ce_spaces_retrieve_v1" id="kinetic_request_ce_spaces_retrieve_v1_2" name="Retrieve Spaces" x="245" y="333">
-                <version>1</version>
-                <configured>true</configured>
-                <defers>false</defers>
-                <deferrable>false</deferrable>
-                <visible>true</visible>
-                <parameters>
-                    <parameter id="error_handling" label="Error Handling" menu="Error Message,Raise Error" required="true" tooltip="Determine what to return if an error is encountered.">Error Message</parameter>
-                    <parameter id="includes" label="Includes" menu="" required="true" tooltip="CSV of what to include in results (sent directly to rest call) ">details</parameter>
-                </parameters>
-                <messages>
-                    <message type="Create"></message>
-                    <message type="Update"></message>
-                    <message type="Complete"></message>
-                </messages>
-                <dependents>
-                    <task label="" type="Complete" value="">generic_http_v1_8</task>
+                    <task label="" type="Complete" value="">kinetic_core_system_api_v1_9</task>
                 </dependents>
             </task>
             <task definition_id="utilities_echo_v1" id="utilities_echo_v1_3" name="Validate Space Doesnt Exist" x="472" y="67">
@@ -75,7 +56,14 @@
                 <deferrable>false</deferrable>
                 <visible>true</visible>
                 <parameters>
-                    <parameter id="input" label="Input" menu="" required="true" tooltip="">&lt;%=@results['Retrieve Space']['Response Code'] == "404"%&gt;</parameter>
+                    <parameter id="input" label="Input" menu="" required="true" tooltip="">&lt;% spaces = JSON.parse(@results['Retrieve Spaces']['Response Body'])['spaces']
+
+exists = false
+spaces.each do |space|
+  exists = true if space['slug'] == @results['Generate Slug']['output']
+end
+%&gt;
+&lt;%=exists%&gt;</parameter>
                 </parameters>
                 <messages>
                     <message type="Create"></message>
@@ -135,18 +123,17 @@
                 </messages>
                 <dependents></dependents>
             </task>
-            <task definition_id="generic_http_v1" id="generic_http_v1_8" name="Retrieve Space" x="314" y="62">
+            <task definition_id="kinetic_core_system_api_v1" id="kinetic_core_system_api_v1_9" name="Retrieve Spaces" x="306" y="65">
                 <version>1</version>
                 <configured>true</configured>
                 <defers>false</defers>
                 <deferrable>false</deferrable>
-                <visible>true</visible>
+                <visible>false</visible>
                 <parameters>
                     <parameter id="error_handling" label="Error Handling" menu="Error Message,Raise Error" required="true" tooltip="Determine what to return if an error is encountered.">Error Message</parameter>
                     <parameter id="method" label="Method" menu="GET,POST,PUT,PATCH,DELETE" required="true" tooltip="GET,POST,PUT,PATCH,DELETE (Defaults to GET)">GET</parameter>
-                    <parameter id="url" label="URL" menu="" required="true" tooltip="Example: http://www.yahoo.com">http://&lt;%=@results['Generate Slug']['output']%&gt;.kinops-test.io/app/api/v1/version</parameter>
-                    <parameter id="body" label="Body" menu="" required="false" tooltip="Body if applicable (POST,PUT,PATCH)"></parameter>
-                    <parameter id="content_type" label="Content Type" menu="" required="false" tooltip="Content Type of the Body if applicable (POST,PUT,PATCH). Use application/json for JSON content, or application/x-www-form-urlencoded for HTML forms."></parameter>
+                    <parameter id="path" label="Path" menu="" required="true" tooltip="Example: /kapps/:kappSlug/forms/:formSlug">/spaces</parameter>
+                    <parameter id="body" label="Body" menu="" required="false" tooltip="JSON body if applicable (POST,PUT,PATCH)"></parameter>
                 </parameters>
                 <messages>
                     <message type="Create"></message>

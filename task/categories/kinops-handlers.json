@@ -4,6 +4,7 @@
   "type": "Stored",
   "handlers": [
     "kinetic_core_api_v1",
+    "kinetic_core_system_api_v1",
     "kinetic_discussions_api_v1",
     "kinetic_request_ce_notification_variables_build_v1",
     "kinetic_task_api_v1",
