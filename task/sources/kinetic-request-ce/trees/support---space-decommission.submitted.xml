@@ -219,7 +219,7 @@
                     <parameter id="input" label="Input" menu="" required="true" tooltip="">&lt;%= {
 "action" =&gt; "#{@results['Provision Action Loop Head']['Value']}",
 "slug" =&gt; "#{@values['Space Slug']}",
-"host" =&gt; "#{}",
+"host" =&gt; "#{@values['Host']}",
 "http_options" =&gt; {
   "log_level" =&gt; "info"
 }
