@@ -16,6 +16,6 @@
   "filter": "",
   "name": "Submission Submitted",
   "type": "Submission",
-  "url": "http://manage.kinops-test.io/kinetic-task/app/api/v1/run-tree/${space('attribute:Task Source Name')}/${kapp('slug')}%20%3E%20${form('slug')}/Submitted",
+  "url": "https://manage.kinops-test.io/kinetic-task/app/api/v1/run-tree/${space('attribute:Task Source Name')}/${kapp('slug')}%20%3E%20${form('slug')}/Submitted",
   "attributes": null
 }
