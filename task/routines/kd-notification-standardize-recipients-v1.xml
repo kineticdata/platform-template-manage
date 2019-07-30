@@ -8,7 +8,7 @@
         <name>KD Notification Standardize Recipients_v1</name>
         <author></author>
         <notes></notes>
-        <lastID>26</lastID>
+        <lastID>29</lastID>
         <taskDefinition id="routine_kd_notifications_standardize_recipients_v1" name="KD Notification Standardize Recipients_v1" schema_version="1.0" version="1">
             <visible>false</visible>
             <deferrable>true</deferrable>
@@ -90,7 +90,7 @@
                 </messages>
                 <dependents>
                     <task label="" type="Complete" value="">system_loop_tail_v1_4</task>
-                    <task label="" type="Complete" value="">routine_kinetic_request_ce_user_retrieve_v1_26</task>
+                    <task label="" type="Complete" value="">routine_kinetic_user_retrieve_v1_27</task>
                 </dependents>
             </task>
             <task definition_id="system_loop_tail_v1" id="system_loop_tail_v1_4" name="Recipient Loop End" x="199" y="561">
@@ -135,11 +135,11 @@
                 <parameters>
                     <parameter id="input" label="Input" menu="" required="true" tooltip="">&lt;%=
             email_notifications = "yes"
-            if @results['Look for User']['Profile Attributes']!="null"
-              JSON.parse(@results['Look for User']['Profile Attributes']).each{|attribute|
-                if attribute["name"].downcase==="email notifications"
-                  if !attribute["values"][0].nil? &amp;&amp; attribute["values"][0].strip != "" &amp;&amp; (attribute["values"][0].strip.downcase=="yes" || attribute["values"][0].strip.downcase=="no")
-                    email_notifications = attribute["values"][0].strip.downcase
+            if @results['Look for User']['Profile Attributes Map JSON']!="null"
+              JSON.parse(@results['Look for User']['Profile Attributes Map JSON']).each{|name,values|
+                if name.downcase=="email notifications"
+                  if values[0].nil? &amp;&amp; values[0].strip != "" &amp;&amp; (values[0].strip.downcase=="yes" || values[0].strip.downcase=="no")
+                    email_notifications = values[0].strip.downcase
                   end
                 end
               }
@@ -200,16 +200,16 @@
                 <visible>false</visible>
                 <parameters>
                     <parameter id="input" label="Input" menu="" required="true" tooltip="">&lt;%=
-            user_details_json = JSON.parse(@results['Retrieve team member details']['User Details JSON'])
+            user_details_json = JSON.parse(@results['Retrieve team member details']['User List JSON'])
             user_details_format = []
             
             user_details_json.each{|user|
               email_notifications = "yes"
-              if !user["profileAttributes"].nil? &amp;&amp; user["profileAttributes"] != "null"
-                user["profileAttributes"].each{|attribute|
-                  if attribute["name"].downcase=="email notifications"
-                    if !attribute["values"][0].nil? &amp;&amp; attribute["values"][0].strip != "" &amp;&amp; (attribute["values"][0].strip.downcase=="yes" || attribute["values"][0].strip.downcase=="no")
-                      email_notifications = attribute["values"][0].strip.downcase
+              if !user["profileAttributesMap"].nil? &amp;&amp; user["profileAttributesMap"] != "null"
+                user["profileAttributesMap"].each{|name,values|
+                  if name.downcase=="email notifications"
+                    if !values[0].nil? &amp;&amp; values[0].strip != "" &amp;&amp; (values[0].strip.downcase=="yes" || values[0].strip.downcase=="no")
+                      email_notifications = values[0].strip.downcase
                     end
                   end
                 }
@@ -282,33 +282,6 @@
                     <task label="" type="Complete" value="">system_tree_return_v1_23</task>
                 </dependents>
             </task>
-            <task definition_id="kinetic_request_ce_user_retrieve_from_list_v1" id="kinetic_request_ce_user_retrieve_from_list_v1_18" name="Retrieve team member details" x="539" y="254">
-                <version>1</version>
-                <configured>true</configured>
-                <defers>false</defers>
-                <deferrable>false</deferrable>
-                <visible>false</visible>
-                <parameters>
-                    <parameter id="space_slug" label="Space Slug" menu="" required="false" tooltip="The Space the submission is being retrieved from.">&lt;%=@inputs['Space Slug']%&gt;</parameter>
-                    <parameter id="usernames" label="Username List" menu="" required="true" tooltip="Comma separated list of usernames to retrieve.">&lt;%= 
-# Parse Members returned from the Team Retrieve Handlers
-members = JSON.parse(@results['Look for Team']['Membership JSON'])
-# If members exist, put them into array of usernames
-if members.length &gt; 0 
-  members = members.map{ |item| item.values }.flatten
-end
-# convert the members array to a CSV
-members.join(',') %&gt;</parameter>
-                </parameters>
-                <messages>
-                    <message type="Create"></message>
-                    <message type="Update"></message>
-                    <message type="Complete"></message>
-                </messages>
-                <dependents>
-                    <task label="" type="Complete" value="">utilities_echo_v1_15</task>
-                </dependents>
-            </task>
             <task definition_id="system_junction_v1" id="system_junction_v1_22" name="Recipient Junction" x="363" y="560">
                 <version>1</version>
                 <configured>true</configured>
@@ -341,36 +314,14 @@ members.join(',') %&gt;</parameter>
                 </messages>
                 <dependents></dependents>
             </task>
-            <task definition_id="routine_kinetic_request_ce_team_retrieve_v1" id="routine_kinetic_request_ce_team_retrieve_v1_25" name="Look for Team" x="538" y="88">
+            <task definition_id="routine_kinetic_user_retrieve_v1" id="routine_kinetic_user_retrieve_v1_27" name="Look for User" x="352" y="95">
                 <version>1</version>
                 <configured>true</configured>
                 <defers>true</defers>
                 <deferrable>true</deferrable>
                 <visible>false</visible>
                 <parameters>
-                    <parameter id="Team Name" label="Team Name" menu="" required="true" tooltip="Name of the Team to Retrieve">&lt;%=@results['Recipient Loop Start']['Value']%&gt;</parameter>
-                    <parameter id="Return Attributes" label="Return Attributes" menu="" required="false" tooltip="If the function needs to return the teams attributes">false</parameter>
-                    <parameter id="Return Members" label="Return Members" menu="" required="false" tooltip="If the function needs to return the teams members">true</parameter>
-                </parameters>
-                <messages>
-                    <message type="Create"></message>
-                    <message type="Update"></message>
-                    <message type="Complete"></message>
-                </messages>
-                <dependents>
-                    <task label="Not team" type="Complete" value="@results['Look for Team']['Exists'] == &quot;false&quot;">utilities_echo_v1_1</task>
-                    <task label="Is team" type="Complete" value="@results['Look for Team']['Exists'] == &quot;true&quot;">kinetic_request_ce_user_retrieve_from_list_v1_18</task>
-                </dependents>
-            </task>
-            <task definition_id="routine_kinetic_request_ce_user_retrieve_v1" id="routine_kinetic_request_ce_user_retrieve_v1_26" name="Look for User" x="352" y="97">
-                <version>1</version>
-                <configured>true</configured>
-                <defers>true</defers>
-                <deferrable>true</deferrable>
-                <visible>false</visible>
-                <parameters>
-                    <parameter id="Space Slug" label="Space Slug" menu="" required="false" tooltip="Slug of the space in which the user exists"></parameter>
-                    <parameter id="Username" label="Username" menu="" required="true" tooltip="Username of the user to retrieve">&lt;%=@results['Recipient Loop Start']['Value']%&gt;</parameter>
+                    <parameter id="Username" label="Username" menu="" required="true" tooltip="The User's username">&lt;%=@results['Recipient Loop Start']['Value']%&gt;</parameter>
                 </parameters>
                 <messages>
                     <message type="Create"></message>
@@ -379,7 +330,58 @@ members.join(',') %&gt;</parameter>
                 </messages>
                 <dependents>
                     <task label="Is user" type="Complete" value="@results['Look for User']['Exists']==&quot;true&quot;">utilities_echo_v1_10</task>
-                    <task label="Not a user" type="Complete" value="@results['Look for User']['Exists']==&quot;false&quot;">routine_kinetic_request_ce_team_retrieve_v1_25</task>
+                    <task label="Not a user" type="Complete" value="@results['Look for User']['Exists']==&quot;false&quot;">routine_kinetic_team_retrieve_v1_28</task>
+                </dependents>
+            </task>
+            <task definition_id="routine_kinetic_team_retrieve_v1" id="routine_kinetic_team_retrieve_v1_28" name="Look for Team" x="539" y="92">
+                <version>1</version>
+                <configured>true</configured>
+                <defers>true</defers>
+                <deferrable>true</deferrable>
+                <visible>false</visible>
+                <parameters>
+                    <parameter id="Name" label="Name" menu="" required="true" tooltip="The Teams name">&lt;%=@results['Recipient Loop Start']['Value']%&gt;</parameter>
+                </parameters>
+                <messages>
+                    <message type="Create"></message>
+                    <message type="Update"></message>
+                    <message type="Complete"></message>
+                </messages>
+                <dependents>
+                    <task label="Not team" type="Complete" value="@results['Look for Team']['Exists'] == &quot;false&quot;">utilities_echo_v1_1</task>
+                    <task label="Is team" type="Complete" value="@results['Look for Team']['Exists'] == &quot;true&quot;">routine_kinetic_users_retrieve_list_v1_29</task>
+                </dependents>
+            </task>
+            <task definition_id="routine_kinetic_users_retrieve_list_v1" id="routine_kinetic_users_retrieve_list_v1_29" name="Retrieve team member details" x="547" y="253">
+                <version>1</version>
+                <configured>true</configured>
+                <defers>true</defers>
+                <deferrable>true</deferrable>
+                <visible>false</visible>
+                <parameters>
+                    <parameter id="Query" label="Query" menu="" required="false" tooltip="Query to use to fetch users. All users fetched when left blank">&lt;%= 
+# Parse Members returned from the Team Retrieve Handlers
+members = JSON.parse(@results['Look for Team']['Membership JSON'])
+# If members exist, put them into array of usernames
+if members.length &gt; 0 
+  members = members.map{ |item| item.values }.flatten
+  # quote each member name
+  members = members.map{ |m| "\"#{m}\"" }
+  # convert the members array to a CSV
+  qual = "username IN (#{members.join(',')})"
+else
+  qual = "username IN (null)"
+end
+qual %&gt;
+</parameter>
+                </parameters>
+                <messages>
+                    <message type="Create"></message>
+                    <message type="Update"></message>
+                    <message type="Complete"></message>
+                </messages>
+                <dependents>
+                    <task label="" type="Complete" value="">utilities_echo_v1_15</task>
                 </dependents>
             </task>
         </request>

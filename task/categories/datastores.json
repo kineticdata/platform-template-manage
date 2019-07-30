@@ -1,0 +1,23 @@
+{
+  "name": "Datastores",
+  "description": null,
+  "type": "Stored",
+  "handlers": [
+
+  ],
+  "policyRules": [
+
+  ],
+  "trees": [
+    "routine_kinetic_datastore_form_attribute_definition_create_v1",
+    "routine_kinetic_datastore_form_attribute_definition_delete_v1",
+    "routine_kinetic_datastore_form_attribute_definition_retrieve_v1",
+    "routine_kinetic_datastore_form_attribute_definition_update_v1",
+    "routine_kinetic_datastore_form_attribute_definitions_retrieve_list_v1",
+    "routine_kinetic_datastore_form_create_v1",
+    "routine_kinetic_datastore_form_delete_v1",
+    "routine_kinetic_datastore_form_retrieve_v1",
+    "routine_kinetic_datastore_form_update_v1",
+    "routine_kinetic_datastore_forms_retrieve_list_v1"
+  ]
+}

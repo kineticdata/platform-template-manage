@@ -65,6 +65,11 @@
 #         "username" => "joe.user"
 #       }
 #     ],
+#     "space" => {
+#       "attributesMap" => {
+#         "Platform Host URL" => [ "http://localhost:8080" ]
+#       }
+#     },
 #     "handlers" => {
 #       "kinetic_core_system_api_v1" => {
 #         "api_username" => "admin",
@@ -232,6 +237,21 @@ space_sdk.import_space(vars["core"]["space_slug"])
 
 # update the space properties
 #   set required space attributes
+space_attributes_map = {
+  "Discussion Id" => [""],
+  "Task Server Scheme" => [URI(vars["task"]["server"]).scheme],
+  "Task Server Host" => [URI(vars["task"]["server"]).host],
+  "Task Server Space Slug" => [vars["task"]["space_slug"]],
+  "Task Server Url" => [vars["task"]["server"]],
+  "Web Server Url" => [vars["core"]["server"]]
+}
+# set space attributes passed in the variable data
+vars_space_attributes_map = (vars["data"].has_key?("space") && 
+    vars["data"]["space"].has_key?("attributesMap")) ? 
+    vars["data"]["space"]["attributesMap"] : {}
+# merge in any space attributes passed in the variable data
+space_attributes_map = space_attributes_map.merge(vars_space_attributes_map)
+
 #   set space name from vars
 #   setup the filehub service
 space_sdk.update_space({

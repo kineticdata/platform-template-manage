@@ -113,7 +113,7 @@
                 </messages>
                 <dependents></dependents>
             </task>
-            <task definition_id="system_join_v1" id="system_join_v1_43" name="system_join_v1_43" x="364" y="196">
+            <task definition_id="system_join_v1" id="system_join_v1_43" name="Detected Space Slug" x="364" y="196">
                 <version>1</version>
                 <configured>true</configured>
                 <defers>false</defers>
@@ -296,7 +296,7 @@
                 <parameters>
                     <parameter id="error_handling" label="Error Handling" menu="Error Message,Raise Error" required="true" tooltip="Determine what to return if an error is encountered.">Error Message</parameter>
                     <parameter id="method" label="Method" menu="GET,POST,PUT,PATCH,DELETE" required="true" tooltip="GET,POST,PUT,PATCH,DELETE (Defaults to GET)">POST</parameter>
-                    <parameter id="url" label="URL" menu="" required="true" tooltip="Example: http://www.yahoo.com">&lt;%= "#{@space_attributes['Tenant Provisioner API']}/install" %&gt;</parameter>
+                    <parameter id="url" label="URL" menu="" required="true" tooltip="Example: http://www.yahoo.com">&lt;%= "#{@space_attributes['Tenant Provisioner URL']}/install" %&gt;</parameter>
                     <parameter id="body" label="Body" menu="" required="false" tooltip="Body if applicable (POST,PUT,PATCH)">&lt;%=@results['Build Post Data']['output']%&gt;</parameter>
                     <parameter id="content_type" label="Content Type" menu="" required="false" tooltip="Content Type of the Body if applicable (POST,PUT,PATCH). Use application/json for JSON content, or application/x-www-form-urlencoded for HTML forms.">application/json</parameter>
                 </parameters>

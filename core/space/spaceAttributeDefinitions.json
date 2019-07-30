@@ -61,6 +61,11 @@
   },
   {
     "allowsMultiple": false,
+    "description": "Platform Host URL",
+    "name": "Platform Host URL"
+  },
+  {
+    "allowsMultiple": false,
     "description": null,
     "name": "Service Days Due"
   },
@@ -91,8 +96,8 @@
   },
   {
     "allowsMultiple": false,
-    "description": "Tenant Provisioner API URL",
-    "name": "Tenant Provisioner API"
+    "description": "Tenant Provisioner URL",
+    "name": "Tenant Provisioner URL"
   },
   {
     "allowsMultiple": false,

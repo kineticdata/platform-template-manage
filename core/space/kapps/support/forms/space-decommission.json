@@ -59,7 +59,7 @@
               "name": "Validate Username",
               "type": "Change",
               "action": "Custom",
-              "code": "var username = K('field[Username]').value()\nif (K('identity').username !== username) {\n  alert('The username entered does not have access to decomission this space');\n  $(K('field[Username]').element()).focus();\n  K('field[Username]').value(null);\n}else{\n  K('button[Submit Button]').enable();\n}",
+              "code": "var username = K('field[Username]').value()\nif (K('identity').username !== username) {\n  alert('The username entered does not have access to decommission this space');\n  $(K('field[Username]').element()).focus();\n  K('field[Username]').value(null);\n}else{\n  K('button[Submit Button]').enable();\n}",
               "runIf": "values('Username') !== null"
             }
           ],
@@ -130,7 +130,7 @@
           "name": "Host",
           "label": "Host",
           "key": "f6",
-          "defaultValue": "https://kinops-test.io",
+          "defaultValue": "${space('attribute:Platform Host URL')}",
           "defaultResourceName": null,
           "visible": true,
           "enabled": true,
@@ -224,7 +224,22 @@
     }
   ],
   "securityPolicies": [
-
+    {
+      "endpoint": "Display",
+      "name": "Admins"
+    },
+    {
+      "endpoint": "Modification",
+      "name": "Admins"
+    },
+    {
+      "endpoint": "Submission Access",
+      "name": "Admins"
+    },
+    {
+      "endpoint": "Submission Modification",
+      "name": "Admins"
+    }
   ],
   "slug": "space-decommission",
   "status": "Active",

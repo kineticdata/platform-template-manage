@@ -68,6 +68,12 @@
       ]
     },
     {
+      "name": "Platform Host URL",
+      "values": [
+        "https://kinops-test.io"
+      ]
+    },
+    {
       "name": "Service Days Due",
       "values": [
         "7"
@@ -122,7 +128,7 @@
       ]
     },
     {
-      "name": "Tenant Provisioner API",
+      "name": "Tenant Provisioner URL",
       "values": [
         "https://tenant-data-manager.kinetic.svc.cluster.local"
       ]

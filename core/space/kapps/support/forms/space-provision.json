@@ -345,7 +345,7 @@
               "name": "Host",
               "label": "Host",
               "key": "f23",
-              "defaultValue": "https://kinops-test.io",
+              "defaultValue": "${space('attribute:Platform Host URL')}",
               "defaultResourceName": null,
               "visible": true,
               "enabled": true,
@@ -569,7 +569,22 @@
     }
   ],
   "securityPolicies": [
-
+    {
+      "endpoint": "Display",
+      "name": "Admins"
+    },
+    {
+      "endpoint": "Modification",
+      "name": "Admins"
+    },
+    {
+      "endpoint": "Submission Access",
+      "name": "Admins"
+    },
+    {
+      "endpoint": "Submission Modification",
+      "name": "Admins"
+    }
   ],
   "slug": "space-provision",
   "status": "Active",
