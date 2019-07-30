@@ -21,7 +21,7 @@
                     <task label="" type="Complete" value="">routine_kinetic_submission_activity_create_v1_35</task>
                 </dependents>
             </task>
-            <task definition_id="routine_kd_notification_send_using_template_v1" id="routine_kd_notification_send_using_template_v1_34" name="Notify Requester" x="781" y="408">
+            <task definition_id="routine_kd_notification_send_using_template_v1" id="routine_kd_notification_send_using_template_v1_34" name="Notify Requester" x="727" y="497">
                 <version>1</version>
                 <configured>true</configured>
                 <defers>true</defers>
@@ -88,7 +88,7 @@
                     <task label="" type="Complete" value="">utilities_echo_v1_43</task>
                 </dependents>
             </task>
-            <task definition_id="routine_kinetic_submission_update_status_v1" id="routine_kinetic_submission_update_status_v1_37" name="Close Submission" x="594" y="418">
+            <task definition_id="routine_kinetic_submission_update_status_v1" id="routine_kinetic_submission_update_status_v1_37" name="Close Submission" x="584" y="418">
                 <version>1</version>
                 <configured>true</configured>
                 <defers>true</defers>
@@ -104,10 +104,10 @@
                     <message type="Complete"></message>
                 </messages>
                 <dependents>
-                    <task label="" type="Complete" value="">routine_kinetic_submission_activity_update_v1_38</task>
+                    <task label="" type="Complete" value="">routine_kinetic_submission_activity_create_v1_39</task>
                 </dependents>
             </task>
-            <task definition_id="routine_kinetic_submission_activity_update_v1" id="routine_kinetic_submission_activity_update_v1_38" name="Decommission Complete" x="594" y="508">
+            <task definition_id="routine_kinetic_submission_activity_update_v1" id="routine_kinetic_submission_activity_update_v1_38" name="Decommission Complete" x="583" y="296">
                 <version>1</version>
                 <configured>true</configured>
                 <defers>true</defers>
@@ -127,10 +127,10 @@
                     <message type="Complete"></message>
                 </messages>
                 <dependents>
-                    <task label="" type="Complete" value="">routine_kinetic_submission_activity_create_v1_39</task>
+                    <task label="" type="Complete" value="">routine_kinetic_submission_update_status_v1_37</task>
                 </dependents>
             </task>
-            <task definition_id="routine_kinetic_submission_activity_create_v1" id="routine_kinetic_submission_activity_create_v1_39" name="Completed" x="594" y="618">
+            <task definition_id="routine_kinetic_submission_activity_create_v1" id="routine_kinetic_submission_activity_create_v1_39" name="Completed" x="583" y="508">
                 <version>1</version>
                 <configured>true</configured>
                 <defers>true</defers>
@@ -150,9 +150,10 @@
                 </messages>
                 <dependents>
                     <task label="" type="Complete" value="">utilities_echo_v1_40</task>
+                    <task label="" type="Complete" value="">routine_kd_notification_send_using_template_v1_34</task>
                 </dependents>
             </task>
-            <task definition_id="utilities_echo_v1" id="utilities_echo_v1_40" name="END" x="594" y="706">
+            <task definition_id="utilities_echo_v1" id="utilities_echo_v1_40" name="END" x="580" y="589">
                 <version>1</version>
                 <configured>true</configured>
                 <defers>false</defers>
@@ -168,7 +169,7 @@
                 </messages>
                 <dependents></dependents>
             </task>
-            <task definition_id="utilities_echo_v1" id="utilities_echo_v1_43" name="Build Decommission Post Data" x="452" y="23">
+            <task definition_id="utilities_echo_v1" id="utilities_echo_v1_43" name="Build Post Data" x="435" y="46">
                 <version>1</version>
                 <configured>true</configured>
                 <defers>false</defers>
@@ -176,7 +177,6 @@
                 <visible>true</visible>
                 <parameters>
                     <parameter id="input" label="Input" menu="" required="true" tooltip="">&lt;%= {
-"action" =&gt; "decommission",
 "slug" =&gt; "#{@values['Space Slug']}",
 "host" =&gt; "#{@values['Host']}",
 "http_options" =&gt; {
@@ -193,7 +193,7 @@
                     <task label="" type="Complete" value="">generic_http_v1_44</task>
                 </dependents>
             </task>
-            <task definition_id="generic_http_v1" id="generic_http_v1_44" name="Decommission Tenant" x="584" y="121">
+            <task definition_id="generic_http_v1" id="generic_http_v1_44" name="Decommission Tenant" x="582" y="44">
                 <version>1</version>
                 <configured>true</configured>
                 <defers>false</defers>
@@ -202,8 +202,8 @@
                 <parameters>
                     <parameter id="error_handling" label="Error Handling" menu="Error Message,Raise Error" required="true" tooltip="Determine what to return if an error is encountered.">Error Message</parameter>
                     <parameter id="method" label="Method" menu="GET,POST,PUT,PATCH,DELETE" required="true" tooltip="GET,POST,PUT,PATCH,DELETE (Defaults to GET)">POST</parameter>
-                    <parameter id="url" label="URL" menu="" required="true" tooltip="Example: http://www.yahoo.com">https://tenant-data-manager.kinetic.svc.cluster.local/decommission</parameter>
-                    <parameter id="body" label="Body" menu="" required="false" tooltip="Body if applicable (POST,PUT,PATCH)">&lt;%=@results['Build Decommission Post Data']['output']%&gt;</parameter>
+                    <parameter id="url" label="URL" menu="" required="true" tooltip="Example: http://www.yahoo.com">&lt;%= "#{@space_attributes['Tenant Provisioner API']}/decommission" %&gt;</parameter>
+                    <parameter id="body" label="Body" menu="" required="false" tooltip="Body if applicable (POST,PUT,PATCH)">&lt;%=@results['Build Post Data']['output']%&gt;</parameter>
                     <parameter id="content_type" label="Content Type" menu="" required="false" tooltip="Content Type of the Body if applicable (POST,PUT,PATCH). Use application/json for JSON content, or application/x-www-form-urlencoded for HTML forms.">application/json</parameter>
                 </parameters>
                 <messages>
@@ -212,11 +212,11 @@
                     <message type="Complete"></message>
                 </messages>
                 <dependents>
-                    <task label="Uninstall" type="Complete" value="(@values['Options'] || []).include?(&quot;Uninstall&quot;)">utilities_echo_v1_47</task>
                     <task label="Do Not Uninstall" type="Complete" value="!(@values['Options'] || []).include?(&quot;Uninstall&quot;)">system_junction_v1_46</task>
+                    <task label="Uninstall" type="Complete" value="(@values['Options'] || []).include?(&quot;Uninstall&quot;)">generic_http_v1_48</task>
                 </dependents>
             </task>
-            <task definition_id="system_junction_v1" id="system_junction_v1_46" name="Tenant Actions Complete" x="594" y="288">
+            <task definition_id="system_junction_v1" id="system_junction_v1_46" name="Tenant Actions Complete" x="580" y="171">
                 <version>1</version>
                 <configured>true</configured>
                 <defers>false</defers>
@@ -229,36 +229,10 @@
                     <message type="Complete"></message>
                 </messages>
                 <dependents>
-                    <task label="" type="Complete" value="">routine_kinetic_submission_update_status_v1_37</task>
-                    <task label="" type="Complete" value="">routine_kd_notification_send_using_template_v1_34</task>
+                    <task label="" type="Complete" value="">routine_kinetic_submission_activity_update_v1_38</task>
                 </dependents>
             </task>
-            <task definition_id="utilities_echo_v1" id="utilities_echo_v1_47" name="Build Uninstall Post Data" x="769" y="100">
-                <version>1</version>
-                <configured>true</configured>
-                <defers>false</defers>
-                <deferrable>false</deferrable>
-                <visible>true</visible>
-                <parameters>
-                    <parameter id="input" label="Input" menu="" required="true" tooltip="">&lt;%= {
-"action" =&gt; "uninstall",
-"slug" =&gt; "#{@values['Space Slug']}",
-"host" =&gt; "#{@values['Host']}",
-"http_options" =&gt; {
-  "log_level" =&gt; "info"
-}
-}.to_json %&gt;</parameter>
-                </parameters>
-                <messages>
-                    <message type="Create"></message>
-                    <message type="Update"></message>
-                    <message type="Complete"></message>
-                </messages>
-                <dependents>
-                    <task label="" type="Complete" value="">generic_http_v1_48</task>
-                </dependents>
-            </task>
-            <task definition_id="generic_http_v1" id="generic_http_v1_48" name="Uninstall Tenant" x="770" y="258">
+            <task definition_id="generic_http_v1" id="generic_http_v1_48" name="Uninstall Tenant" x="715" y="182">
                 <version>1</version>
                 <configured>true</configured>
                 <defers>false</defers>
@@ -267,7 +241,7 @@
                 <parameters>
                     <parameter id="error_handling" label="Error Handling" menu="Error Message,Raise Error" required="true" tooltip="Determine what to return if an error is encountered.">Error Message</parameter>
                     <parameter id="method" label="Method" menu="GET,POST,PUT,PATCH,DELETE" required="true" tooltip="GET,POST,PUT,PATCH,DELETE (Defaults to GET)">POST</parameter>
-                    <parameter id="url" label="URL" menu="" required="true" tooltip="Example: http://www.yahoo.com">https://tenant-data-manager.kinetic.svc.cluster.local/uninstall</parameter>
+                    <parameter id="url" label="URL" menu="" required="true" tooltip="Example: http://www.yahoo.com">&lt;%= "#{@space_attributes['Tenant Provisioner API']}/uninstall" %&gt;</parameter>
                     <parameter id="body" label="Body" menu="" required="false" tooltip="Body if applicable (POST,PUT,PATCH)">&lt;%=@results['Build Uninstall Post Data']['output']%&gt;</parameter>
                     <parameter id="content_type" label="Content Type" menu="" required="false" tooltip="Content Type of the Body if applicable (POST,PUT,PATCH). Use application/json for JSON content, or application/x-www-form-urlencoded for HTML forms.">application/json</parameter>
                 </parameters>

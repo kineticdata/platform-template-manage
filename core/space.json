@@ -82,7 +82,7 @@
     {
       "name": "Task Assignee Team",
       "values": [
-        "Administators"
+        "Administrators"
       ]
     },
     {
@@ -119,6 +119,12 @@
       "name": "Task Source Name",
       "values": [
         "Kinetic Request CE"
+      ]
+    },
+    {
+      "name": "Tenant Provisioner API",
+      "values": [
+        "https://tenant-data-manager.kinetic.svc.cluster.local"
       ]
     },
     {

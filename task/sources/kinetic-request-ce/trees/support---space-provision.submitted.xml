@@ -7,7 +7,7 @@
         <name>Submitted</name>
         <author></author>
         <notes></notes>
-        <lastID>54</lastID>
+        <lastID>56</lastID>
         <request>
             <task definition_id="system_start_v1" id="start" name="Start" x="38" y="65">
                 <version>1</version>
@@ -90,7 +90,7 @@
                     <task label="" type="Complete" value="">routine_kinetic_submission_activity_create_v1_49</task>
                 </dependents>
             </task>
-            <task definition_id="routine_kd_notification_send_using_template_v1" id="routine_kd_notification_send_using_template_v1_30" name="Notify Completed" x="769" y="420">
+            <task definition_id="routine_kd_notification_send_using_template_v1" id="routine_kd_notification_send_using_template_v1_30" name="Notify Requester" x="740" y="518">
                 <version>1</version>
                 <configured>true</configured>
                 <defers>true</defers>
@@ -215,7 +215,6 @@
                     <message type="Complete"></message>
                 </messages>
                 <dependents>
-                    <task label="" type="Complete" value="">routine_kd_notification_send_using_template_v1_30</task>
                     <task label="" type="Complete" value="">routine_kinetic_submission_activity_create_v1_52</task>
                 </dependents>
             </task>
@@ -239,6 +238,7 @@
                 </messages>
                 <dependents>
                     <task label="" type="Complete" value="">utilities_echo_v1_4</task>
+                    <task label="" type="Complete" value="">routine_kd_notification_send_using_template_v1_30</task>
                 </dependents>
             </task>
             <task definition_id="utilities_echo_v1" id="utilities_echo_v1_53" name="Build Post Data" x="580.2999877929688" y="138.4166717529297">
@@ -249,7 +249,6 @@
                 <visible>true</visible>
                 <parameters>
                     <parameter id="input" label="Input" menu="" required="true" tooltip="">&lt;%= {
-  "action" =&gt; "install",
   "slug" =&gt; "#{@results['Slug']['output']}",
   "host" =&gt; "#{@values['Host']}",
   "http_options" =&gt; {
@@ -297,7 +296,7 @@
                 <parameters>
                     <parameter id="error_handling" label="Error Handling" menu="Error Message,Raise Error" required="true" tooltip="Determine what to return if an error is encountered.">Error Message</parameter>
                     <parameter id="method" label="Method" menu="GET,POST,PUT,PATCH,DELETE" required="true" tooltip="GET,POST,PUT,PATCH,DELETE (Defaults to GET)">POST</parameter>
-                    <parameter id="url" label="URL" menu="" required="true" tooltip="Example: http://www.yahoo.com">https://tenant-data-manager.kinetic.svc.cluster.local/install</parameter>
+                    <parameter id="url" label="URL" menu="" required="true" tooltip="Example: http://www.yahoo.com">&lt;%= "#{@space_attributes['Tenant Provisioner API']}/install" %&gt;</parameter>
                     <parameter id="body" label="Body" menu="" required="false" tooltip="Body if applicable (POST,PUT,PATCH)">&lt;%=@results['Build Post Data']['output']%&gt;</parameter>
                     <parameter id="content_type" label="Content Type" menu="" required="false" tooltip="Content Type of the Body if applicable (POST,PUT,PATCH). Use application/json for JSON content, or application/x-www-form-urlencoded for HTML forms.">application/json</parameter>
                 </parameters>

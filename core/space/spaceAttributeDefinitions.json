@@ -91,6 +91,11 @@
   },
   {
     "allowsMultiple": false,
+    "description": "Tenant Provisioner API URL",
+    "name": "Tenant Provisioner API"
+  },
+  {
+    "allowsMultiple": false,
     "description": "Url of the request web server that this space exists",
     "name": "Web Server Url"
   }
