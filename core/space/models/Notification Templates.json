@@ -48,7 +48,7 @@
           "structureField": "${fields('values[Subject]')}"
         }
       ],
-      "bridgeName": "Kinetic Core",
+      "bridgeSlug": "kinetic-core",
       "name": "Notification Templates",
       "qualifications": [
         {
@@ -60,6 +60,7 @@
           "query": "kappSlug=admin&formSlug=notification-templates&values[Notification Name]=${parameters('Notification Name')}&limit=999"
         }
       ],
+      "serviceEndpointSlug": "bridgehub",
       "structure": "Submissions"
     }
   ],

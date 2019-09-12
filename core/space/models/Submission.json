@@ -97,7 +97,7 @@
           "structureField": "${fields('label')}"
         }
       ],
-      "bridgeName": "Kinetic Core",
+      "bridgeSlug": "kinetic-core",
       "name": "Kinetic Core Submissions",
       "qualifications": [
         {
@@ -117,6 +117,7 @@
           "query": "id=${parameters('Id')}"
         }
       ],
+      "serviceEndpointSlug": "bridgehub",
       "structure": "Submissions"
     }
   ],

@@ -55,7 +55,7 @@
           "structureField": "${fields('values[Record Type]')}"
         }
       ],
-      "bridgeName": "Kinetic Core",
+      "bridgeSlug": "kinetic-core",
       "name": "Notification Headers and Footers",
       "qualifications": [
         {
@@ -87,6 +87,7 @@
           "query": "kappSlug=admin&formSlug=notification-headers-and-footers&limit=999&values[Status]=Inactive&values[Record Type]=Header"
         }
       ],
+      "serviceEndpointSlug": "bridgehub",
       "structure": "Submissions"
     }
   ],
