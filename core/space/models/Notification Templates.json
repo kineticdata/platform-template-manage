@@ -60,7 +60,6 @@
           "query": "kappSlug=admin&formSlug=notification-templates&values[Notification Name]=${parameters('Notification Name')}&limit=999"
         }
       ],
-      "serviceEndpointSlug": "bridgehub",
       "structure": "Submissions"
     }
   ],

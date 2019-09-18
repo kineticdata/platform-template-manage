@@ -5,6 +5,7 @@
 # {
 #   "core" => {
 #     "api" => "http://localhost:8080/kinetic/app/api/v1",
+#     "proxy_url" => "http://localhost:8080/kinetic/app/components",
 #     "server" => "http://localhost:8080/kinetic",
 #     "space_slug" => "foo",
 #     "space_name" => "Foo",
