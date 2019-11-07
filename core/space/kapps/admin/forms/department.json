@@ -1,0 +1,282 @@
+{
+  "anonymous": false,
+  "attributes": [
+    {
+      "name": "Datastore Configuration",
+      "values": [
+        "[{\"data\":\"Status\",\"title\":\"Status\",\"visible\":true,\"searchable\":true,\"orderable\":true,\"unique\":false},{\"data\":\"Department\",\"title\":\"Department\",\"visible\":true,\"searchable\":true,\"orderable\":true,\"unique\":true},{\"data\":\"Organization Name\",\"title\":\"Organization Name\",\"visible\":true,\"searchable\":true,\"orderable\":true,\"unique\":true},{\"data\":\"Organization ID\",\"title\":\"Organization ID\",\"visible\":false,\"searchable\":true,\"orderable\":true,\"unique\":false},{\"data\":\"Description\",\"title\":\"Description\",\"visible\":true,\"searchable\":true,\"orderable\":true,\"unique\":false},{\"data\":\"Notes\",\"title\":\"Notes\",\"visible\":false,\"searchable\":true,\"orderable\":true,\"unique\":false}]"
+      ]
+    }
+  ],
+  "bridgedResources": [
+    {
+      "model": "Datastore - Organizations",
+      "name": "Organization by Name",
+      "order": [
+
+      ],
+      "parameters": [
+        {
+          "mapping": "${values('Organization Name')}",
+          "name": "Organization Name"
+        }
+      ],
+      "qualification": "By Organization Name",
+      "status": "Active"
+    },
+    {
+      "model": "Datastore - Organizations",
+      "name": "Organizations",
+      "order": [
+
+      ],
+      "parameters": [
+
+      ],
+      "qualification": "All",
+      "status": "Active"
+    }
+  ],
+  "categorizations": [
+
+  ],
+  "customHeadContent": null,
+  "description": "Departments or business units within an organization",
+  "name": "Department or Business Unit",
+  "notes": null,
+  "pages": [
+    {
+      "advanceCondition": "false",
+      "displayCondition": null,
+      "displayPage": "pages/datastore/datastoreForm.jsp",
+      "elements": [
+        {
+          "type": "field",
+          "name": "Status",
+          "label": "Status",
+          "key": "f901",
+          "defaultValue": "active",
+          "defaultResourceName": null,
+          "visible": true,
+          "enabled": true,
+          "required": true,
+          "requiredMessage": null,
+          "omitWhenHidden": null,
+          "pattern": null,
+          "constraints": [
+
+          ],
+          "events": [
+
+          ],
+          "renderAttributes": {
+
+          },
+          "dataType": "string",
+          "renderType": "radio",
+          "choicesResourceName": null,
+          "choicesRunIf": null,
+          "choices": [
+            {
+              "label": "Pending",
+              "value": "pending"
+            },
+            {
+              "label": "Active",
+              "value": "active"
+            },
+            {
+              "label": "Inactive",
+              "value": "inactive"
+            }
+          ]
+        },
+        {
+          "type": "field",
+          "name": "Organization Name",
+          "label": "Organization Name",
+          "key": "f1",
+          "defaultValue": null,
+          "defaultResourceName": null,
+          "visible": true,
+          "enabled": true,
+          "required": false,
+          "requiredMessage": null,
+          "omitWhenHidden": null,
+          "pattern": null,
+          "constraints": [
+
+          ],
+          "events": [
+            {
+              "name": "Set Organization Name",
+              "type": "Change",
+              "action": "Set Fields",
+              "mappings": [
+                {
+                  "field": "Organization ID",
+                  "value": "${resources('Organization by Name:Submission ID')}",
+                  "visible": true
+                }
+              ],
+              "bridgedResourceName": "Organization by Name"
+            }
+          ],
+          "renderAttributes": {
+
+          },
+          "dataType": "string",
+          "renderType": "dropdown",
+          "choicesResourceName": "Organizations",
+          "choicesRunIf": "",
+          "choices": {
+            "label": "${resources('Organizations:Organization Name')}",
+            "value": "${resources('Organizations:Organization Name')}"
+          }
+        },
+        {
+          "type": "field",
+          "name": "Department",
+          "label": "Department or Business Unit Name",
+          "key": "f2",
+          "defaultValue": null,
+          "defaultResourceName": "",
+          "visible": true,
+          "enabled": true,
+          "required": false,
+          "requiredMessage": null,
+          "omitWhenHidden": null,
+          "pattern": null,
+          "constraints": [
+
+          ],
+          "events": [
+
+          ],
+          "renderAttributes": {
+            "style": "width:100%"
+          },
+          "dataType": "string",
+          "renderType": "text",
+          "rows": 1
+        },
+        {
+          "type": "field",
+          "name": "Description",
+          "label": "Description",
+          "key": "f3",
+          "defaultValue": null,
+          "defaultResourceName": null,
+          "visible": true,
+          "enabled": true,
+          "required": false,
+          "requiredMessage": null,
+          "omitWhenHidden": null,
+          "pattern": null,
+          "constraints": [
+
+          ],
+          "events": [
+
+          ],
+          "renderAttributes": {
+            "style": "width:100%"
+          },
+          "dataType": "string",
+          "renderType": "text",
+          "rows": 3
+        },
+        {
+          "type": "field",
+          "name": "Notes",
+          "label": "Notes",
+          "key": "f4",
+          "defaultValue": null,
+          "defaultResourceName": null,
+          "visible": true,
+          "enabled": true,
+          "required": false,
+          "requiredMessage": null,
+          "omitWhenHidden": null,
+          "pattern": null,
+          "constraints": [
+
+          ],
+          "events": [
+
+          ],
+          "renderAttributes": {
+            "style": "width:100%"
+          },
+          "dataType": "string",
+          "renderType": "text",
+          "rows": 3
+        },
+        {
+          "type": "field",
+          "name": "Organization ID",
+          "label": "Organization ID",
+          "key": "f5",
+          "defaultValue": null,
+          "defaultResourceName": null,
+          "visible": false,
+          "enabled": true,
+          "required": false,
+          "requiredMessage": null,
+          "omitWhenHidden": false,
+          "pattern": null,
+          "constraints": [
+
+          ],
+          "events": [
+
+          ],
+          "renderAttributes": {
+            "style": "width:100%"
+          },
+          "dataType": "string",
+          "renderType": "text",
+          "rows": 1
+        },
+        {
+          "type": "button",
+          "label": "Save",
+          "name": "Save",
+          "visible": "bundle.adminDatastore != null",
+          "enabled": true,
+          "renderType": "submit-page",
+          "renderAttributes": {
+            "class": "btn btn-tertiary"
+          }
+        },
+        {
+          "type": "button",
+          "label": "Cancel",
+          "name": "Cancel",
+          "visible": "bundle.adminDatastore != null",
+          "enabled": true,
+          "renderType": "custom",
+          "renderAttributes": {
+            "class": "btn btn-link cancel-record"
+          },
+          "events": [
+
+          ]
+        }
+      ],
+      "events": [
+
+      ],
+      "name": "Datastore",
+      "renderType": "submittable",
+      "type": "page"
+    }
+  ],
+  "securityPolicies": [
+
+  ],
+  "slug": "department",
+  "status": "Active",
+  "submissionLabelExpression": "${values('Organization Name')} :: ${values('Department')}",
+  "type": "Datastore"
+}

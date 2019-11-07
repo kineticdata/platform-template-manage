@@ -4,7 +4,19 @@
     {
       "name": "Icon",
       "values": [
-        "fa-plus-square-o"
+        "fa-commenting-o"
+      ]
+    },
+    {
+      "name": "Owning Team",
+      "values": [
+        "Default"
+      ]
+    },
+    {
+      "name": "Task Assignee Team",
+      "values": [
+        "Default"
       ]
     }
   ],
@@ -12,26 +24,22 @@
 
   ],
   "categorizations": [
-    {
-      "category": {
-        "slug": "space-activities"
-      }
-    }
+
   ],
-  "customHeadContent": "",
-  "description": "Form used to provision a space.",
-  "name": "Space Provision",
+  "customHeadContent": null,
+  "description": "Customers use this form to submit feedback to their kinops System Administrator.",
+  "name": "Feedback",
   "notes": null,
   "pages": [
     {
-      "advanceCondition": "",
+      "advanceCondition": null,
       "displayCondition": null,
-      "displayPage": "",
+      "displayPage": "pages/utilities/form.jsp",
       "elements": [
         {
           "type": "section",
           "renderType": null,
-          "name": "Header",
+          "name": "Questions",
           "title": "",
           "visible": true,
           "omitWhenHidden": null,
@@ -40,11 +48,88 @@
           },
           "elements": [
             {
-              "type": "content",
-              "renderType": "html",
-              "name": "Enter Info Below",
-              "text": "<h5>Please enter your information below to get started</h5><br>",
+              "type": "field",
+              "name": "Comments",
+              "label": "Comments",
+              "key": "f1",
+              "defaultValue": null,
+              "defaultResourceName": null,
               "visible": true,
+              "enabled": true,
+              "required": true,
+              "requiredMessage": null,
+              "omitWhenHidden": null,
+              "pattern": null,
+              "constraints": [
+
+              ],
+              "events": [
+
+              ],
+              "renderAttributes": {
+
+              },
+              "dataType": "string",
+              "renderType": "text",
+              "rows": 4
+            },
+            {
+              "type": "field",
+              "name": "Relevant Screenshots",
+              "label": "Relevant Screenshots",
+              "key": "f910",
+              "defaultValue": null,
+              "defaultResourceName": null,
+              "visible": true,
+              "enabled": true,
+              "required": false,
+              "requiredMessage": null,
+              "omitWhenHidden": null,
+              "pattern": null,
+              "constraints": [
+
+              ],
+              "events": [
+
+              ],
+              "renderAttributes": {
+
+              },
+              "dataType": "file",
+              "renderType": "attachment",
+              "allowMultiple": true
+            }
+          ]
+        },
+        {
+          "type": "section",
+          "renderType": null,
+          "name": "Footer",
+          "title": null,
+          "visible": true,
+          "omitWhenHidden": null,
+          "renderAttributes": {
+            "class": "text-right"
+          },
+          "elements": [
+            {
+              "type": "button",
+              "label": "Save",
+              "name": "Save",
+              "visible": false,
+              "enabled": true,
+              "renderType": "save",
+              "renderAttributes": {
+
+              }
+            },
+            {
+              "type": "button",
+              "label": "Submit",
+              "name": "Submit",
+              "visible": true,
+              "enabled": true,
+              "renderType": "submit-page",
               "renderAttributes": {
 
               }
@@ -54,47 +139,162 @@
         {
           "type": "section",
           "renderType": null,
-          "name": "Customer Info Section",
-          "title": "",
-          "visible": true,
-          "omitWhenHidden": null,
+          "name": "Hidden System Questions Do Not Delete",
+          "title": "Hidden System Questions Do Not Delete",
+          "visible": false,
+          "omitWhenHidden": false,
           "renderAttributes": {
 
           },
           "elements": [
             {
               "type": "field",
-              "name": "Company Name",
-              "label": "Company Name",
+              "name": "Requested For",
+              "label": "Requested For",
+              "key": "f908",
+              "defaultValue": "${identity('username')}",
+              "defaultResourceName": null,
+              "visible": true,
+              "enabled": true,
+              "required": false,
+              "requiredMessage": null,
+              "omitWhenHidden": null,
+              "pattern": null,
+              "constraints": [
+
+              ],
+              "events": [
+
+              ],
+              "renderAttributes": {
+
+              },
+              "dataType": "string",
+              "renderType": "text",
+              "rows": 1
+            },
+            {
+              "type": "field",
+              "name": "Requested For Display Name",
+              "label": "Requested For Display Name",
+              "key": "f909",
+              "defaultValue": "${identity('displayName')}",
+              "defaultResourceName": null,
+              "visible": true,
+              "enabled": true,
+              "required": false,
+              "requiredMessage": null,
+              "omitWhenHidden": null,
+              "pattern": null,
+              "constraints": [
+
+              ],
+              "events": [
+
+              ],
+              "renderAttributes": {
+
+              },
+              "dataType": "string",
+              "renderType": "text",
+              "rows": 1
+            },
+            {
+              "type": "field",
+              "name": "Requested By",
+              "label": "Requested By",
+              "key": "f906",
+              "defaultValue": "${identity('username')}",
+              "defaultResourceName": null,
+              "visible": true,
+              "enabled": true,
+              "required": false,
+              "requiredMessage": null,
+              "omitWhenHidden": null,
+              "pattern": null,
+              "constraints": [
+
+              ],
+              "events": [
+
+              ],
+              "renderAttributes": {
+
+              },
+              "dataType": "string",
+              "renderType": "text",
+              "rows": 1
+            },
+            {
+              "type": "field",
+              "name": "Requested By Display Name",
+              "label": "Requested By Display Name",
+              "key": "f907",
+              "defaultValue": "${identity('displayName')}",
+              "defaultResourceName": null,
+              "visible": true,
+              "enabled": true,
+              "required": false,
+              "requiredMessage": null,
+              "omitWhenHidden": null,
+              "pattern": null,
+              "constraints": [
+
+              ],
+              "events": [
+
+              ],
+              "renderAttributes": {
+
+              },
+              "dataType": "string",
+              "renderType": "text",
+              "rows": 1
+            },
+            {
+              "type": "field",
+              "name": "Status",
+              "label": "Status",
+              "key": "f901",
+              "defaultValue": "Draft",
+              "defaultResourceName": null,
+              "visible": true,
+              "enabled": true,
+              "required": false,
+              "requiredMessage": null,
+              "omitWhenHidden": null,
+              "pattern": null,
+              "constraints": [
+
+              ],
+              "events": [
+
+              ],
+              "renderAttributes": {
+
+              },
+              "dataType": "string",
+              "renderType": "text",
+              "rows": 1
+            },
+            {
+              "type": "field",
+              "name": "Space",
+              "label": "Space",
               "key": "f2",
               "defaultValue": null,
               "defaultResourceName": null,
               "visible": true,
               "enabled": true,
-              "required": true,
-              "requiredMessage": "Please enter a company name",
+              "required": false,
+              "requiredMessage": null,
               "omitWhenHidden": null,
-              "pattern": {
-                "regex": "^[\\w ]+$",
-                "message": "Company Names must only contain Alphanumeric characters"
-              },
+              "pattern": null,
               "constraints": [
 
               ],
               "events": [
-                {
-                  "name": "Set Space Name",
-                  "type": "Change",
-                  "action": "Set Fields",
-                  "mappings": [
-                    {
-                      "field": "Space Name",
-                      "value": "${values('Company Name')}",
-                      "visible": null
-                    }
-                  ],
-                  "runIf": "values('Space Name') === null"
-                }
+
               ],
               "renderAttributes": {
 
@@ -105,14 +305,66 @@
             },
             {
               "type": "field",
-              "name": "First Name",
-              "label": "First Name",
+              "name": "Kapp",
+              "label": "Kapp",
+              "key": "f3",
+              "defaultValue": null,
+              "defaultResourceName": null,
+              "visible": true,
+              "enabled": true,
+              "required": false,
+              "requiredMessage": null,
+              "omitWhenHidden": null,
+              "pattern": null,
+              "constraints": [
+
+              ],
+              "events": [
+
+              ],
+              "renderAttributes": {
+
+              },
+              "dataType": "string",
+              "renderType": "text",
+              "rows": 1
+            },
+            {
+              "type": "field",
+              "name": "Form",
+              "label": "Form",
+              "key": "f4",
+              "defaultValue": null,
+              "defaultResourceName": null,
+              "visible": true,
+              "enabled": true,
+              "required": false,
+              "requiredMessage": null,
+              "omitWhenHidden": null,
+              "pattern": null,
+              "constraints": [
+
+              ],
+              "events": [
+
+              ],
+              "renderAttributes": {
+
+              },
+              "dataType": "string",
+              "renderType": "text",
+              "rows": 1
+            },
+            {
+              "type": "field",
+              "name": "Page",
+              "label": "Page",
               "key": "f5",
               "defaultValue": null,
               "defaultResourceName": null,
               "visible": true,
               "enabled": true,
-              "required": true,
+              "required": false,
               "requiredMessage": null,
               "omitWhenHidden": null,
               "pattern": null,
@@ -131,14 +383,14 @@
             },
             {
               "type": "field",
-              "name": "Last Name",
-              "label": "Last Name",
+              "name": "Referring Id",
+              "label": "Referring Id",
               "key": "f6",
               "defaultValue": null,
               "defaultResourceName": null,
               "visible": true,
               "enabled": true,
-              "required": true,
+              "required": false,
               "requiredMessage": null,
               "omitWhenHidden": null,
               "pattern": null,
@@ -157,37 +409,8 @@
             },
             {
               "type": "field",
-              "name": "Email",
-              "label": "Email",
-              "key": "f3",
-              "defaultValue": "${identity('username')}",
-              "defaultResourceName": null,
-              "visible": true,
-              "enabled": true,
-              "required": true,
-              "requiredMessage": "Please enter an Email",
-              "omitWhenHidden": null,
-              "pattern": {
-                "regex": "(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])",
-                "message": "Please enter a valid email address."
-              },
-              "constraints": [
-
-              ],
-              "events": [
-
-              ],
-              "renderAttributes": {
-
-              },
-              "dataType": "string",
-              "renderType": "text",
-              "rows": 1
-            },
-            {
-              "type": "field",
-              "name": "Phone Number",
-              "label": "Phone Number",
+              "name": "Category",
+              "label": "Category",
               "key": "f7",
               "defaultValue": null,
               "defaultResourceName": null,
@@ -209,26 +432,13 @@
               "dataType": "string",
               "renderType": "text",
               "rows": 1
-            }
-          ]
-        },
-        {
-          "type": "section",
-          "renderType": null,
-          "name": "Space Info Section",
-          "title": "",
-          "visible": true,
-          "omitWhenHidden": null,
-          "renderAttributes": {
-
-          },
-          "elements": [
+            },
             {
               "type": "field",
-              "name": "Space Name",
-              "label": "Space Name",
-              "key": "f22",
-              "defaultValue": "",
+              "name": "Username",
+              "label": "Username",
+              "key": "f8",
+              "defaultValue": null,
               "defaultResourceName": null,
               "visible": true,
               "enabled": true,
@@ -251,14 +461,14 @@
             },
             {
               "type": "field",
-              "name": "Custom Space Slug",
-              "label": "Custom Space Slug",
-              "key": "f10",
-              "defaultValue": "No",
+              "name": "Discussion Id",
+              "label": "Discussion Id",
+              "key": "f902",
+              "defaultValue": null,
               "defaultResourceName": null,
               "visible": true,
               "enabled": true,
-              "required": true,
+              "required": false,
               "requiredMessage": null,
               "omitWhenHidden": null,
               "pattern": null,
@@ -266,87 +476,52 @@
 
               ],
               "events": [
-                {
-                  "name": "Enable Submit Button on No",
-                  "type": "Change",
-                  "action": "Custom",
-                  "code": "if ( K('field[Custom Space Slug]').value() === \"Yes\" ){\n\tK('button[Submit Button]').disable();\n} else {\n\tK('button[Submit Button]').enable();\n}",
-                  "runIf": ""
-                }
+
               ],
               "renderAttributes": {
 
               },
               "dataType": "string",
-              "renderType": "dropdown",
+              "renderType": "text",
+              "rows": 1
+            },
+            {
+              "type": "field",
+              "name": "Observing Teams",
+              "label": "Observing Teams",
+              "key": "f904",
+              "defaultValue": null,
+              "defaultResourceName": null,
+              "visible": true,
+              "enabled": true,
+              "required": false,
+              "requiredMessage": null,
+              "omitWhenHidden": null,
+              "pattern": null,
+              "constraints": [
+
+              ],
+              "events": [
+
+              ],
+              "renderAttributes": {
+
+              },
+              "dataType": "json",
+              "renderType": "checkbox",
               "choicesResourceName": null,
               "choicesRunIf": null,
               "choices": [
-                {
-                  "label": "Yes",
-                  "value": "Yes"
-                },
-                {
-                  "label": "No",
-                  "value": "No"
-                }
+
               ]
             },
             {
               "type": "field",
-              "name": "Space Slug",
-              "label": "Space Slug",
-              "key": "f8",
+              "name": "Observing Individuals",
+              "label": "Observing Individuals",
+              "key": "f905",
               "defaultValue": null,
               "defaultResourceName": null,
-              "visible": "values('Custom Space Slug') === \"Yes\"",
-              "enabled": true,
-              "required": "values('Custom Space Slug') === \"Yes\"",
-              "requiredMessage": "Space Slug is required",
-              "omitWhenHidden": true,
-              "pattern": {
-                "regex": "^[a-z0-9\\-]*$",
-                "message": "Must be a valid slug (lower case alpha, numeric, and hyphens only)"
-              },
-              "constraints": [
-
-              ],
-              "events": [
-                {
-                  "name": "Enable Submit Button",
-                  "type": "Change",
-                  "action": "Custom",
-                  "code": "if ( K('field[Space Slug]').value() === null ){\n\tK('button[Submit Button]').disable();\n} else {\n\tK('button[Submit Button]').enable();\n}",
-                  "runIf": "values('Custom Space Slug') === \"Yes\""
-                }
-              ],
-              "renderAttributes": {
-
-              },
-              "dataType": "string",
-              "renderType": "text",
-              "rows": 1
-            }
-          ]
-        },
-        {
-          "type": "section",
-          "renderType": null,
-          "name": "Provisioning Details Section",
-          "title": "",
-          "visible": true,
-          "omitWhenHidden": null,
-          "renderAttributes": {
-
-          },
-          "elements": [
-            {
-              "type": "field",
-              "name": "Host",
-              "label": "Host",
-              "key": "f23",
-              "defaultValue": "${space('attribute:Platform Host URL')}",
-              "defaultResourceName": null,
               "visible": true,
               "enabled": true,
               "required": false,
@@ -362,216 +537,52 @@
               "renderAttributes": {
 
               },
-              "dataType": "string",
-              "renderType": "text",
-              "rows": 1
-            },
-            {
-              "type": "field",
-              "name": "Platform Template Git Repository",
-              "label": "Platform Template Git Repository",
-              "key": "f17",
-              "defaultValue": "https://github.com/kineticdata/platform-template-base.git",
-              "defaultResourceName": null,
-              "visible": true,
-              "enabled": true,
-              "required": false,
-              "requiredMessage": null,
-              "omitWhenHidden": null,
-              "pattern": null,
-              "constraints": [
+              "dataType": "json",
+              "renderType": "checkbox",
+              "choicesResourceName": null,
+              "choicesRunIf": null,
+              "choices": [
 
-              ],
-              "events": [
-
-              ],
-              "renderAttributes": {
-
-              },
-              "dataType": "string",
-              "renderType": "text",
-              "rows": 1
-            },
-            {
-              "type": "field",
-              "name": "Platform Template Version Type",
-              "label": "Platform Template Version Type",
-              "key": "f18",
-              "defaultValue": "branch",
-              "defaultResourceName": null,
-              "visible": true,
-              "enabled": true,
-              "required": false,
-              "requiredMessage": null,
-              "omitWhenHidden": null,
-              "pattern": null,
-              "constraints": [
-
-              ],
-              "events": [
-
-              ],
-              "renderAttributes": {
-
-              },
-              "dataType": "string",
-              "renderType": "text",
-              "rows": 1
-            },
-            {
-              "type": "field",
-              "name": "Platform Template Version Value",
-              "label": "Platform Template Version Value",
-              "key": "f15",
-              "defaultValue": "develop",
-              "defaultResourceName": null,
-              "visible": true,
-              "enabled": true,
-              "required": false,
-              "requiredMessage": null,
-              "omitWhenHidden": null,
-              "pattern": null,
-              "constraints": [
-
-              ],
-              "events": [
-
-              ],
-              "renderAttributes": {
-
-              },
-              "dataType": "string",
-              "renderType": "text",
-              "rows": 1
-            },
-            {
-              "type": "field",
-              "name": "Kinetic Task Image Name",
-              "label": "Kinetic Task Image Name",
-              "key": "f19",
-              "defaultValue": "kineticdata/kinetic-task",
-              "defaultResourceName": null,
-              "visible": true,
-              "enabled": true,
-              "required": false,
-              "requiredMessage": null,
-              "omitWhenHidden": null,
-              "pattern": null,
-              "constraints": [
-
-              ],
-              "events": [
-
-              ],
-              "renderAttributes": {
-
-              },
-              "dataType": "string",
-              "renderType": "text",
-              "rows": 1
-            },
-            {
-              "type": "field",
-              "name": "Kinetic Task Image Tag",
-              "label": "Kinetic Task Image Tag",
-              "key": "f20",
-              "defaultValue": "platform-development",
-              "defaultResourceName": null,
-              "visible": true,
-              "enabled": true,
-              "required": false,
-              "requiredMessage": null,
-              "omitWhenHidden": null,
-              "pattern": null,
-              "constraints": [
-
-              ],
-              "events": [
-
-              ],
-              "renderAttributes": {
-
-              },
-              "dataType": "string",
-              "renderType": "text",
-              "rows": 1
-            },
-            {
-              "type": "field",
-              "name": "Kinetic Task License",
-              "label": "Kinetic Task License",
-              "key": "f21",
-              "defaultValue": "",
-              "defaultResourceName": null,
-              "visible": true,
-              "enabled": true,
-              "required": false,
-              "requiredMessage": null,
-              "omitWhenHidden": null,
-              "pattern": null,
-              "constraints": [
-
-              ],
-              "events": [
-
-              ],
-              "renderAttributes": {
-
-              },
-              "dataType": "string",
-              "renderType": "text",
-              "rows": 6
-            }
-          ]
-        },
-        {
-          "type": "section",
-          "renderType": null,
-          "name": "Buttons",
-          "title": null,
-          "visible": true,
-          "omitWhenHidden": null,
-          "renderAttributes": {
-
-          },
-          "elements": [
-            {
-              "type": "button",
-              "label": "Submit",
-              "name": "Submit Button",
-              "visible": true,
-              "enabled": true,
-              "renderType": "submit-page",
-              "renderAttributes": {
-
-              }
+              ]
             }
           ]
         }
       ],
       "events": [
+
+      ],
+      "name": "Page 1",
+      "renderType": "submittable",
+      "type": "page"
+    },
+    {
+      "advanceCondition": null,
+      "displayCondition": null,
+      "displayPage": "pages/utilities/form.jsp",
+      "elements": [
         {
-          "name": "Email to Lower Case",
-          "type": "Submit",
-          "action": "Set Fields",
-          "mappings": [
-            {
-              "field": "Email",
-              "value": "${values('Email').toLowerCase()}",
-              "visible": null
-            }
-          ]
+          "type": "content",
+          "renderType": "html",
+          "name": "Confirmation",
+          "text": "<h2>Thanks!</h2>\n<p>We appreciate that you’ve taken the time to provide this feedback. This data is routed to the <strong>${space('name')}</strong> Feedback team for review, response, and action.</p>",
+          "visible": true,
+          "renderAttributes": {
+
+          }
         }
       ],
-      "name": "Signup",
-      "renderType": "submittable",
+      "events": [
+
+      ],
+      "name": "Confirmation Page",
+      "renderType": "confirmation",
       "type": "page"
     }
   ],
   "securityPolicies": [
     {
       "endpoint": "Display",
-      "name": "Admins"
+      "name": "Everyone"
     },
     {
       "endpoint": "Modification",
@@ -579,15 +590,15 @@
     },
     {
       "endpoint": "Submission Access",
-      "name": "Admins"
+      "name": "Submitter - Form Owners - Observers"
     },
     {
       "endpoint": "Submission Modification",
-      "name": "Admins"
+      "name": "Submitter - Form Owners - Observers"
     }
   ],
-  "slug": "space-provision",
+  "slug": "feedback",
   "status": "Active",
-  "submissionLabelExpression": "${values('Space Slug')} - ${values('Company Name')} - ${values('Email')}",
-  "type": "Service"
+  "submissionLabelExpression": "${values('Comments').length > 97 ? values('Comments').substring(0,97)+'...' : values('Comments')}",
+  "type": "Utility"
 }

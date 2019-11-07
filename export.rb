@@ -5,20 +5,25 @@
 # {
 #   "core" => {
 #     "api" => "http://localhost:8080/kinetic/app/api/v1",
-#     "proxy_url" => "http://localhost:8080/kinetic/app/components",
+#     "agent_api" => "http://localhost:8080/kinetic/foo/app/components/agent/app/api/v1",
+#     "proxy_url" => "http://localhost:8080/kinetic/foo/app/components",
 #     "server" => "http://localhost:8080/kinetic",
 #     "space_slug" => "foo",
 #     "space_name" => "Foo",
 #     "service_user_username" => "service_user_username",
-#     "service_user_password" => "secret"
+#     "service_user_password" => "secret",
+#     "task_api_v1" => "http://localhost:8080/kinetic/foo/app/components/task/app/api/v1",
+#     "task_api_v2" => "http://localhost:8080/kinetic/foo/app/components/task/app/api/v2"
 #   },
 #   "task" => {
 #     "api" => "http://localhost:8080/kinetic-task/app/api/v1",
 #     "api_v2" => "http://localhost:8080/kinetic-task/app/api/v2",
+#     "component_type" => "task",
 #     "server" => "http://localhost:8080/kinetic-task",
 #     "space_slug" => "foo",
 #     "service_user_username" => "service_user_username",
-#     "service_user_password" => "secret"
+#     "service_user_password" => "secret",
+#     "signature_secret" => "1234asdf5678jkl;"
 #   },
 #   "http_options" => {
 #     "log_level" => "info",

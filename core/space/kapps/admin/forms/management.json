@@ -1,0 +1,39 @@
+{
+  "anonymous": false,
+  "attributes": [
+
+  ],
+  "bridgedResources": [
+
+  ],
+  "categorizations": [
+
+  ],
+  "customHeadContent": null,
+  "description": "Allows for management of the Space, Kapps, and Forms.",
+  "name": "Management",
+  "notes": null,
+  "pages": [
+    {
+      "advanceCondition": null,
+      "displayCondition": null,
+      "displayPage": "pages/management/console.jsp",
+      "elements": [
+
+      ],
+      "events": [
+
+      ],
+      "name": "Management",
+      "renderType": "submittable",
+      "type": "page"
+    }
+  ],
+  "securityPolicies": [
+
+  ],
+  "slug": "management",
+  "status": "Active",
+  "submissionLabelExpression": "${form('name')} ${form('slug')}",
+  "type": "Console"
+}

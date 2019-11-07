@@ -1,0 +1,416 @@
+{
+  "anonymous": false,
+  "attributes": [
+    {
+      "name": "Datastore Configuration",
+      "values": [
+        "[{\"data\":\"Space Slug\",\"title\":\"Space Slug\",\"visible\":true,\"searchable\":true,\"orderable\":true,\"unique\":true},{\"data\":\"Company Name\",\"title\":\"Company Name\",\"visible\":true,\"searchable\":true,\"orderable\":true,\"unique\":false},{\"data\":\"Environment Status\",\"title\":\"Environment Status\",\"visible\":true,\"searchable\":true,\"orderable\":true,\"unique\":false},{\"data\":\"Shared Workflow Engine\",\"title\":\"Shared Workflow Engine\",\"visible\":true,\"searchable\":true,\"orderable\":true,\"unique\":false},{\"data\":\"Status\",\"title\":\"Status\",\"visible\":false,\"searchable\":false,\"orderable\":false,\"unique\":false},{\"data\":\"Description\",\"title\":\"Description\",\"visible\":true,\"searchable\":true,\"orderable\":true,\"unique\":false},{\"data\":\"Admin Name\",\"title\":\"Admin Name\",\"visible\":true,\"searchable\":true,\"orderable\":true,\"unique\":false},{\"data\":\"Admin Email\",\"title\":\"Admin Email\",\"visible\":true,\"searchable\":true,\"orderable\":true,\"unique\":false},{\"data\":\"Admin Phone\",\"title\":\"Admin Phone\",\"visible\":true,\"searchable\":true,\"orderable\":true,\"unique\":false},{\"data\":\"Assigned Team\",\"title\":\"Assigned Team\",\"visible\":true,\"searchable\":true,\"orderable\":true,\"unique\":false},{\"data\":\"Exclude from Repair All\",\"title\":\"Exclude from Repair All\",\"visible\":true,\"searchable\":true,\"orderable\":true,\"unique\":false}]"
+      ]
+    }
+  ],
+  "bridgedResources": [
+
+  ],
+  "categorizations": [
+
+  ],
+  "customHeadContent": null,
+  "description": "Used to keep track of all spaces that have been created and who they belong to",
+  "name": "Kinops Environments",
+  "notes": null,
+  "pages": [
+    {
+      "advanceCondition": "false",
+      "displayCondition": null,
+      "displayPage": "pages/datastore/datastoreForm.jsp",
+      "elements": [
+        {
+          "type": "field",
+          "name": "Space Slug",
+          "label": "Space Slug",
+          "key": "fSample",
+          "defaultValue": null,
+          "defaultResourceName": null,
+          "visible": true,
+          "enabled": true,
+          "required": false,
+          "requiredMessage": null,
+          "omitWhenHidden": null,
+          "pattern": null,
+          "constraints": [
+
+          ],
+          "events": [
+
+          ],
+          "renderAttributes": {
+
+          },
+          "dataType": "string",
+          "renderType": "text",
+          "rows": 1
+        },
+        {
+          "type": "field",
+          "name": "Company Name",
+          "label": "Company Name",
+          "key": "f3",
+          "defaultValue": null,
+          "defaultResourceName": null,
+          "visible": true,
+          "enabled": true,
+          "required": false,
+          "requiredMessage": null,
+          "omitWhenHidden": null,
+          "pattern": null,
+          "constraints": [
+
+          ],
+          "events": [
+
+          ],
+          "renderAttributes": {
+
+          },
+          "dataType": "string",
+          "renderType": "text",
+          "rows": 1
+        },
+        {
+          "type": "field",
+          "name": "Description",
+          "label": "Description",
+          "key": "f6",
+          "defaultValue": null,
+          "defaultResourceName": null,
+          "visible": true,
+          "enabled": true,
+          "required": false,
+          "requiredMessage": null,
+          "omitWhenHidden": null,
+          "pattern": null,
+          "constraints": [
+
+          ],
+          "events": [
+
+          ],
+          "renderAttributes": {
+
+          },
+          "dataType": "string",
+          "renderType": "text",
+          "rows": 4
+        },
+        {
+          "type": "field",
+          "name": "Environment Status",
+          "label": "Environment Status",
+          "key": "f7",
+          "defaultValue": null,
+          "defaultResourceName": null,
+          "visible": true,
+          "enabled": true,
+          "required": false,
+          "requiredMessage": null,
+          "omitWhenHidden": null,
+          "pattern": null,
+          "constraints": [
+
+          ],
+          "events": [
+
+          ],
+          "renderAttributes": {
+
+          },
+          "dataType": "string",
+          "renderType": "text",
+          "rows": 1
+        },
+        {
+          "type": "field",
+          "name": "Admin Name",
+          "label": "Admin Name",
+          "key": "f2",
+          "defaultValue": null,
+          "defaultResourceName": null,
+          "visible": true,
+          "enabled": true,
+          "required": false,
+          "requiredMessage": null,
+          "omitWhenHidden": null,
+          "pattern": null,
+          "constraints": [
+
+          ],
+          "events": [
+
+          ],
+          "renderAttributes": {
+
+          },
+          "dataType": "string",
+          "renderType": "text",
+          "rows": 1
+        },
+        {
+          "type": "field",
+          "name": "Admin Email",
+          "label": "Admin Email",
+          "key": "f4",
+          "defaultValue": null,
+          "defaultResourceName": null,
+          "visible": true,
+          "enabled": true,
+          "required": false,
+          "requiredMessage": null,
+          "omitWhenHidden": null,
+          "pattern": null,
+          "constraints": [
+
+          ],
+          "events": [
+
+          ],
+          "renderAttributes": {
+
+          },
+          "dataType": "string",
+          "renderType": "text",
+          "rows": 1
+        },
+        {
+          "type": "field",
+          "name": "Admin Phone",
+          "label": "Admin Phone",
+          "key": "f8",
+          "defaultValue": null,
+          "defaultResourceName": null,
+          "visible": true,
+          "enabled": true,
+          "required": false,
+          "requiredMessage": null,
+          "omitWhenHidden": null,
+          "pattern": null,
+          "constraints": [
+
+          ],
+          "events": [
+
+          ],
+          "renderAttributes": {
+
+          },
+          "dataType": "string",
+          "renderType": "text",
+          "rows": 1
+        },
+        {
+          "type": "field",
+          "name": "Assigned Team",
+          "label": "Assigned Team",
+          "key": "f5",
+          "defaultValue": null,
+          "defaultResourceName": null,
+          "visible": true,
+          "enabled": true,
+          "required": false,
+          "requiredMessage": null,
+          "omitWhenHidden": null,
+          "pattern": null,
+          "constraints": [
+
+          ],
+          "events": [
+
+          ],
+          "renderAttributes": {
+
+          },
+          "dataType": "string",
+          "renderType": "text",
+          "rows": 1
+        },
+        {
+          "type": "field",
+          "name": "Exclude from Repair All",
+          "label": "Exclude from Repair All (If containers are stopped, don't start them on Repair All Action)",
+          "key": "f9",
+          "defaultValue": "False",
+          "defaultResourceName": null,
+          "visible": true,
+          "enabled": true,
+          "required": false,
+          "requiredMessage": null,
+          "omitWhenHidden": null,
+          "pattern": null,
+          "constraints": [
+
+          ],
+          "events": [
+
+          ],
+          "renderAttributes": {
+
+          },
+          "dataType": "string",
+          "renderType": "radio",
+          "choicesResourceName": null,
+          "choicesRunIf": null,
+          "choices": [
+            {
+              "label": "False",
+              "value": "False"
+            },
+            {
+              "label": "True",
+              "value": "True"
+            }
+          ]
+        },
+        {
+          "type": "field",
+          "name": "Shared Workflow Engine",
+          "label": "Shared Workflow Engine",
+          "key": "f10",
+          "defaultValue": "True",
+          "defaultResourceName": null,
+          "visible": true,
+          "enabled": true,
+          "required": false,
+          "requiredMessage": null,
+          "omitWhenHidden": null,
+          "pattern": null,
+          "constraints": [
+
+          ],
+          "events": [
+
+          ],
+          "renderAttributes": {
+
+          },
+          "dataType": "string",
+          "renderType": "radio",
+          "choicesResourceName": null,
+          "choicesRunIf": null,
+          "choices": [
+            {
+              "label": "False",
+              "value": "False"
+            },
+            {
+              "label": "True",
+              "value": "True"
+            }
+          ]
+        },
+        {
+          "type": "field",
+          "name": "Status",
+          "label": "Status",
+          "key": "f1",
+          "defaultValue": "active",
+          "defaultResourceName": null,
+          "visible": true,
+          "enabled": true,
+          "required": true,
+          "requiredMessage": null,
+          "omitWhenHidden": null,
+          "pattern": null,
+          "constraints": [
+
+          ],
+          "events": [
+
+          ],
+          "renderAttributes": {
+
+          },
+          "dataType": "string",
+          "renderType": "radio",
+          "choicesResourceName": null,
+          "choicesRunIf": null,
+          "choices": [
+            {
+              "label": "Active",
+              "value": "active"
+            },
+            {
+              "label": "Inactive",
+              "value": "inactive"
+            }
+          ]
+        },
+        {
+          "type": "field",
+          "name": "Flavor",
+          "label": "Flavor",
+          "key": "f11",
+          "defaultValue": null,
+          "defaultResourceName": null,
+          "visible": true,
+          "enabled": true,
+          "required": false,
+          "requiredMessage": null,
+          "omitWhenHidden": null,
+          "pattern": null,
+          "constraints": [
+
+          ],
+          "events": [
+
+          ],
+          "renderAttributes": {
+
+          },
+          "dataType": "string",
+          "renderType": "text",
+          "rows": 1
+        },
+        {
+          "type": "button",
+          "label": "Save",
+          "name": "Save",
+          "visible": "bundle.adminDatastore != null",
+          "enabled": true,
+          "renderType": "submit-page",
+          "renderAttributes": {
+            "class": "btn btn-primary"
+          }
+        },
+        {
+          "type": "button",
+          "label": "Cancel",
+          "name": "Cancel",
+          "visible": "bundle.adminDatastore != null",
+          "enabled": true,
+          "renderType": "custom",
+          "renderAttributes": {
+            "class": "btn btn-link cancel-record"
+          },
+          "events": [
+
+          ]
+        }
+      ],
+      "events": [
+
+      ],
+      "name": "Datastore",
+      "renderType": "submittable",
+      "type": "page"
+    }
+  ],
+  "securityPolicies": [
+    {
+      "endpoint": "Submission Access",
+      "name": "Everyone"
+    }
+  ],
+  "slug": "kinops-environments",
+  "status": "Active",
+  "submissionLabelExpression": "${values('Company Name')} - ${values('Admin Email')}",
+  "type": "Datastore"
+}
