@@ -475,7 +475,7 @@
               "name": "Kinetic Task Image Tag",
               "label": "Kinetic Task Image Tag",
               "key": "f20",
-              "defaultValue": "platform-development",
+              "defaultValue": "3834e16",
               "defaultResourceName": null,
               "visible": true,
               "enabled": true,
