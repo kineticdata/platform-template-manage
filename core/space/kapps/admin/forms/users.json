@@ -1,0 +1,42 @@
+{
+  "anonymous": false,
+  "attributes": [
+
+  ],
+  "bridgedResources": [
+
+  ],
+  "categorizations": [
+
+  ],
+  "customHeadContent": null,
+  "description": "Allows for creation and management of users and their properties and attributes.",
+  "name": "Users",
+  "notes": null,
+  "pages": [
+    {
+      "advanceCondition": null,
+      "displayCondition": null,
+      "displayPage": "pages/users/console.jsp",
+      "elements": [
+
+      ],
+      "events": [
+
+      ],
+      "name": "Users",
+      "renderType": "submittable",
+      "type": "page"
+    }
+  ],
+  "securityPolicies": [
+    {
+      "endpoint": "Display",
+      "name": "Admins"
+    }
+  ],
+  "slug": "users",
+  "status": "Active",
+  "submissionLabelExpression": null,
+  "type": "Console"
+}
