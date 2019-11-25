@@ -7,7 +7,7 @@
         <name>Submitted</name>
         <author></author>
         <notes></notes>
-        <lastID>48</lastID>
+        <lastID>55</lastID>
         <request>
             <task definition_id="system_start_v1" id="start" name="Start" x="46" y="53">
                 <version>1</version>
@@ -21,7 +21,7 @@
                     <task label="" type="Complete" value="">routine_kinetic_submission_activity_create_v1_35</task>
                 </dependents>
             </task>
-            <task definition_id="routine_kd_notification_send_using_template_v1" id="routine_kd_notification_send_using_template_v1_34" name="Notify Requester" x="727" y="497">
+            <task definition_id="routine_kd_notification_send_using_template_v1" id="routine_kd_notification_send_using_template_v1_34" name="Notify Requester" x="682" y="484">
                 <version>1</version>
                 <configured>true</configured>
                 <defers>true</defers>
@@ -44,7 +44,7 @@
                 </messages>
                 <dependents></dependents>
             </task>
-            <task definition_id="routine_kinetic_submission_activity_create_v1" id="routine_kinetic_submission_activity_create_v1_35" name="Submitted" x="178" y="53">
+            <task definition_id="routine_kinetic_submission_activity_create_v1" id="routine_kinetic_submission_activity_create_v1_35" name="Submitted Submitted" x="176" y="45">
                 <version>1</version>
                 <configured>true</configured>
                 <defers>true</defers>
@@ -66,7 +66,7 @@
                     <task label="" type="Complete" value="">routine_kinetic_submission_activity_create_v1_36</task>
                 </dependents>
             </task>
-            <task definition_id="routine_kinetic_submission_activity_create_v1" id="routine_kinetic_submission_activity_create_v1_36" name="Decommission In Progress" x="312" y="33">
+            <task definition_id="routine_kinetic_submission_activity_create_v1" id="routine_kinetic_submission_activity_create_v1_36" name="Action In Progress" x="330" y="44">
                 <version>1</version>
                 <configured>true</configured>
                 <defers>true</defers>
@@ -85,10 +85,10 @@
                     <message type="Complete"></message>
                 </messages>
                 <dependents>
-                    <task label="" type="Complete" value="">utilities_echo_v1_43</task>
+                    <task label="" type="Complete" value="">utilities_defer_v1_49</task>
                 </dependents>
             </task>
-            <task definition_id="routine_kinetic_submission_update_status_v1" id="routine_kinetic_submission_update_status_v1_37" name="Close Submission" x="584" y="418">
+            <task definition_id="routine_kinetic_submission_update_status_v1" id="routine_kinetic_submission_update_status_v1_37" name="Close Submission" x="493" y="405">
                 <version>1</version>
                 <configured>true</configured>
                 <defers>true</defers>
@@ -107,7 +107,7 @@
                     <task label="" type="Complete" value="">routine_kinetic_submission_activity_create_v1_39</task>
                 </dependents>
             </task>
-            <task definition_id="routine_kinetic_submission_activity_update_v1" id="routine_kinetic_submission_activity_update_v1_38" name="Decommission Complete" x="583" y="296">
+            <task definition_id="routine_kinetic_submission_activity_update_v1" id="routine_kinetic_submission_activity_update_v1_38" name="Decommission Complete" x="483" y="143">
                 <version>1</version>
                 <configured>true</configured>
                 <defers>true</defers>
@@ -115,8 +115,8 @@
                 <visible>false</visible>
                 <parameters>
                     <parameter id="Submission Id" label="Submission Id" menu="" required="true" tooltip="The Id of the submission in which the activity is related">&lt;%= @submission['Id']%&gt;</parameter>
-                    <parameter id="Activity Id" label="Activity Id" menu="" required="true" tooltip="The Id of the submission activity">&lt;%=@results['Decommission In Progress']['Id']%&gt;</parameter>
-                    <parameter id="Updated - Data" label="Updated - Data" menu="" required="false" tooltip="Data to store in the submission activity">{"Status":"Complete"}</parameter>
+                    <parameter id="Activity Id" label="Activity Id" menu="" required="true" tooltip="The Id of the submission activity">&lt;%=@results['Action In Progress']['Id']%&gt;</parameter>
+                    <parameter id="Updated - Data" label="Updated - Data" menu="" required="false" tooltip="Data to store in the submission activity">{"Status":"Decommission Complete"}</parameter>
                     <parameter id="Updated - Description" label="Updated - Description" menu="" required="false" tooltip="Description of the submission activity">&lt;%= @form['Name']%&gt;</parameter>
                     <parameter id="Updated - Label" label="Updated - Label" menu="" required="false" tooltip="Label for the submission activity">&lt;%= @form['Name']%&gt;</parameter>
                     <parameter id="Updated - Type" label="Updated - Type" menu="" required="false" tooltip="Type of submission activity">&lt;%= @form['Name']%&gt;</parameter>
@@ -127,10 +127,11 @@
                     <message type="Complete"></message>
                 </messages>
                 <dependents>
-                    <task label="" type="Complete" value="">routine_kinetic_submission_update_status_v1_37</task>
+                    <task label="Do not uninstall" type="Complete" value="!(@values['Options'] || []).include?(&quot;Uninstall&quot;)">system_noop_v1_51</task>
+                    <task label="Uninstall" type="Complete" value="(@values['Options'] || []).include?(&quot;Uninstall&quot;)">routine_kinetic_submission_activity_update_v1_55</task>
                 </dependents>
             </task>
-            <task definition_id="routine_kinetic_submission_activity_create_v1" id="routine_kinetic_submission_activity_create_v1_39" name="Completed" x="583" y="508">
+            <task definition_id="routine_kinetic_submission_activity_create_v1" id="routine_kinetic_submission_activity_create_v1_39" name="Completed" x="493" y="494">
                 <version>1</version>
                 <configured>true</configured>
                 <defers>true</defers>
@@ -153,7 +154,7 @@
                     <task label="" type="Complete" value="">routine_kd_notification_send_using_template_v1_34</task>
                 </dependents>
             </task>
-            <task definition_id="utilities_echo_v1" id="utilities_echo_v1_40" name="END" x="580" y="589">
+            <task definition_id="utilities_echo_v1" id="utilities_echo_v1_40" name="END" x="493" y="563">
                 <version>1</version>
                 <configured>true</configured>
                 <defers>false</defers>
@@ -169,7 +170,7 @@
                 </messages>
                 <dependents></dependents>
             </task>
-            <task definition_id="utilities_echo_v1" id="utilities_echo_v1_43" name="Build Post Data" x="435" y="46">
+            <task definition_id="utilities_echo_v1" id="utilities_echo_v1_43" name="Build Decommission Post Data" x="661" y="34">
                 <version>1</version>
                 <configured>true</configured>
                 <defers>false</defers>
@@ -179,6 +180,10 @@
                     <parameter id="input" label="Input" menu="" required="true" tooltip="">&lt;%= {
 "slug" =&gt; "#{@values['Space Slug']}",
 "host" =&gt; "#{@values['Host']}",
+"callback" =&gt; {
+  "token" =&gt; "#{@results['Decommission Space']['deferral_token']}",
+  "url" =&gt; "#{@values['Host'].gsub("://","://#{@space['Slug']}.")}/app/components/task/app/api/v1/complete-deferred-task/#{ERB::Util.url_encode(@source['Name'])}"
+},
 "http_options" =&gt; {
   "log_level" =&gt; "info"
 }
@@ -193,7 +198,7 @@
                     <task label="" type="Complete" value="">generic_http_v1_44</task>
                 </dependents>
             </task>
-            <task definition_id="generic_http_v1" id="generic_http_v1_44" name="Decommission Tenant" x="582" y="44">
+            <task definition_id="generic_http_v1" id="generic_http_v1_44" name="Decommission Tenant" x="814" y="46">
                 <version>1</version>
                 <configured>true</configured>
                 <defers>false</defers>
@@ -203,7 +208,7 @@
                     <parameter id="error_handling" label="Error Handling" menu="Error Message,Raise Error" required="true" tooltip="Determine what to return if an error is encountered.">Error Message</parameter>
                     <parameter id="method" label="Method" menu="GET,POST,PUT,PATCH,DELETE" required="true" tooltip="GET,POST,PUT,PATCH,DELETE (Defaults to GET)">POST</parameter>
                     <parameter id="url" label="URL" menu="" required="true" tooltip="Example: http://www.yahoo.com">&lt;%= "#{@space_attributes['Tenant Provisioner URL'].gsub("https://","https://#{ERB::Util.url_encode(ENV['PROVISIONER_USERNAME'])}:#{ERB::Util.url_encode(ENV['PROVISIONER_PASSWORD'])}@")}/decommission" %&gt;</parameter>
-                    <parameter id="body" label="Body" menu="" required="false" tooltip="Body if applicable (POST,PUT,PATCH)">&lt;%=@results['Build Post Data']['output']%&gt;</parameter>
+                    <parameter id="body" label="Body" menu="" required="false" tooltip="Body if applicable (POST,PUT,PATCH)">&lt;%=@results['Build Decommission Post Data']['output']%&gt;</parameter>
                     <parameter id="content_type" label="Content Type" menu="" required="false" tooltip="Content Type of the Body if applicable (POST,PUT,PATCH). Use application/json for JSON content, or application/x-www-form-urlencoded for HTML forms.">application/json</parameter>
                 </parameters>
                 <messages>
@@ -211,12 +216,48 @@
                     <message type="Update"></message>
                     <message type="Complete"></message>
                 </messages>
+                <dependents></dependents>
+            </task>
+            <task definition_id="generic_http_v1" id="generic_http_v1_48" name="Uninstall Tenant" x="932" y="263">
+                <version>1</version>
+                <configured>true</configured>
+                <defers>false</defers>
+                <deferrable>false</deferrable>
+                <visible>true</visible>
+                <parameters>
+                    <parameter id="error_handling" label="Error Handling" menu="Error Message,Raise Error" required="true" tooltip="Determine what to return if an error is encountered.">Error Message</parameter>
+                    <parameter id="method" label="Method" menu="GET,POST,PUT,PATCH,DELETE" required="true" tooltip="GET,POST,PUT,PATCH,DELETE (Defaults to GET)">POST</parameter>
+                    <parameter id="url" label="URL" menu="" required="true" tooltip="Example: http://www.yahoo.com">&lt;%= "#{@space_attributes['Tenant Provisioner URL'].gsub("https://","https://#{ERB::Util.url_encode(ENV['PROVISIONER_USERNAME'])}:#{ERB::Util.url_encode(ENV['PROVISIONER_PASSWORD'])}@")}/uninstall" %&gt;</parameter>
+                    <parameter id="body" label="Body" menu="" required="false" tooltip="Body if applicable (POST,PUT,PATCH)">&lt;%=@results['Build Uninstall Post Data']['output']%&gt;</parameter>
+                    <parameter id="content_type" label="Content Type" menu="" required="false" tooltip="Content Type of the Body if applicable (POST,PUT,PATCH). Use application/json for JSON content, or application/x-www-form-urlencoded for HTML forms.">application/json</parameter>
+                </parameters>
+                <messages>
+                    <message type="Create"></message>
+                    <message type="Update"></message>
+                    <message type="Complete"></message>
+                </messages>
+                <dependents></dependents>
+            </task>
+            <task definition_id="utilities_defer_v1" id="utilities_defer_v1_49" name="Decommission Space" x="482" y="44">
+                <version>1</version>
+                <configured>true</configured>
+                <defers>true</defers>
+                <deferrable>true</deferrable>
+                <visible>true</visible>
+                <parameters>
+                    <parameter id="deferral_value" label="Initial Deferral Value" menu="" required="false" tooltip="">Decommissioning</parameter>
+                </parameters>
+                <messages>
+                    <message type="Create"></message>
+                    <message type="Update"></message>
+                    <message type="Complete"></message>
+                </messages>
                 <dependents>
-                    <task label="Do Not Uninstall" type="Complete" value="!(@values['Options'] || []).include?(&quot;Uninstall&quot;)">system_junction_v1_46</task>
-                    <task label="Uninstall" type="Complete" value="(@values['Options'] || []).include?(&quot;Uninstall&quot;)">generic_http_v1_48</task>
+                    <task label="" type="Complete" value="">routine_kinetic_submission_activity_update_v1_38</task>
+                    <task label="" type="Create" value="">utilities_echo_v1_43</task>
                 </dependents>
             </task>
-            <task definition_id="system_junction_v1" id="system_junction_v1_46" name="Tenant Actions Complete" x="580" y="171">
+            <task definition_id="system_junction_v1" id="system_junction_v1_50" name="Junction" x="493" y="328">
                 <version>1</version>
                 <configured>true</configured>
                 <defers>false</defers>
@@ -229,21 +270,33 @@
                     <message type="Complete"></message>
                 </messages>
                 <dependents>
-                    <task label="" type="Complete" value="">routine_kinetic_submission_activity_update_v1_38</task>
+                    <task label="" type="Complete" value="">routine_kinetic_submission_update_status_v1_37</task>
                 </dependents>
             </task>
-            <task definition_id="generic_http_v1" id="generic_http_v1_48" name="Uninstall Tenant" x="715" y="182">
+            <task definition_id="system_noop_v1" id="system_noop_v1_51" name="Continue" x="340" y="262">
                 <version>1</version>
                 <configured>true</configured>
                 <defers>false</defers>
                 <deferrable>false</deferrable>
+                <visible>false</visible>
+                <parameters></parameters>
+                <messages>
+                    <message type="Create"></message>
+                    <message type="Update"></message>
+                    <message type="Complete"></message>
+                </messages>
+                <dependents>
+                    <task label="" type="Complete" value="">system_junction_v1_50</task>
+                </dependents>
+            </task>
+            <task definition_id="utilities_defer_v1" id="utilities_defer_v1_52" name="Uninstall Space" x="799" y="154">
+                <version>1</version>
+                <configured>true</configured>
+                <defers>true</defers>
+                <deferrable>true</deferrable>
                 <visible>true</visible>
                 <parameters>
-                    <parameter id="error_handling" label="Error Handling" menu="Error Message,Raise Error" required="true" tooltip="Determine what to return if an error is encountered.">Error Message</parameter>
-                    <parameter id="method" label="Method" menu="GET,POST,PUT,PATCH,DELETE" required="true" tooltip="GET,POST,PUT,PATCH,DELETE (Defaults to GET)">POST</parameter>
-                    <parameter id="url" label="URL" menu="" required="true" tooltip="Example: http://www.yahoo.com">&lt;%= "#{@space_attributes['Tenant Provisioner URL'].gsub("https://","https://#{ERB::Util.url_encode(ENV['PROVISIONER_USERNAME'])}:#{ERB::Util.url_encode(ENV['PROVISIONER_PASSWORD'])}@")}/uninstall" %&gt;</parameter>
-                    <parameter id="body" label="Body" menu="" required="false" tooltip="Body if applicable (POST,PUT,PATCH)">&lt;%=@results['Build Post Data']['output']%&gt;</parameter>
-                    <parameter id="content_type" label="Content Type" menu="" required="false" tooltip="Content Type of the Body if applicable (POST,PUT,PATCH). Use application/json for JSON content, or application/x-www-form-urlencoded for HTML forms.">application/json</parameter>
+                    <parameter id="deferral_value" label="Initial Deferral Value" menu="" required="false" tooltip="">Uninstalling</parameter>
                 </parameters>
                 <messages>
                     <message type="Create"></message>
@@ -251,7 +304,82 @@
                     <message type="Complete"></message>
                 </messages>
                 <dependents>
-                    <task label="" type="Complete" value="">system_junction_v1_46</task>
+                    <task label="" type="Create" value="">utilities_echo_v1_53</task>
+                    <task label="" type="Complete" value="">routine_kinetic_submission_activity_update_v1_54</task>
+                </dependents>
+            </task>
+            <task definition_id="utilities_echo_v1" id="utilities_echo_v1_53" name="Build Uninstall Post Data" x="931" y="153">
+                <version>1</version>
+                <configured>true</configured>
+                <defers>false</defers>
+                <deferrable>false</deferrable>
+                <visible>true</visible>
+                <parameters>
+                    <parameter id="input" label="Input" menu="" required="true" tooltip="">&lt;%= {
+"slug" =&gt; "#{@values['Space Slug']}",
+"host" =&gt; "#{@values['Host']}",
+"callback" =&gt; {
+  "token" =&gt; "#{@results['Uninstall Space']['deferral_token']}",
+  "url" =&gt; "#{@values['Host'].gsub("://","://#{@space['Slug']}.")}/app/components/task/app/api/v1/complete-deferred-task/#{ERB::Util.url_encode(@source['Name'])}"
+},
+"http_options" =&gt; {
+  "log_level" =&gt; "info"
+}
+}.to_json %&gt;</parameter>
+                </parameters>
+                <messages>
+                    <message type="Create"></message>
+                    <message type="Update"></message>
+                    <message type="Complete"></message>
+                </messages>
+                <dependents>
+                    <task label="" type="Complete" value="">generic_http_v1_48</task>
+                </dependents>
+            </task>
+            <task definition_id="routine_kinetic_submission_activity_update_v1" id="routine_kinetic_submission_activity_update_v1_54" name="Uninstall Complete" x="649" y="263">
+                <version>1</version>
+                <configured>true</configured>
+                <defers>true</defers>
+                <deferrable>true</deferrable>
+                <visible>false</visible>
+                <parameters>
+                    <parameter id="Submission Id" label="Submission Id" menu="" required="true" tooltip="The Id of the submission in which the activity is related">&lt;%= @submission['Id']%&gt;</parameter>
+                    <parameter id="Activity Id" label="Activity Id" menu="" required="true" tooltip="The Id of the submission activity">&lt;%=@results['Action In Progress']['Id']%&gt;</parameter>
+                    <parameter id="Updated - Data" label="Updated - Data" menu="" required="false" tooltip="Data to store in the submission activity">{"Status":"Uninstall Complete"}</parameter>
+                    <parameter id="Updated - Description" label="Updated - Description" menu="" required="false" tooltip="Description of the submission activity">&lt;%= @form['Name']%&gt;</parameter>
+                    <parameter id="Updated - Label" label="Updated - Label" menu="" required="false" tooltip="Label for the submission activity">&lt;%= @form['Name']%&gt;</parameter>
+                    <parameter id="Updated - Type" label="Updated - Type" menu="" required="false" tooltip="Type of submission activity">&lt;%= @form['Name']%&gt;</parameter>
+                </parameters>
+                <messages>
+                    <message type="Create"></message>
+                    <message type="Update"></message>
+                    <message type="Complete"></message>
+                </messages>
+                <dependents>
+                    <task label="" type="Complete" value="">system_junction_v1_50</task>
+                </dependents>
+            </task>
+            <task definition_id="routine_kinetic_submission_activity_update_v1" id="routine_kinetic_submission_activity_update_v1_55" name="Uninstall In Progress" x="656" y="154">
+                <version>1</version>
+                <configured>true</configured>
+                <defers>true</defers>
+                <deferrable>true</deferrable>
+                <visible>false</visible>
+                <parameters>
+                    <parameter id="Submission Id" label="Submission Id" menu="" required="true" tooltip="The Id of the submission in which the activity is related">&lt;%= @submission['Id']%&gt;</parameter>
+                    <parameter id="Activity Id" label="Activity Id" menu="" required="true" tooltip="The Id of the submission activity">&lt;%=@results['Action In Progress']['Id']%&gt;</parameter>
+                    <parameter id="Updated - Data" label="Updated - Data" menu="" required="false" tooltip="Data to store in the submission activity">{"Status":"Uninstall In Progress"}</parameter>
+                    <parameter id="Updated - Description" label="Updated - Description" menu="" required="false" tooltip="Description of the submission activity">&lt;%= @form['Name']%&gt;</parameter>
+                    <parameter id="Updated - Label" label="Updated - Label" menu="" required="false" tooltip="Label for the submission activity">&lt;%= @form['Name']%&gt;</parameter>
+                    <parameter id="Updated - Type" label="Updated - Type" menu="" required="false" tooltip="Type of submission activity">&lt;%= @form['Name']%&gt;</parameter>
+                </parameters>
+                <messages>
+                    <message type="Create"></message>
+                    <message type="Update"></message>
+                    <message type="Complete"></message>
+                </messages>
+                <dependents>
+                    <task label="" type="Complete" value="">utilities_defer_v1_52</task>
                 </dependents>
             </task>
         </request>
