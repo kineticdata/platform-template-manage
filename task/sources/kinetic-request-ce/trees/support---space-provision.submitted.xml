@@ -7,7 +7,7 @@
         <name>Submitted</name>
         <author></author>
         <notes></notes>
-        <lastID>56</lastID>
+        <lastID>57</lastID>
         <request>
             <task definition_id="system_start_v1" id="start" name="Start" x="38" y="65">
                 <version>1</version>
@@ -173,7 +173,7 @@
                     <message type="Complete"></message>
                 </messages>
                 <dependents>
-                    <task label="" type="Complete" value="">utilities_echo_v1_53</task>
+                    <task label="" type="Complete" value="">utilities_defer_v1_57</task>
                 </dependents>
             </task>
             <task definition_id="routine_kinetic_submission_activity_update_v1" id="routine_kinetic_submission_activity_update_v1_50" name="Action Completed" x="583" y="321">
@@ -241,7 +241,7 @@
                     <task label="" type="Complete" value="">routine_kd_notification_send_using_template_v1_30</task>
                 </dependents>
             </task>
-            <task definition_id="utilities_echo_v1" id="utilities_echo_v1_53" name="Build Post Data" x="580.2999877929688" y="138.4166717529297">
+            <task definition_id="utilities_echo_v1" id="utilities_echo_v1_53" name="Build Post Data" x="781" y="154">
                 <version>1</version>
                 <configured>true</configured>
                 <defers>false</defers>
@@ -251,6 +251,10 @@
                     <parameter id="input" label="Input" menu="" required="true" tooltip="">&lt;%= {
   "slug" =&gt; "#{@results['Slug']['output']}",
   "host" =&gt; "#{@values['Host']}",
+  "callback" =&gt; {
+    "token" =&gt; "#{@results['Provision Space']['deferral_token']}",
+    "url" =&gt; "#{@values['Host'].gsub("://","://#{@space['Slug']}.")}/app/components/task/app/api/v1/complete-deferred-task/#{ERB::Util.url_encode(@source['Name'])}"
+  },
   "http_options" =&gt; {
     "log_level" =&gt; "info"
   },
@@ -287,7 +291,7 @@
                     <task label="" type="Complete" value="">generic_http_v1_54</task>
                 </dependents>
             </task>
-            <task definition_id="generic_http_v1" id="generic_http_v1_54" name="Call Tenant Manager" x="588" y="226">
+            <task definition_id="generic_http_v1" id="generic_http_v1_54" name="Call Tenant Manager" x="783" y="241">
                 <version>1</version>
                 <configured>true</configured>
                 <defers>false</defers>
@@ -305,8 +309,25 @@
                     <message type="Update"></message>
                     <message type="Complete"></message>
                 </messages>
+                <dependents></dependents>
+            </task>
+            <task definition_id="utilities_defer_v1" id="utilities_defer_v1_57" name="Provision Space" x="586" y="154">
+                <version>1</version>
+                <configured>true</configured>
+                <defers>true</defers>
+                <deferrable>true</deferrable>
+                <visible>true</visible>
+                <parameters>
+                    <parameter id="deferral_value" label="Initial Deferral Value" menu="" required="false" tooltip="">Provisioning</parameter>
+                </parameters>
+                <messages>
+                    <message type="Create"></message>
+                    <message type="Update"></message>
+                    <message type="Complete"></message>
+                </messages>
                 <dependents>
                     <task label="" type="Complete" value="">routine_kinetic_submission_activity_update_v1_50</task>
+                    <task label="" type="Create" value="">utilities_echo_v1_53</task>
                 </dependents>
             </task>
         </request>
