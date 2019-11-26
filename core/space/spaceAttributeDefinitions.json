@@ -66,6 +66,11 @@
   },
   {
     "allowsMultiple": false,
+    "description": "Provisioning Status",
+    "name": "Provisioning Status"
+  },
+  {
+    "allowsMultiple": false,
     "description": null,
     "name": "Service Days Due"
   },
