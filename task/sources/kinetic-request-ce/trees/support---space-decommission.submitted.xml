@@ -181,6 +181,7 @@
 "slug" =&gt; "#{@values['Space Slug']}",
 "host" =&gt; "#{@values['Host']}",
 "callback" =&gt; {
+  "token" =&gt; "#{@results['Decommission Space']['deferral_token']}",
   "url" =&gt; "#{@values['Host'].gsub("://","://#{@space['Slug']}.")}/app/components/task/app/api/v2/runs/task/#{ERB::Util.url_encode(@results['Decommission Space']['deferral_token'])}"
 },
 "http_options" =&gt; {
@@ -318,6 +319,7 @@
 "slug" =&gt; "#{@values['Space Slug']}",
 "host" =&gt; "#{@values['Host']}",
 "callback" =&gt; {
+  "token" =&gt; "#{@results['Uninstall Space']['deferral_token']}",
   "url" =&gt; "#{@values['Host'].gsub("://","://#{@space['Slug']}.")}/app/components/task/app/api/v2/runs/task/#{ERB::Util.url_encode(@results['Uninstall Space']['deferral_token'])}"
 },
 "http_options" =&gt; {
