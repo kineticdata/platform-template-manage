@@ -74,6 +74,12 @@
       ]
     },
     {
+      "name": "Provisioning Status",
+      "values": [
+        "In Progress"
+      ]
+    },
+    {
       "name": "Service Days Due",
       "values": [
         "7"
