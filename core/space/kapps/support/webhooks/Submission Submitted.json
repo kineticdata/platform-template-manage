@@ -1,5 +1,5 @@
 {
-  "authStrategy": {},
+  "authStrategy": null,
   "event": "Submitted",
   "filter": "",
   "name": "Submission Submitted",

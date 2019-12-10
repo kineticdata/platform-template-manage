@@ -159,12 +159,16 @@
   "enabledLocales": [
     "en-US"
   ],
-  "filestore": {
-    "filehubUrl": "https://kinops-test.io/kinetic-filehub",
-    "slug": "manage-core"
-  },
   "loginPage": null,
-  "name": "Manage",
+  "name": "manage",
+  "platformComponents": {
+    "agents": [
+
+    ],
+    "task": {
+      "url": "https://manage.kinops-test.io/kinetic-task"
+    }
+  },
   "resetPasswordPage": null,
   "securityPolicies": [
     {

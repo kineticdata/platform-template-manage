@@ -43,6 +43,7 @@
   ],
   "mappings": [
     {
+      "agentSlug": "system",
       "attributes": [
         {
           "name": "Closed At",
@@ -126,12 +127,10 @@
       "name": "By Form",
       "parameters": [
         {
-          "name": "Form Slug",
-          "notes": null
+          "name": "Form Slug"
         },
         {
-          "name": "Kapp Slug",
-          "notes": ""
+          "name": "Kapp Slug"
         }
       ],
       "resultType": "Multiple"
@@ -140,8 +139,7 @@
       "name": "By Id",
       "parameters": [
         {
-          "name": "Id",
-          "notes": null
+          "name": "Id"
         }
       ],
       "resultType": "Single"
@@ -150,8 +148,7 @@
       "name": "By Kapp",
       "parameters": [
         {
-          "name": "Kapp Slug",
-          "notes": null
+          "name": "Kapp Slug"
         }
       ],
       "resultType": "Multiple"
@@ -160,8 +157,7 @@
       "name": "By Type",
       "parameters": [
         {
-          "name": "Type",
-          "notes": null
+          "name": "Type"
         }
       ],
       "resultType": "Multiple"

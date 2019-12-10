@@ -25,6 +25,7 @@
   ],
   "mappings": [
     {
+      "agentSlug": "system",
       "attributes": [
         {
           "name": "HTML Content",

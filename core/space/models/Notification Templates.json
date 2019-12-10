@@ -22,6 +22,7 @@
   ],
   "mappings": [
     {
+      "agentSlug": "system",
       "attributes": [
         {
           "name": "Body",
@@ -76,8 +77,7 @@
       "name": "Content By Notification",
       "parameters": [
         {
-          "name": "Notification Name",
-          "notes": null
+          "name": "Notification Name"
         }
       ],
       "resultType": "Multiple"
