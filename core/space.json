@@ -164,10 +164,7 @@
   "platformComponents": {
     "agents": [
 
-    ],
-    "task": {
-      "url": "https://manage.kinops-test.io/kinetic-task"
-    }
+    ]
   },
   "resetPasswordPage": null,
   "securityPolicies": [
