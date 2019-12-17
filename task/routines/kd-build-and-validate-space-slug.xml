@@ -56,14 +56,14 @@
                 <deferrable>false</deferrable>
                 <visible>true</visible>
                 <parameters>
-                    <parameter id="input" label="Input" menu="" required="true" tooltip="">&lt;% spaces = JSON.parse(@results['Retrieve Spaces']['Response Body'])['spaces']
-
+                    <parameter id="input" label="Input" menu="" required="true" tooltip="">&lt;%=
 exists = false
-spaces.each do |space|
+spaces = JSON.parse(@results['Retrieve Spaces']['Response Body'])['spaces']
+(spaces || []).each {|space|
   exists = true if space['slug'] == @results['Generate Slug']['output']
-end
-%&gt;
-&lt;%=exists%&gt;</parameter>
+}
+exists.to_s.strip
+%&gt;</parameter>
                 </parameters>
                 <messages>
                     <message type="Create"></message>
